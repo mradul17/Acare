@@ -1,0 +1,235 @@
+@import play.mvc.Http.Context
+@import models.ebeanModel.Doctors
+@(list : List[Doctors])
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Doctor</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <script src="@routes.Assets.versioned("jquery/jquery.min.js")"></script>
+  <script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+  <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+
+  <style>
+    body { 
+      background: url("@routes.Assets.versioned("images/bg.jpg")") no-repeat center center fixed; 
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+      opacity: .7;
+    }
+      
+    .btn-file {
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-file input[type=file] {
+      position: absolute;
+      top: 0;
+      right: 0;
+      min-width: 100%;
+      min-height: 100%;
+      font-size: 100px;
+      text-align: right;
+      filter: alpha(opacity=0);
+      opacity: 0;
+      outline: none;
+      background: white;
+      cursor: inherit;
+      display: block;
+    }
+    .control-label{
+      font-size: 15px;
+      color: white
+    }
+    .container{
+      margin: 6%;
+    }
+  </style>
+
+  <script>
+    $(document).ready(function () {
+      $('.chek').click(function() {
+        if(this.checked) {
+          $.getJSON( "/address", function( json ) {
+            document.getElementById("add1").value=json[0].address1
+            document.getElementById("add2").value=json[0].address2
+            document.getElementById("pin").value=json[0].pinCode
+            document.getElementById("state").value=json[0].state
+            document.getElementById("country").value=json[0].country
+            document.getElementById("dtp").value=json[0].dayTimePhonenumber
+            document.getElementById("ohp").value=json[0].offTimePhonenumber
+            document.getElementById("email").value=json[0].email
+          });
+        }
+      });
+    });
+  </script>
+
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">iChroniCare</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/dashboard"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+            <li><a href="/patient/list"> <span class="glyphicon glyphicon-user"></span>&nbsp;PatientList</a></li>
+            <li><a href="/patient/registration"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Patient</a></li>  
+          </ul>
+      <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span></a>
+          <ul class="dropdown-menu">
+
+            <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> MyProfile</a></li>
+            <li><a href="/practice/info"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;PracticeInfo</a></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+          </ul>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container">
+
+<br>
+      <div class="col-md-4 col-sm-push-8">
+        <div class="text-center">
+          <img src="@routes.Assets.versioned("images/1.jpeg")" width=25% height=25% class="avatar img-circle" alt="avatar">
+         <br> <br>
+               <span class="file-input btn btn-primary btn-file">
+                Add Profile Picture<input type="file" multiple>
+            </span>
+        </div>
+      </div>
+
+      <div class="col-md-8 col-sm-pull-4">
+      
+      <!-- helper.form(routes.Doctor.save()){ -->
+        <form class="form-horizontal" role="form" method="post" action="/profile/@list.get(0).id/update">
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">DoctorId</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" placeholder="DoctorId" value="@if(list.isEmpty()==false){@list.get(0).id}" disabled>
+            </div>
+
+          </div>
+
+        <div class="form-group">
+            <label class="col-md-3 control-label">Name:</label>
+            <div class="col-md-8">
+              <input class="form-control" name="name" type="text" placeholder="Name"
+                value="@if(list.isEmpty()==false){@list.get(0).name}">
+            </div>
+<!--             if(null != loginForm.error("doctorName")){
+              <span class="control-group error">loginForm.error("doctorName").message</span>
+            } -->
+          </div>
+       
+          <div class="form-group">
+            <div class="checkbox">
+              <label class="col-md-7 control-label"><input class="chek" id="add" type="checkbox" style="zoom:1.0" value="">Use Practice Detail Information</label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Address:</label>
+              <div class="col-md-8">
+                <input class="form-control" id="add1" name="address1" type="text" placeholder="Address1"
+                  value="@if(list.isEmpty()==false){@list.get(0).address1}">
+              </div>
+<!--             if(null != loginForm.error("address1")){
+              <span class="control-group error">loginForm.error("address1").message</span>
+            } -->
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+              <div class="col-md-8">
+               <input class="form-control" id="add2" name="address2" type="text" placeholder="Address 2"
+                value="@if(list.isEmpty()==false){@list.get(0).address2}">
+              </div>
+          </div>
+        
+
+           <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-3">
+              <input class="form-control" name="country" id="country" type="text" placeholder="Country"
+                value="@if(list.isEmpty()==false){@list.get(0).country}">
+<!--             if(null != loginForm.error("country")){
+              <span class="control-group error">loginForm.error("country").message</span>
+            } -->
+            </div>
+            
+            <div class="col-md-3">
+              <input class="form-control" name="state" id="state" type="text" placeholder="State"
+                value="@if(list.isEmpty()==false){@list.get(0).state}">
+<!--             if(null != loginForm.error("state")){
+              <span class="control-group error">loginForm.error("state").message</span>
+            } -->
+            </div>
+
+            <div class="col-md-2">
+              <input class="form-control" name="pinCode" id="pin" type="text" placeholder="Pin Code"
+                value="@if(list.isEmpty()==false){@list.get(0).pinCode}">
+<!--             if(null != loginForm.error("pinCode")){
+              <span class="control-group error">loginForm.error("pinCode").message</span>
+            }  -->
+            </div>
+            
+            
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Contact Number</label>
+            <div class="col-md-4">
+              <input class="form-control" id="dtp" name="dayTimePhonenumber" type="text" placeholder="Day Time"
+                value="@if(list.isEmpty()==false){@list.get(0).dayTimePhonenumber}">
+<!--             if(null != loginForm.error("dayTime_phonenumber")){
+              <span class="control-group error">loginForm.error("dayTime_phonenumber").message</span>
+            } -->
+            </div>
+             <div class="col-md-4">
+              <input class="form-control" id="ohp" name="offTimePhonenumber" type="text" placeholder="Off Time"
+                value="@if(list.isEmpty()==false){@list.get(0).offTimePhonenumber}">
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label class="col-md-3 control-label">Email:</label>
+            <div class="col-md-8">
+              <input class="form-control" name="email" id="email" type="text" placeholder="Email"
+                value="@if(list.isEmpty()==false){@list.get(0).email}">
+            </div>
+          </div>
+           
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="submit" class="btn btn-primary" value="Save ">
+             &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="reset" class="btn btn-default" value="Reset">
+            </div>
+          </div>
+        </form>
+      }
+
+</div>
+
+</body>
+</html>

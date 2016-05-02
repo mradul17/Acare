@@ -1,0 +1,25 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+# Map static resources from the /public folder to the /assets URL path
+
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+
+GET     /                           controllers.Login.login
+GET     /admin/login                controllers.Login.login
+POST    /login/authentication       controllers.Login.authenticate
+
+GET     /dashboard					controllers.Dashboard.search
+
+GET    	/patient/registration		controllers.Patient.add
+GET    	/patient/list				controllers.Patient.list
+POST	/patient/save				controllers.Patient.save
+GET    /patient/:id/detail         controllers.Patient.detail(id : Long)
+POST   /patient/:id/update		controllers.Patient.update(id:Long)
+
+GET		/profile				controllers.Doctor.profile
+GET    /address					controllers.Doctor.add
+GET    /logout					controllers.Doctor.logout
+POST   /profile/:id/update		controllers.Doctor.update(id:Long)
+
+GET   /practice/info			controllers.Practice.info

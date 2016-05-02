@@ -1,0 +1,78 @@
+@(loginForm:Form[models.forms.LoginForm])
+
+<!DOCTYPE html>
+<html class="full" lang="en">
+
+<head>
+    <title>iDAvatars</title>
+
+    <link href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")" rel="stylesheet">
+    
+    <style>
+    body { 
+    background: url("@routes.Assets.versioned("images/bg.jpg")") no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    opacity: .7;
+}
+        .panel-default {
+            margin-top:100px;
+        }
+        .form-group.last {
+            margin-bottom:0px;
+        }
+    </style>
+</head>
+
+<body id="bg">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-7">
+                <div class="panel panel-default">
+
+                    <div class="panel-body">
+                        <form class="form-horizontal" action="@routes.Login.authenticate" role="form" method="post">
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Email</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="email" class="form-control" placeholder="Email">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">Password</label>
+                                <div class="col-sm-9">
+                                    <input type="password" name = "password" class="form-control" placeholder="Password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-offset-3 col-sm-9">
+                                    <input type="submit" value="Sign in" class="btn btn-success btn-sm col-xs-4">
+                                    <input type="reset" value="Reset" class="btn btn-default btn-sm col-xs-4">
+                                </div>
+                            </div>
+                                @if(loginForm!=null){
+                                    @if(loginForm.hasGlobalErrors) {
+                                    <span class="control-group error">
+                                    @loginForm.globalError.message
+                                    </span>
+                                    }
+                    
+                                    @if(null != loginForm.error("email")){
+                                        <span class="control-group error">@loginForm.error("email").message</span>
+                                    }
+                                    @if(null != loginForm.error("password")){
+                                        <span class="control-group error">@loginForm.error("password").message</span>
+                                    }
+                                }
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

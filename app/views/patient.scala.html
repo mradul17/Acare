@@ -1,0 +1,286 @@
+@import play.api.mvc.Flash
+@import models.ebeanModel.Patients;
+@(list:List[Patients])
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Patient</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <script src="@routes.Assets.versioned("jquery/jquery.min.js")"></script>
+  <script src="@routes.Assets.versioned("jquery/jquery.validate.min.js")"></script>
+  <script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+  <script type="text/javascript" src="@routes.Assets.versioned("jquery/jsDatePick.min.js")"></script>
+
+  <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+  <link rel="stylesheet" href="@routes.Assets.versioned("css/jsDatePickltr.min.css")">
+  <link rel="stylesheet" href="@routes.Assets.versioned("css/jquery-ui.css")">
+
+    <style>
+        body { 
+         background: url("@routes.Assets.versioned("images/bg.jpg")") no-repeat center center fixed; 
+         -webkit-background-size: cover;
+         -moz-background-size: cover;
+         -o-background-size: cover;
+         background-size: cover;
+         opacity: .7;
+        }
+      .btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+.control-label{
+
+  font-size: 15px;
+  color: white
+}
+.container{
+  margin-top: 10%;
+}
+    </style>
+    <script type="text/javascript">
+    function imagePreview(input) 
+    {
+      if (input.files && input.files[0]) 
+      {
+        var filerdr = new FileReader();
+        filerdr.onload = function(e) {
+            $('#imageShow').attr('src', e.target.result);
+        };
+        filerdr.readAsDataURL(input.files[0]);
+      }
+    }
+</script>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">iChroniCare</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/dashboard"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+            <li><a href="/patient/list"> <span class="glyphicon glyphicon-user"></span>&nbsp;PatientList</a></li>
+            <li><a href="/patient/registration"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Patient</a></li>  
+          </ul>
+      <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span></a>
+          <ul class="dropdown-menu">
+
+            <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> MyProfile</a></li>
+            <li><a href="/practice/info"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;PracticeInfo</a></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+          </ul>
+        </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+                               
+<div class="container">
+
+<form class="form-horizontal" enctype="multipart/form-data" id="PatientDetail" role="form" action="@if(list==null){@routes.Patient.save}else{/patient/@list.get(0).id/update}" method="post">
+      <div class="col-md-4 col-sm-push-8">
+        <div class="text-center">
+          <img src="@routes.Assets.versioned("images/1.jpeg")" id="imageShow" width="200" height="200" class="avatar img-circle" alt="avatar">
+          <br> <br>
+          <span class="file-input btn btn-primary btn-file">
+            Add Profile Picture<input type="file" name="photo" onchange="imagePreview(this)">
+          </span>
+        </div>
+      </div>
+      <div class="col-md-8 col-sm-pull-4">
+        
+
+        @if(list!=null){
+          <div class="form-group">
+            <label class="col-md-3 control-label">PatientId</label>
+            <div class="col-md-8">
+              <input class="form-control" name="id" type="text" value="@list.get(0).id" name="patientid" disabled />
+            </div>
+          </div>
+        }
+        
+        <div class="form-group">
+            <label class="col-md-3 control-label">Name:</label>
+            <div class="col-md-8">
+              <input class="form-control" type="text" value="@if(list!=null){@list.get(0).name}" placeholder="Name" name="name"/>
+            </div>
+          </div>
+         <div class="form-group">
+            <label class="col-md-3 control-label">Date Of Birth:</label>
+            <div class="col-md-4">
+              <input class="form-control" type="text" value="@if(list!=null){@list.get(0).dob}" id="inputField" placeholder="DOB" name="dob"/>
+            </div>
+            <div class="col-md-4">
+              <input class="form-control" type="text" id="age" placeholder="Age"/>
+            </div>
+             
+          </div>
+       
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Address:</label>
+              <div class="col-md-8">
+                <input class="form-control" type="text" value="@if(list!=null){@list.get(0).address1}" placeholder="Address1" name="address1"/>
+              </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+              <div class="col-md-8">
+               <input class="form-control" type="text" value="@if(list!=null){@list.get(0).address2}" placeholder="Address 2" name="address2"/>
+              </div>
+          </div>
+        
+
+           <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+           <div class="col-md-3">
+              <input class="form-control" value="@if(list!=null){@list.get(0).country}" type="text" placeholder="Country" name="country">
+            </div>
+
+             <div class="col-md-3">
+              <input class="form-control" type="text" value="@if(list!=null){@list.get(0).state}" placeholder="State" name="state"/>
+            </div>
+             <div class="col-md-2">
+              <input class="form-control" value="@if(list!=null){@list.get(0).pinCode}" type="text" placeholder="Pin Code" name="pinCode"/>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-md-3 control-label">Contact Number</label>
+            <div class="col-md-4">
+              <input class="form-control" type="text" value="@if(list!=null){@list.get(0).contactNumber1}" placeholder="Contact Number 1" name="contactNumber1"/>
+            </div>
+             <div class="col-md-4">
+              <input class="form-control" value="@if(list!=null){@list.get(0).contactNumber2}" type="text" placeholder="Contact Number 2" value="" name="contactNumber2"/>
+            </div>
+          </div>
+        
+          <div class="form-group">
+            <label class="col-md-3 control-label">Email:</label>
+            <div class="col-md-8">
+              <input class="form-control" value="@if(list!=null){@list.get(0).email}" type="email" placeholder="Email address" name="email"/>
+            </div>
+          </div>
+           
+          <div class="form-group">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
+              <input type="submit" class="btn btn-primary" value="Save">
+             &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="reset" class="btn btn-default" value="Reset">
+            </div>
+          </div>
+        </form>
+
+</div>
+
+
+<script type="text/javascript">
+  window.onload = function(){
+    new JsDatePick({
+      useMode:2,
+      target:"inputField",
+      dateFormat:"%d-%M-%Y"
+     
+    });
+  };
+</script>
+<script>
+    
+ 
+    $(document).ready(function() {
+        $("#PatientDetail").validate({
+            rules: {
+                name: {
+                    required: true
+                },
+                dob: {
+                    required: true
+                },
+                address1: {
+                    required: true
+                },
+
+                pinCode: {
+                    required: true,
+                    number:true
+                },
+                state: {
+                    required: true
+                },
+                country: {
+                    required: true
+                },
+                contactNumber1: {
+                    required: true,
+                    minlength:9,
+                    maxlength:10,
+                    number:true
+                },
+                email:{
+                  required: true
+                }
+
+            },
+         messages: {
+                
+                name: {
+                    required: "Please enter a name"
+                },
+
+                DOB: {
+                    required: "Please enter a Date Of Birth"
+                },
+                address1: {
+                    required: "Please enter a Address1"
+                },
+                pinCode: {
+                    required: "Please enter a pincode"
+                },
+                state: {
+                    required: "Please enter a State"
+                },
+                country: {
+                    required: "Please enter a country name"
+                },
+                contactNumber1: {
+                    required: "Please enter a Number"
+                },
+                email:{
+                  required: "Please enter a Email"
+                },   
+            }   
+                });
+    });
+    </script>   
+</body>
+</html>

@@ -1,0 +1,11 @@
+@import play.mvc.Http.Context
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>iDAvatars</title>
+	</head>
+	<body>
+		<p>@Context.current().session().get("id")</p>
+		<p>@Context.current().session().get("name")</p>
+	</body>
+</html>

@@ -1,0 +1,113 @@
+@import com.avaje.ebean.SqlRow;
+@(list:List[SqlRow]);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Patient List</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <script src="@routes.Assets.versioned("jquery/jquery.min.js")"></script>
+    <script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+    <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
+
+
+    <style>
+      
+      body { 
+         background: url("@routes.Assets.versioned("images/bg.jpg")") no-repeat center center fixed; 
+         -webkit-background-size: cover;
+         -moz-background-size: cover;
+         -o-background-size: cover;
+         background-size: cover;
+         opacity: .7;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+       <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>                        
+          </button>
+          <a class="navbar-brand" href="#">iChroniCare</a>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/dashboard"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+            <li><a href="/patient/list"> <span class="glyphicon glyphicon-user"></span>&nbsp;Patients</a></li>
+            <li><a href="/add/patient"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Patient</a></li>  
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="/doctor/profile"><span class="glyphicon glyphicon-user"></span> MyProfile</a></li>
+                <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+              </ul>
+            </li>  
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+<div class="container" style="margin-top: 5%;">
+
+
+
+	<table class="table table-inverse">
+    <thead>
+      <tr>
+      <th>Patient_Id</th>
+        <th>Name</th>
+        <th>Date Of Birth</th>
+        <th>Email</th>
+        <th>Encounter_Id</th>
+        <th>CarePlan_Id</th>
+        <th>Contact No.</th>
+      </tr>
+    </thead>
+    <tbody>
+              <tr>
+          <td><a href="#">lists.getString("id")</a></td>
+          <td>lists.getString("firstname")</td>
+          <td>lists.getString("dob")</td>
+          <td>lists.getString("email")</td>
+          <td>423443345</td>
+          <td><a href="#">5344534</a></td>
+          <td>lists.getString("contact_number")</td>
+        </tr>
+                <tr>
+          <td><a href="#">lists.getString("id")</a></td>
+          <td>lists.getString("firstname")</td>
+          <td>lists.getString("dob")</td>
+          <td>lists.getString("email")</td>
+          <td>423443345</td>
+          <td><a href="#">5344534</a></td>
+          <td>lists.getString("contact_number")</td>
+        </tr>
+      @for(lists<-list) {
+        <tr>
+          <td><a href="#">@lists.getString("id")</a></td>
+          <td>@lists.getString("firstname")</td>
+          <td>@lists.getString("dob")</td>
+          <td>@lists.getString("email")</td>
+          <td>423443345</td>
+          <td><a href="#">5344534</a></td>
+          <td>@lists.getString("contact_number")</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+</div> 
+
+</body>
+
+</html>
