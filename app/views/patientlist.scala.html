@@ -1,4 +1,5 @@
 @import com.avaje.ebean.SqlRow;
+@import play.mvc.Http.Context
 @(list:List[SqlRow]);
 <!DOCTYPE html>
 <html lang="en">
@@ -70,6 +71,9 @@ $(document).ready(function(){
               </ul>
             </li>  
           </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <h5 style="color:white">@ctx().session().get("name")</h5>
+          </ul>
         </div>
       </div>
     </nav>
@@ -96,7 +100,7 @@ $(document).ready(function(){
               <td>@lists.getString("dob")</td>
               <td>@lists.getString("email")</td>
               <td>@lists.getString("contactNumber1")</td>
-              <td><a href="#">0179</a></td>
+              <td><a href="/patient/@lists.getLong("id")/careplan">@lists.getString("cid")</a></td>
             </tr>
           }
         </tbody> 

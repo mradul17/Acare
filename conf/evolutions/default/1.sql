@@ -3,6 +3,13 @@
 
 # --- !Ups
 
+create table careplans (
+  id                            bigint auto_increment not null,
+  madication_name               varchar(1000) not null,
+  patientid                     bigint not null,
+  constraint pk_careplans primary key (id)
+);
+
 create table doctors (
   id                            bigint auto_increment not null,
   name                          varchar(255) not null,
@@ -25,6 +32,7 @@ create table login_session (
   create_at                     datetime not null,
   expire_at                     datetime not null,
   last_modified_at              TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP not null,
+  expired                       tinyint(1) default 0 not null,
   ip_addresses                  varchar(255) not null,
   constraint pk_login_session primary key (id)
 );
@@ -79,6 +87,8 @@ drop index ix_practices_doctors_pid_id on practices_doctors;
 
 alter table practices_doctors drop foreign key fk_practices_doctors_did_id;
 drop index ix_practices_doctors_did_id on practices_doctors;
+
+drop table if exists careplans;
 
 drop table if exists doctors;
 

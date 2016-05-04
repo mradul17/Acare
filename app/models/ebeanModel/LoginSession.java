@@ -38,6 +38,9 @@ public class LoginSession extends Model {
     public Date lastModifiedAt;
 
     @NotNull
+    public Boolean expired;
+
+    @NotNull
     public String ipAddresses;
 
     public static Finder<Long, LoginSession> find = new Finder<Long,LoginSession>(LoginSession.class);

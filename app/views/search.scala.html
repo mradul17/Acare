@@ -21,6 +21,32 @@
       }
       .container{margin-top: 10%;}
     </style>
+    <script>
+      $(document).ready(function(){
+        $( "#patient" ).keyup(function() {
+          var dInput = $(this).val();
+        
+          $(".list-group-item").remove();
+          if(dInput.length>0){
+            $(function(){
+              var arr = [];
+              $.getJSON("/searchPatient?searchedText="+dInput, function(data) {
+                var i = 0, dataSize = data.length < 7 ? data.length : 6, html = '';
+                for(i; i < dataSize; i++){
+                  $("#add").append("<a href="+"/patient/"+data[i].id+"/detail"+" class="+"list-group-item"+">"+data[i].name+"  (PatientId:"+data[i].id+")</a>");
+                }
+                if(data.length>6){
+                  $("#add").append("<a href="+"/patient/searchlist?str="+dInput+" class="+"list-group-item"+"><p class="+"text-center"+">Click For More ("+ data.length+" items found)<span class="+"glyphicon glyphicon-search"+"></span></p>");
+                }
+                if(data.length==0){
+                  $("#add").append("<a href="+"/patient/searchlist?str="+dInput+" class="+"list-group-item"+"><p class="+"text-center"+">No result for ("+ dInput+" items found)<span class="+"glyphicon glyphicon-search"+"></span></p>");
+                }
+              });
+            });
+          }
+        });
+      });
+    </script>
   </head>
   <body>
 
@@ -61,15 +87,40 @@
     <div class="container">
     <br><br>
     <div class="row">
-            <div class="col-md-7 col-md-offset-2">
-             <div class="input-group">
-              <input type="text" class="form-control" placeholder="Search Patients">
-                  <span class="input-group-btn">
-               <button class="btn btn-primary" type="button">Search</button>
-                   </span>
-              </div>
-           </div>
+      <!-- <div class="col-md-7 col-md-offset-2">
+        <div class="input-group">
+          <input type="text" class="form-control" id="patient" placeholder="Search Patients">
+            <span class="input-group-btn">
+              <button class="btn btn-primary" type="button">Search</button>
+            </span>
+            
+        </div>
+        <div class="list-group" id="add">
+            </div>
+      </div> -->
+
+
+
+      <div class="form-group">
+        <label class="col-xs-2"></label>
+        <div class="col-xs-6">
+          <input type="text" class="form-control" id="patient" name="searchText" placeholder="Patients Search.">
+        </div>
+        <div class="col-xs-3">
+          <input type="submit" class="btn btn-primary" value="search" >
+        </div>
+      </div>
+
+ 
+      <div class="form-group">
+        <label class="col-xs-2"></label>
+        <div class="col-xs-6 " >
+          <div class="list-group" id="add">
+          </div>
+        </div>
+      </div>  
+
     </div>
-    </div>      
+  </div>    
   </body>
 </html>

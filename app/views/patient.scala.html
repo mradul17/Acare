@@ -1,5 +1,6 @@
 @import play.api.mvc.Flash
 @import models.ebeanModel.Patients;
+@import play.mvc.Http.Context
 @(list:List[Patients])
 <!DOCTYPE html>
 <html lang="en">
@@ -90,7 +91,6 @@
               <li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span></a>
           <ul class="dropdown-menu">
-
             <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> MyProfile</a></li>
             <li><a href="/practice/info"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;PracticeInfo</a></li>
             <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
@@ -98,6 +98,9 @@
         </li>
         
       </ul>
+      <ul class="nav navbar-nav navbar-right">
+            <h5 style="color:white">@ctx().session().get("name")</h5>
+          </ul>
     </div>
   </div>
 </nav>
@@ -108,7 +111,7 @@
 <form class="form-horizontal" enctype="multipart/form-data" id="PatientDetail" role="form" action="@if(list==null){@routes.Patient.save}else{/patient/@list.get(0).id/update}" method="post">
       <div class="col-md-4 col-sm-push-8">
         <div class="text-center">
-          <img src="@routes.Assets.versioned("images/1.jpeg")" id="imageShow" width="200" height="200" class="avatar img-circle" alt="avatar">
+          <img  src="@routes.Assets.versioned("images")/@if(list!=null){@list.get(0).id}else{favicon.png}" id="imageShow" width="200" height="200" class="avatar img-circle" alt="avatar">
           <br> <br>
           <span class="file-input btn btn-primary btn-file">
             Add Profile Picture<input type="file" name="photo" onchange="imagePreview(this)">
@@ -116,13 +119,24 @@
         </div>
       </div>
       <div class="col-md-8 col-sm-pull-4">
-        
+      
+        @if(list!=null){
+             <div class="form-group">
+             <label class="col-xs-3 control-label"></label>
+             <div class="col-xs-8">
+        <!-- <form action="/patient/@list.get(0).id/careplan" method="get">
+          <input type="submit" class="btn btn-primary" value="Create Careplan"> -->
+          <a href="/patient/@list.get(0).id/careplan" id="care">Create CarePlan</a>
+        </form>
+        </div>
+        </div>
+        }
 
         @if(list!=null){
           <div class="form-group">
             <label class="col-md-3 control-label">PatientId</label>
             <div class="col-md-8">
-              <input class="form-control" name="id" type="text" value="@list.get(0).id" name="patientid" disabled />
+              <input class="form-control" name="id" type="text" value="@if(list!=null){@list.get(0).id}" name="patientid" disabled />
             </div>
           </div>
         }
@@ -194,7 +208,7 @@
           <div class="form-group">
             <label class="col-md-3 control-label"></label>
             <div class="col-md-8">
-              <input type="submit" class="btn btn-primary" value="Save">
+              <input type="submit" class="btn btn-primary" value="@if(list!=null){Update}else{Save}">
              &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="reset" class="btn btn-default" value="Reset">
             </div>
