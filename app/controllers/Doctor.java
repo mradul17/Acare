@@ -30,7 +30,7 @@ public class Doctor extends Controller {
 		return Results.ok(views.html.doctorprofile.render(list));
     }
 
-    public Result add() {
+    public Result getPracticeAddress() {
 
     	List<Practices> list = User.getPracticeByDoctorId(ctx().session().get("id"));
     	if(list.isEmpty()) {

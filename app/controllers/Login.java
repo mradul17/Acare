@@ -6,6 +6,7 @@ import services.UserSession;
 import play.mvc.Result;
 import play.mvc.Results;
 import play.mvc.Controller;
+import play.mvc.Http.Context;
 
 import play.data.Form;
 
@@ -14,25 +15,18 @@ import models.forms.LoginForm;
 import java.util.List;
 import java.util.UUID;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import models.ebeanModel.Doctors;
 import com.avaje.ebean.SqlRow;
 import play.mvc.BodyParser;
 import play.libs.Json;
-import com.fasterxml.jackson.databind.JsonNode;
+
 
 public class Login extends Controller{
 
 	public Result login() {
        // return Results.ok(views.html.careplan.render());
 		return Results.ok(views.html.login.render(null));
-    }
-
-    @BodyParser.Of(BodyParser.Json.class)
-    public Result rec() {
-
-        JsonNode json = request().body().asJson();
-        System.out.println(json);
-        return ok(json);
     }
 
     public Result authenticate() {
@@ -49,7 +43,9 @@ public class Login extends Controller{
 
         String id = list.get(0).id.toString();
         String sessionToken = UUID.randomUUID().toString();
-        UserSession.saveSessionToken(id, sessionToken, request().remoteAddress());
+        if(UserSession.saveSessionToken(id, sessionToken, request().remoteAddress())){
+
+        }
 
     	session("id",id);
     	session("name",list.get(0).name);
@@ -58,12 +54,23 @@ public class Login extends Controller{
     	return redirect(controllers.routes.Dashboard.search());
     }
 
-    public static Result extendToken(String token) {
+    public Result extendToken(String token) {
         
-    if (UserSession.extendSession(token)) {
-        return ok("Token's lifetime extended");
-    } else {        
-        return forbidden("Token could not be extended");
+        System.out.println("--"+token);
+        if (UserSession.extendSession(token)) {
+            return ok("Token's lifetime extended");
+        } else {        
+            return forbidden("Token could not be extended");
+        }
     }
+
+    public Result inactivityLogout() {
+
+        System.out.println("++"+Context.current().request().cookie("sessionToken").toString());
+        UserSession.invalidateSessionToken(ctx().session().get("id"),
+                Context.current().request().cookie("sessionToken").toString()); 
+        session().clear();
+        response().discardCookie("sessionToken");
+        return Results.ok(views.html.login.render(null));
     }
 }

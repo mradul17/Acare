@@ -120,17 +120,7 @@
       </div>
       <div class="col-md-8 col-sm-pull-4">
       
-        @if(list!=null){
-             <div class="form-group">
-             <label class="col-xs-3 control-label"></label>
-             <div class="col-xs-8">
-        <!-- <form action="/patient/@list.get(0).id/careplan" method="get">
-          <input type="submit" class="btn btn-primary" value="Create Careplan"> -->
-          <a href="/patient/@list.get(0).id/careplan" id="care">Create CarePlan</a>
-        </form>
-        </div>
-        </div>
-        }
+        
 
         @if(list!=null){
           <div class="form-group">
@@ -207,10 +197,14 @@
            
           <div class="form-group">
             <label class="col-md-3 control-label"></label>
-            <div class="col-md-8">
+            <div class="col-md-8 col-xs-8">
               <input type="submit" class="btn btn-primary" value="@if(list!=null){Update}else{Save}">
-             &nbsp;&nbsp;&nbsp;&nbsp;
+             &nbsp;&nbsp;
               <input type="reset" class="btn btn-default" value="Reset">
+              @if(list!=null){
+              &nbsp;&nbsp;
+             <a href="/patient/@list.get(0).id/careplan" class="btn btn-default " id="care">Create CarePlan</a>  
+              }
             </div>
           </div>
         </form>

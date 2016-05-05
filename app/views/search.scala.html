@@ -10,6 +10,9 @@
     <script src="@routes.Assets.versioned("jquery/jquery.min.js")"></script>
     <script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
 
+    <!-- <script src="@routes.Assets.versioned("javascripts/main.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/bootstrap-session-timeout.js")"></script> -->
+
     <style>
       body{ 
         background: url("@routes.Assets.versioned("images/bg.jpg")") no-repeat center center fixed; 
@@ -21,6 +24,7 @@
       }
       .container{margin-top: 10%;}
     </style>
+
     <script>
       $(document).ready(function(){
         $( "#patient" ).keyup(function() {
@@ -33,13 +37,13 @@
               $.getJSON("/searchPatient?searchedText="+dInput, function(data) {
                 var i = 0, dataSize = data.length < 7 ? data.length : 6, html = '';
                 for(i; i < dataSize; i++){
-                  $("#add").append("<a href="+"/patient/"+data[i].id+"/detail"+" class="+"list-group-item"+">"+data[i].name+"  (PatientId:"+data[i].id+")</a>");
+                  $("#add").append("<a href="+"/patient/"+data[i].id+"/detail"+" class="+"list-group-item"+">"+data[i].name+"  (PatientId: "+data[i].id+")</a>");
                 }
                 if(data.length>6){
                   $("#add").append("<a href="+"/patient/searchlist?str="+dInput+" class="+"list-group-item"+"><p class="+"text-center"+">Click For More ("+ data.length+" items found)<span class="+"glyphicon glyphicon-search"+"></span></p>");
                 }
                 if(data.length==0){
-                  $("#add").append("<a href="+"/patient/searchlist?str="+dInput+" class="+"list-group-item"+"><p class="+"text-center"+">No result for ("+ dInput+" items found)<span class="+"glyphicon glyphicon-search"+"></span></p>");
+                  $("#add").append("<a href="+"/patient/searchlist?str="+dInput+" class="+"list-group-item"+"><p class="+"text-center"+">No result for "+ dInput+" <span class="+"glyphicon glyphicon-search"+"></span></p>");
                 }
               });
             });
@@ -47,6 +51,7 @@
         });
       });
     </script>
+    
   </head>
   <body>
 

@@ -126,7 +126,7 @@ public class Careplan extends Controller {
 	+"\"Data\": "+json+""
 +"}";
 System.out.println(data);
-		ws.url("https://api.redoxengine.com/endpoint").setHeader("Authorization","Bearer fd19fd4e-dcb4-4279-bbd0-e93825fa5b47").setContentType("application/json").post(data);
+		ws.url("https://api.redoxengine.com/endpoint").setHeader("Authorization","Bearer 7a1e016f-7ae5-4089-b91e-708c10f45fae").setContentType("application/json").post(data);
 		System.out.println("after redox request");
 		return ok(json);
 	}

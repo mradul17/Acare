@@ -54,7 +54,7 @@
     $(document).ready(function () {
       $('.chek').click(function() {
         if(this.checked) {
-          $.getJSON( "/address", function( json ) {
+          $.getJSON( "/getPracticeAddress", function( json ) {
             document.getElementById("add1").value=json[0].address1
             document.getElementById("add2").value=json[0].address2
             document.getElementById("pin").value=json[0].pinCode

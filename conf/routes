@@ -5,27 +5,28 @@
 
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-GET     /                           controllers.Login.login
-GET     /admin/login                controllers.Login.login
-POST    /login/authentication       controllers.Login.authenticate
-POST     /rec                		controllers.Login.rec
+GET   /                         	controllers.Login.login
+GET   /admin/login              	controllers.Login.login
+POST  /login/authentication     	controllers.Login.authenticate
+GET   /login/token/:token/extend	controllers.Login.extendToken(token:String)
+GET   /inactivitylogout				controllers.Login.inactivityLogout
 
-GET     /dashboard					controllers.Dashboard.search
-GET		/searchPatient				controllers.Dashboard.searchPatient(searchedText:String)
+GET   /dashboard				controllers.Dashboard.search
+GET	  /searchPatient			controllers.Dashboard.searchPatient(searchedText:String)
 
-GET    	/patient/registration		controllers.Patient.add
-GET    	/patient/list				controllers.Patient.list
-GET    	/patient/searchlist			controllers.Patient.searchList(str :String)
-POST	/patient/save				controllers.Patient.save
-GET    /patient/:id/detail         	controllers.Patient.detail(id : Long)
-POST   /patient/:id/update			controllers.Patient.update(id:Long)
+GET   /patient/registration		controllers.Patient.add
+GET   /patient/list				controllers.Patient.list
+GET   /patient/searchlist		controllers.Patient.searchList(str :String)
+POST  /patient/save				controllers.Patient.save
+GET   /patient/:id/detail       controllers.Patient.detail(id : Long)
+POST  /patient/:id/update		controllers.Patient.update(id:Long)
 
-GET		/profile				controllers.Doctor.profile
-GET    /address					controllers.Doctor.add
-GET    /logout					controllers.Doctor.logout
-POST   /profile/:id/update		controllers.Doctor.update(id:Long)
+GET	  /profile					controllers.Doctor.profile
+GET   /getPracticeAddress		controllers.Doctor.getPracticeAddress
+GET   /logout					controllers.Doctor.logout
+POST  /profile/:id/update		controllers.Doctor.update(id:Long)
 
 GET   /practice/info			controllers.Practice.info
 
-GET   /patient/:id/careplan			controllers.Careplan.careplan(id : Long)
-POST  /careplan/:id/save			controllers.Careplan.save(id : Long)
+GET   /patient/:id/careplan		controllers.Careplan.careplan(id : Long)
+POST  /careplan/:id/save		controllers.Careplan.save(id : Long)
