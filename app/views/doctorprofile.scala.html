@@ -11,7 +11,8 @@
   <script src="@routes.Assets.versioned("jquery/jquery.min.js")"></script>
   <script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
   <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
-
+  <script src="@routes.Assets.versioned("javascripts/main.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/bootstrap-session-timeout.js")"></script>
   <style>
     body { 
       background: url("@routes.Assets.versioned("images/bg.jpg")") no-repeat center center fixed; 
@@ -68,7 +69,19 @@
       });
     });
   </script>
-
+    <script type="text/javascript">
+    function imagePreview(input) 
+    {
+      if (input.files && input.files[0]) 
+      {
+        var filerdr = new FileReader();
+        filerdr.onload = function(e) {
+            $('#imageShow').attr('src', e.target.result);
+        };
+        filerdr.readAsDataURL(input.files[0]);
+      }
+    }
+</script>
 </head>
 <body>
 
@@ -112,10 +125,10 @@
 <br>
       <div class="col-md-4 col-sm-push-8">
         <div class="text-center">
-          <img src="@routes.Assets.versioned("images/1.jpeg")" width=25% height=25% class="avatar img-circle" alt="avatar">
+          <img  src="@routes.Assets.versioned("images/doctors")/@if(list!=null){@list.get(0).id}else{default.png}" id="imageShow" width="200" height="200" class="avatar img-circle" alt="avatar">
          <br> <br>
                <span class="file-input btn btn-primary btn-file">
-                Add Profile Picture<input type="file" multiple>
+                Add Profile Picture<input type="file" name="photo" onchange="imagePreview(this)">
             </span>
         </div>
       </div>

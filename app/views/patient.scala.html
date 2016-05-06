@@ -17,7 +17,8 @@
   <link rel="stylesheet" href="@routes.Assets.versioned("bootstrap/css/bootstrap.min.css")">
   <link rel="stylesheet" href="@routes.Assets.versioned("css/jsDatePickltr.min.css")">
   <link rel="stylesheet" href="@routes.Assets.versioned("css/jquery-ui.css")">
-
+  <script src="@routes.Assets.versioned("javascripts/main.js")"></script>
+    <script src="@routes.Assets.versioned("javascripts/bootstrap-session-timeout.js")"></script>
     <style>
         body { 
          background: url("@routes.Assets.versioned("images/bg.jpg")") no-repeat center center fixed; 
@@ -111,7 +112,7 @@
 <form class="form-horizontal" enctype="multipart/form-data" id="PatientDetail" role="form" action="@if(list==null){@routes.Patient.save}else{/patient/@list.get(0).id/update}" method="post">
       <div class="col-md-4 col-sm-push-8">
         <div class="text-center">
-          <img  src="@routes.Assets.versioned("images")/@if(list!=null){@list.get(0).id}else{favicon.png}" id="imageShow" width="200" height="200" class="avatar img-circle" alt="avatar">
+          <img  src="@routes.Assets.versioned("images/patients")/@if(list!=null){@list.get(0).id}else{default.png}" id="imageShow" width="200" height="200" class="avatar img-circle" alt="avatar">
           <br> <br>
           <span class="file-input btn btn-primary btn-file">
             Add Profile Picture<input type="file" name="photo" onchange="imagePreview(this)">

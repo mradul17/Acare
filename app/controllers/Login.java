@@ -25,7 +25,7 @@ import play.libs.Json;
 public class Login extends Controller{
 
 	public Result login() {
-       // return Results.ok(views.html.careplan.render());
+
 		return Results.ok(views.html.login.render(null));
     }
 
@@ -40,23 +40,20 @@ public class Login extends Controller{
     	}
 
     	List<Doctors> list = User.getUserByEmail(bindedLoginForm.get().email);
-
+        System.out.println("---------"+list);
         String id = list.get(0).id.toString();
         String sessionToken = UUID.randomUUID().toString();
-        if(UserSession.saveSessionToken(id, sessionToken, request().remoteAddress())){
-
-        }
+        UserSession.saveSessionToken(id, sessionToken, request().remoteAddress());
 
     	session("id",id);
     	session("name",list.get(0).name);
-        response().setCookie("token",sessionToken);
+        response().setCookie("sessionToken",sessionToken);
 
     	return redirect(controllers.routes.Dashboard.search());
     }
 
     public Result extendToken(String token) {
         
-        System.out.println("--"+token);
         if (UserSession.extendSession(token)) {
             return ok("Token's lifetime extended");
         } else {        
@@ -66,9 +63,8 @@ public class Login extends Controller{
 
     public Result inactivityLogout() {
 
-        System.out.println("++"+Context.current().request().cookie("sessionToken").toString());
-        UserSession.invalidateSessionToken(ctx().session().get("id"),
-                Context.current().request().cookie("sessionToken").toString()); 
+        UserSession.invalidateSessionToken(ctx().session().get("id"), 
+                Context.current().request().cookie("sessionToken").value().toString());
         session().clear();
         response().discardCookie("sessionToken");
         return Results.ok(views.html.login.render(null));

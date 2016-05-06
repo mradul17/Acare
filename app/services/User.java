@@ -12,6 +12,7 @@ import utils.PasswordUtils;
 import models.ebeanModel.Practices;
 import models.ebeanModel.Doctors;
 import models.ebeanModel.PracticesDoctors;
+import play.libs.Json;
 public class User {
 
 	public static Boolean isValid(String email,String password) {
@@ -34,6 +35,7 @@ public class User {
 	public static List<Doctors> getUserByEmail(String email) {
 
 		List<Doctors> list = Doctors.find.where().eq("email", email).findList();
+		System.out.println("+++++++++++"+Json.toJson(list));
 		return list;
 	}
 
@@ -46,8 +48,11 @@ public class User {
 	public static List<Practices> getPracticeByDoctorId(String id) {
 
 		//TODO improve Ebean query
+		List<Practices> list = null;
 		List<PracticesDoctors> pd = PracticesDoctors.find.select("pid").where().eq("id", id).findList(); 
-		List<Practices> list = Practices.find.where().eq("id", pd.get(0).id).findList();
+		if(pd.isEmpty()==false){
+			list = Practices.find.where().eq("id", pd.get(0).id).findList();
+		}
 		return list;
 	}
 }

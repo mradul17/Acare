@@ -1,4 +1,4 @@
-package controllers;
+ package controllers;
 
 import play.mvc.Result;
 import play.mvc.Results;
@@ -33,8 +33,8 @@ public class Patient extends Controller {
     public Result list() {
 
     	String query = "SELECT patients.id,patients.name,patients.dob,patients.email,"+
-            "patients.contactnumber1,careplans.id as cid FROM patients left join careplans"+
-            " on patients.id=careplans.patientid";
+                "patients.contactnumber1,careplans.id as cid FROM patients left join careplans"+
+                " on patients.id=careplans.patientid";
         SqlQuery sqlQuery = Ebean.createSqlQuery(query);
         List<SqlRow> list = sqlQuery.findList();
 		return Results.ok(views.html.patientlist.render(list));
@@ -68,7 +68,7 @@ public class Patient extends Controller {
 		if (photo != null) {
             String fileName = photo.getFilename();
             File file = photo.getFile();
-            File newFile = new File("/home/enabledoc/Acare/public/images/"+patientId);
+            File newFile = new File("/home/enabledoc/Acare/public/images/patients"+patientId);
             file.renameTo(newFile);        
         }
 
@@ -102,6 +102,15 @@ public class Patient extends Controller {
         patient.email = requestData.get("email");
         Ebean.save(patient);
         
+        MultipartFormData <File> body = request().body().asMultipartFormData();
+        FilePart <File> photo = body.getFile("photo");
+        if (photo != null) {
+            String fileName = photo.getFilename();
+            File file = photo.getFile();
+            File newFile = new File("/home/enabledoc/Acare/public/images/patients"+id);
+            file.renameTo(newFile);        
+        }
+
         return redirect(controllers.routes.Patient.detail(id));
     }
 }

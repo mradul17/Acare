@@ -19,6 +19,10 @@ import play.data.DynamicForm;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import play.mvc.Http.MultipartFormData;
+import play.mvc.Http.MultipartFormData.FilePart;
+import java.io.File;
+
 public class Doctor extends Controller {
 
     public Result profile() {
@@ -61,6 +65,15 @@ public class Doctor extends Controller {
         doctor.email = requestData.get("email");
         Ebean.save(doctor);
         
+        MultipartFormData <File> body = request().body().asMultipartFormData();
+        FilePart <File> photo = body.getFile("photo");
+        if (photo != null) {
+            String fileName = photo.getFilename();
+            File file = photo.getFile();
+            File newFile = new File("/home/enabledoc/Acare/public/images/doctors"+id);
+            file.renameTo(newFile);        
+        }
+
         List<Doctors> list = User.getUserById(ctx().session().get("id"));
         return Results.ok(views.html.doctorprofile.render(list));
     }

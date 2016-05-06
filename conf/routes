@@ -3,7 +3,7 @@
 # ~~~~
 # Map static resources from the /public folder to the /assets URL path
 
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET   /assets/*file                 controllers.Assets.versioned(path="/public", file: Asset)
 
 GET   /                         	controllers.Login.login
 GET   /admin/login              	controllers.Login.login
@@ -17,9 +17,9 @@ GET	  /searchPatient			controllers.Dashboard.searchPatient(searchedText:String)
 GET   /patient/registration		controllers.Patient.add
 GET   /patient/list				controllers.Patient.list
 GET   /patient/searchlist		controllers.Patient.searchList(str :String)
-POST  /patient/save				controllers.Patient.save
 GET   /patient/:id/detail       controllers.Patient.detail(id : Long)
 POST  /patient/:id/update		controllers.Patient.update(id:Long)
+POST  /patient/save				controllers.Patient.save
 
 GET	  /profile					controllers.Doctor.profile
 GET   /getPracticeAddress		controllers.Doctor.getPracticeAddress
@@ -30,3 +30,8 @@ GET   /practice/info			controllers.Practice.info
 
 GET   /patient/:id/careplan		controllers.Careplan.careplan(id : Long)
 POST  /careplan/:id/save		controllers.Careplan.save(id : Long)
+
+GET   /admin							controllers.Admin.admin
+GET   /admin/:token/activate			controllers.Admin.setPassword(token : String) 
+POST  /mailsend							controllers.Admin.sendmail() 
+POST  /admin/:token/savepassword		controllers.Admin.savePassword(token : String) 

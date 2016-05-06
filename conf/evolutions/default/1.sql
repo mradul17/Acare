@@ -12,16 +12,18 @@ create table careplans (
 
 create table doctors (
   id                            bigint auto_increment not null,
-  name                          varchar(255) not null,
-  address1                      varchar(255) not null,
-  address2                      varchar(255) not null,
-  pincode                       varchar(255) not null,
-  state                         varchar(255) not null,
-  country                       varchar(255) not null,
-  daytimephonenumber            varchar(255) not null,
-  offtimephonenumber            varchar(255) not null,
-  email                         varchar(255) not null,
-  encryptedpassword             varchar(255) not null,
+  name                          varchar(255),
+  address1                      varchar(255),
+  address2                      varchar(255),
+  pincode                       varchar(255),
+  state                         varchar(255),
+  country                       varchar(255),
+  daytimephonenumber            varchar(255),
+  offtimephonenumber            varchar(255),
+  email                         varchar(255),
+  encryptedpassword             varchar(255),
+  token                         varchar(255),
+  activate                      tinyint(1) default 0,
   constraint pk_doctors primary key (id)
 );
 
