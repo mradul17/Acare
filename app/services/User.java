@@ -35,7 +35,6 @@ public class User {
 	public static List<Doctors> getUserByEmail(String email) {
 
 		List<Doctors> list = Doctors.find.where().eq("email", email).findList();
-		System.out.println("+++++++++++"+Json.toJson(list));
 		return list;
 	}
 
@@ -51,7 +50,7 @@ public class User {
 		List<Practices> list = null;
 		List<PracticesDoctors> pd = PracticesDoctors.find.select("pid").where().eq("id", id).findList(); 
 		if(pd.isEmpty()==false){
-			list = Practices.find.where().eq("id", pd.get(0).id).findList();
+			list = Practices.find.where().eq("id", pd.get(0).pid.id).findList();
 		}
 		return list;
 	}
