@@ -1,5 +1,6 @@
  package controllers;
 
+import play.Play;
 import play.mvc.Result;
 import play.mvc.Results;
 import play.mvc.Controller;
@@ -62,13 +63,14 @@ public class Patient extends Controller {
           	.eq("email", requestData.get("email"))
           	.findList();
 
-        String patientId = list.get(0).id.toString();
+        //String patientId = list.get(0).id.toString();
+        String ipath = Play.application().configuration().getString("userFilePath")+ "/" + "patients/" + list.get(0).id.toString();
 		MultipartFormData <File> body = request().body().asMultipartFormData();
 		FilePart <File> photo = body.getFile("photo");
 		if (photo != null) {
             String fileName = photo.getFilename();
             File file = photo.getFile();
-            File newFile = new File("/home/enabledoc/Acare/public/images/patients"+patientId);
+            File newFile = new File(ipath);
             file.renameTo(newFile);        
         }
 
@@ -103,11 +105,13 @@ public class Patient extends Controller {
         Ebean.save(patient);
         
         MultipartFormData <File> body = request().body().asMultipartFormData();
+        String ipath = Play.application().configuration().getString("userFilePath")+ "/" + "patients/" + id.toString();
         FilePart <File> photo = body.getFile("photo");
         if (photo != null) {
             String fileName = photo.getFilename();
             File file = photo.getFile();
-            File newFile = new File("/home/enabledoc/Acare/public/images/patients"+id);
+
+            File newFile = new File(ipath);
             file.renameTo(newFile);        
         }
 

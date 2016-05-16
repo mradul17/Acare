@@ -1,5 +1,6 @@
 package controllers;
 
+import play.Play;
 import play.mvc.Result;
 import play.mvc.Results;
 import play.mvc.Controller;
@@ -70,11 +71,11 @@ public class Doctor extends Controller {
         if (photo != null) {
             String fileName = photo.getFilename();
             File file = photo.getFile();
-            File newFile = new File("/home/enabledoc/Acare/public/images/doctors"+id);
+            String ipath = Play.application().configuration().getString("userFilePath")+ "/" + "doctors/" + id; 
+            File newFile = new File(ipath);
             file.renameTo(newFile);        
         }
 
-        List<Doctors> list = User.getUserById(ctx().session().get("id"));
-        return Results.ok(views.html.doctorprofile.render(list));
+        return redirect(controllers.routes.Doctor.profile());
     }
 }

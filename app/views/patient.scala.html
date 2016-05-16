@@ -2,6 +2,8 @@
 @import models.ebeanModel.Patients;
 @import play.mvc.Http.Context
 @(list:List[Patients])
+@import utils.ImageUtils
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -112,7 +114,14 @@
 <form class="form-horizontal" enctype="multipart/form-data" id="PatientDetail" role="form" action="@if(list==null){@routes.Patient.save}else{/patient/@list.get(0).id/update}" method="post">
       <div class="col-md-4 col-sm-push-8">
         <div class="text-center">
-          <img  src="@routes.Assets.versioned("images/patients")/@if(list!=null){@list.get(0).id}else{default.png}" id="imageShow" width="200" height="200" class="avatar img-circle" alt="avatar">
+        @if(list!=null){
+          @if(utils.ImageUtils.doesPfilePathExist(list.get(0).id)){
+            <img  src="@routes.Assets.versioned("images/patients")/@list.get(0).id" id="imageShow" width="200" height="200" class="avatar img-circle" alt="avatar">
+          }
+        }else {
+          <img  src="@routes.Assets.versioned("images/patients")/default.png" id="imageShow" width="200" height="200" class="avatar img-circle" alt="avatar">
+        }
+<!--           <img  src="@routes.Assets.versioned("images/patients")/@if(list!=null){@list.get(0).id}else{default.png}" id="imageShow" width="200" height="200" class="avatar img-circle" alt="avatar"> -->
           <br> <br>
           <span class="file-input btn btn-primary btn-file">
             Add Profile Picture<input type="file" name="photo" onchange="imagePreview(this)">

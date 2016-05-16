@@ -40,7 +40,6 @@ public class Login extends Controller{
     	}
 
     	List<Doctors> list = User.getUserByEmail(bindedLoginForm.get().email);
-        System.out.println("---------"+list);
         String id = list.get(0).id.toString();
         String sessionToken = UUID.randomUUID().toString();
         UserSession.saveSessionToken(id, sessionToken, request().remoteAddress());
