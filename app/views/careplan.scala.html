@@ -46,15 +46,17 @@
      
 
     <script type="text/javascript">
+
     $(document).ready(function(){
         var counter = 1;
+         
         
         $("#addButton").click(function () {  
         
           var newCarePlanDiv = $(document.createElement('div'))
               .attr("id", 'careplan' + counter);
                    
-newCarePlanDiv.after().html('<div class="form-group" ><div class="col-xs-2"><label>Medicaton</label></div><div class="col-xs-2"><input class=" mname form-control " type="text" placeholder="Name" id="mname'+(counter+1)+'" name="madicationName['+counter+'][product][name]" value="" onkeypress="myFunction()"></div><div class="col-xs-2"><input class="mcode form-control " type="text" placeholder="Code" id="mcode'+(counter+1)+'"name="madicationName['+counter+'][product][code]" readonly></div><div class="col-xs-2"><input class=" mcodeSystem form-control " type="text" placeholder="CodeSystem" id="mcodeSystem'+(counter+1)+'" name="madicationName['+counter+'][product][Systemcode]" readonly></div><div class="col-xs-2"><input class="mcodeSystemname form-control" type="text" placeholder="CodeSystemName" id="mcodeSystemname'+(counter+1)+'" name="madicationName['+counter+'][product][Systemcodename]" readonly></div></div><div class="form-group" ><div class="col-xs-2"><label>Route:</label></div><div class="col-xs-2"><input class="form-control rname" type="text" placeholder="Name" id="rname'+(counter+1)+'" name="madicationName['+counter+'][Route][name]" value "" onkeypress="myFunction1()"></div><div class="col-xs-2"><input class="form-control rcode" type="text" placeholder="Code" id="rcode'+(counter+1)+'" name="madicationName['+counter+'][Route][code]" readonly></div><div class="col-xs-2"><input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem'+(counter+1)+'" name="madicationName['+counter+'][Route][codeSystem]" readonly></div><div class="col-xs-2"><input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname'+(counter+1)+'" name="madicationName['+counter+'][Route][codeSystemname]" readonly></div></div><div class="form-group" ><div class="col-xs-2"><label>Dose:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="madicationName['+counter+'][Dose][quentity]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units" id="dunits" name="madicationName['+counter+'][Dose][units]"></div><div class="col-xs-2"> <label>Start Date:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Start date" id="startdate'+(counter+1)+'" name="madicationName['+counter+'][Startdate]"></div></div><div class="form-group" ><div class="col-xs-2"><label>Frequency:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Peried" id="fperied" name="madicationName['+counter+'][Frequency][peried]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units"id="funits" name="madicationName['+counter+'][Frequency][units]"></div> <div class="col-xs-2"><label>End Date:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="End date"id="enddate'+(counter+1)+'" name="madicationName['+counter+'][Enddate]"></div></div>');
+newCarePlanDiv.after().html('<div class="form-group" ><div class="col-xs-2"><label>Medicaton</label></div><div class="col-xs-2"><input class=" mname form-control " type="text" placeholder="Name" id="mname'+(counter+1)+'" name="madicationName['+counter+'][product][name]" value="" onkeypress="myFunction()"></div><div class="col-xs-2"><input class="mcode form-control " type="text" placeholder="Code" id="mcode'+(counter+1)+'"name="madicationName['+counter+'][product][code]" readonly></div><div class="col-xs-2"><input class=" mcodeSystem form-control " type="text" placeholder="CodeSystem" id="mcodeSystem'+(counter+1)+'" name="madicationName['+counter+'][product][Systemcode]" readonly></div><div class="col-xs-2"><input class="mcodeSystemname form-control" type="text" placeholder="CodeSystemName" id="mcodeSystemname'+(counter+1)+'" name="madicationName['+counter+'][product][Systemcodename]" readonly></div></div><div class="form-group" ><div class="col-xs-2"><label>Route:</label></div><div class="col-xs-2"><input class="form-control rname" type="text" placeholder="Name" id="rname'+(counter+1)+'" name="madicationName['+counter+'][Route][name]" value "" onkeypress="myFunction1()"></div><div class="col-xs-2"><input class="form-control rcode" type="text" placeholder="Code" id="rcode'+(counter+1)+'" name="madicationName['+counter+'][Route][code]" readonly></div><div class="col-xs-2"><input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem'+(counter+1)+'" name="madicationName['+counter+'][Route][codeSystem]" readonly></div><div class="col-xs-2"><input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname'+(counter+1)+'" name="madicationName['+counter+'][Route][codeSystemname]" readonly></div></div><div class="form-group" ><div class="col-xs-2"><label>Dose:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="madicationName['+counter+'][Dose][quentity]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units" id="dunits" name="madicationName['+counter+'][Dose][units]"></div><div class="col-xs-2"> <label>Start Date:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Start date" id="startdate'+(counter+1)+'" name="madicationName['+counter+'][Startdate]" onclick="Startdate()"></div></div><div class="form-group" ><div class="col-xs-2"><label>Frequency:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Peried" id="fperied" name="madicationName['+counter+'][Frequency][peried]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units"id="funits" name="madicationName['+counter+'][Frequency][units]"></div> <div class="col-xs-2"><label>End Date:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="End date"id="enddate'+(counter+1)+'" name="madicationName['+counter+'][Enddate]" onclick="Enddate()"></div></div>');
           newCarePlanDiv.appendTo("#CarePlanGroup");
 
       counter++; 
@@ -69,6 +71,8 @@ newCarePlanDiv.after().html('<div class="form-group" ><div class="col-xs-2"><lab
           }   
             
           counter--;
+          temp--;
+          temp1--;
           
           $("#careplan" + counter).remove();  
         });
@@ -176,27 +180,68 @@ newCarePlanDiv.after().html('<div class="form-group" ><div class="col-xs-2"><lab
          });
 
 
+ $("#startdate"+counter).click(function () {
+          new JsDatePick({
+      useMode:2,
+      target:"startdate"+counter,
+      dateFormat:"%d-%M-%Y"
+     
+    });  
+        });
+ $("#enddate"+counter).click(function () {
+          new JsDatePick({
+      useMode:2,
+      target:"enddate"+counter,
+      dateFormat:"%d-%M-%Y"
+     
+    });  
+        });
+
+
+ 
+
+
 
 });
 
   </script>
 
-<script type="text/javascript">
-  window.onload = function(){
-    new JsDatePick({
+
+  <script type="text/javascript">
+  var temp1=2;
+    var temp=2;
+ function Enddate(){
+ 
+       
+new JsDatePick({
       useMode:2,
-      target:"startdate1",
+      target:"enddate"+temp,
       dateFormat:"%d-%M-%Y"
      
-    });
-    new JsDatePick({
+    });  
+
+temp++;
+
+}
+
+function Startdate(){
+   
+new JsDatePick({
       useMode:2,
-      target:"enddate1",
+      target:"startdate"+temp1,
       dateFormat:"%d-%M-%Y"
      
-    });
-  };
-</script>
+    });  
+
+temp1++;
+
+}
+
+
+
+
+  </script>
+
 
   <script type="text/javascript">
   var counter1=2;
@@ -660,77 +705,6 @@ newCarePlanDiv.after().html('<br><br><div id="bool" class="form-group"><label cl
           $('#formquestion'+number).remove();  
         });
         </script>
-
-
-
-
-
-        <script type="text/javascript">
-          /*var number = 1;
-           $(document).ready(function(){
-        
-        
-        $("#addquestion").click(function () {  
-        
-          var newCarePlanDiv = $(document.createElement('div'))
-              .attr("id", 'formquestion' + number);
-                   
-newCarePlanDiv.after().html('<div class="form-group"><label class="col-lg-3 control-label">Select Question Type:</label><div class="col-xs-2"><select class="form-control" id="question'+number+'"><option>Boolean</option><option >Multiple</option><option>free</option></select></div></div><div class="form-group"><div id="inputArea'+number+'"></div></div>');
-          newCarePlanDiv.appendTo("#questiongroup");
-
-      number++; 
-       alert(number);
-        });
-
-
-        $("#removequestion").click(function () {
-          if(number==1){
-            alert("No more question to remove");
-            return false;
-          }   
-            
-          number--;
-          
-          $('#formquestion'+number).remove();  
-        });
-
-
-
-
-         $('#question'+number).change(function () {
-          //alert("change number value"+number);
-             
-            var Value = document.getElementById('question'+number).value
-            //alert("after increament question"+Value);
-            if(Value=='Boolean')
-            {
-              $("#mul"+number).remove();
-              $("#free"+number).remove();
-            $("#inputArea"+number).append('<div id="bool'+number+'" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
-          }
-          else if(Value=='Multiple')
-            {
-              $("#free"+number).remove();
-              $("#bool"+number).remove();
-            $("#inputArea"+number).append('<div id="mul'+number+'"class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><input type="text" class="form-control"/></div><div class="col-xs-4"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
-          }
-          else
-            {
-              $("#bool"+number).remove();
-              $("#mul"+number).remove();
-            $("#inputArea"+number).append('<div id="free'+number+'" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><input type="text" class="form-control" placeholder="Question"/></div><div class="col-xs-4"><input type="text" class="form-control" placeholder="Answer"/></div></div>');
-          }
-
-          });
-
-});
-*/
-        </script>
-        <div id="dyna">
-
-        </div>
-
-             
             <br>
              <div class="form-group">
             <label class="col-xs-3 control-label"></label>
