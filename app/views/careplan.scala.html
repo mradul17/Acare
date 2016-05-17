@@ -144,7 +144,19 @@ newCarePlanDiv.after().html('<div class="form-group" ><div class="col-xs-2"><lab
                label: "INTRAPULMONARY",
                label1:"2.16.840.1.113883.3.26.1.1",
                label2:"NCI Thesaurus",
-            }
+            },
+             {
+               value: "C38205",
+               label: "ENDOCERVICAL",
+               label1:"2.16.840.1.113883.3.26.1.1",
+                label2:"NCI Thesaurus",
+            },
+             {
+               value: "C38205",
+               label: "ENDOCERVICAL",
+               label1:"2.16.840.1.113883.3.26.1.1",
+                label2:"NCI Thesaurus",
+            },
          ];
              $( "#rname"+counter ).autocomplete({
             minLength: 0,
@@ -521,6 +533,9 @@ $(function() {
         </div>
         </div>
 
+
+
+
             <br>
              <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vitals Measurement</h3>
         <br>
@@ -548,20 +563,174 @@ $(function() {
               </div>
             </div>
             <br><br>
+            <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Free Form Question</h3>
+        <br>
+        
              <div class="form-group">
-            <label class="col-lg-3 control-label">When did you take insulin ?:</label>
-            <div class="col-xs-5">
-              <input class="form-control" type="text" placeholder="Answer">
-              </div>
+             <label class="col-lg-3 control-label">Select Question Type:</label>
+              <div class="col-xs-2">
+          <select class="form-control" id="question">
+            <option>Boolean</option>
+            <option >Multiple</option>
+            <option>free</option>
+          </select>
+        </div>
+        </div>
+        <div id="questiongroup">
+        <div id="formquestion0">
+        <div class="form-group">
+  
+            <div id="inputArea">
             </div>
+        </div>
+        </div>
+        </div>
+        <div class="form-group">
+       <label class="col-lg-1 control-label"></label>
+          <div class="col-xs-3">
+          <button type='button' class="btn btn-info btn-sm" value='Add medication' id='addquestion'><span class="glyphicon glyphicon-plus"></span>Add Question</button>&nbsp;&nbsp;&nbsp;&nbsp;
+          <button type='button' class="btn btn-info btn-sm" value='Remove question' id='removequestion'><span class="glyphicon glyphicon-minus"></span>Remove Question</button>          </div>
+            </div>
+
+        <script type="text/javascript">
+         var number=1;
+         var counter=0;
+          $("#question").change(function () {
              
-            <br>
-             <div class="form-group">
-            <label class="col-lg-3 control-label">How many Units ?:</label>
-            <div class="col-xs-5">
-              <input class="form-control" type="text" placeholder="Answer">
-              </div>
-            </div>
+            var jobValue = document.getElementById('question').value
+           //alert("first question"+jobValue);
+            if(jobValue=='Boolean' && counter==0)
+            {
+              $("#mul").remove();
+              $("#free").remove();
+            $("#inputArea").append('<br><br><div id="bool" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-5"><input type="text" class="form-control" placeholder="Question"></div><div class="col-xs-5"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
+            counter++;
+          }
+           if(jobValue=='Multiple' && counter==0)
+            {
+              $("#free").remove();
+              $("#bool").remove();
+            $("#inputArea").append('<br><br><div id="mul"class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-9"><input type="text" class="form-control" placeholder="Question"/></div></div><label class="col-xs-2" control-label"></label><div class="col-xs-10"><label><input type="checkbox" value=""><input type="text"name="optradio" placeholder="option1"></label><label><input type="checkbox" value=""><input type="text "name="optradio" placeholder="option2"></label><label><input  type="checkbox" value=""><input type="text"name="optradio"placeholder="option3"></label><label><input type="checkbox" value=""><input type="text"name="optradio" placeholder="option4"></label></div>');
+            counter++;
+          }
+          if (jobValue=='free' && counter==0)
+            {
+              $("#bool").remove();
+              $("#mul").remove();
+            $("#inputArea").append('<br><br><div id="free" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><input type="text" class="form-control" placeholder="Question"/></div><div class="col-xs-4"><input type="text" class="form-control" placeholder="Answer"/></div></div>');
+            counter++;
+          }
+
+          });
+
+ $("#addquestion").click(function () {  
+        
+          var newCarePlanDiv = $(document.createElement('div'))
+              .attr("id", 'formquestion' + number);
+              if(document.getElementById('question').value=='Boolean')
+                 {  
+newCarePlanDiv.after().html('<br><br><div id="bool" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-5"><input type="text" class="form-control" placeholder="Question"></div><div class="col-xs-5"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
+          newCarePlanDiv.appendTo("#questiongroup");
+        }
+        else if(document.getElementById('question').value=='Multiple')
+        {
+            newCarePlanDiv.after().html('<br><br><div id="mul"class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-9"><input type="text" class="form-control" placeholder="Question"/></div></div><label class="col-xs-2" control-label"></label><div class="col-xs-10"><label><input type="checkbox" value=""><input type="text"name="optradio" placeholder="option1"></label><label><input type="checkbox" value=""><input type="text "name="optradio" placeholder="option2"></label><label><input  type="checkbox" value=""><input type="text"name="optradio"placeholder="option3"></label><label><input type="checkbox" value=""><input type="text"name="optradio" placeholder="option4"></label></div>');
+          newCarePlanDiv.appendTo("#questiongroup");
+
+        }
+        else
+        {
+          newCarePlanDiv.after().html('<br><br><div id="free" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><input type="text" class="form-control" placeholder="Question"/></div><div class="col-xs-4"><input type="text" class="form-control" placeholder="Answer"/></div></div>');
+          newCarePlanDiv.appendTo("#questiongroup");
+        }
+        counter++;
+      number++; 
+       //alert(number);
+        });
+
+
+        $("#removequestion").click(function () {
+          if(number==-1){
+            alert("No more question to remove");
+            return false;
+          }   
+            
+          number--;
+          
+          $('#formquestion'+number).remove();  
+        });
+        </script>
+
+
+
+
+
+        <script type="text/javascript">
+          /*var number = 1;
+           $(document).ready(function(){
+        
+        
+        $("#addquestion").click(function () {  
+        
+          var newCarePlanDiv = $(document.createElement('div'))
+              .attr("id", 'formquestion' + number);
+                   
+newCarePlanDiv.after().html('<div class="form-group"><label class="col-lg-3 control-label">Select Question Type:</label><div class="col-xs-2"><select class="form-control" id="question'+number+'"><option>Boolean</option><option >Multiple</option><option>free</option></select></div></div><div class="form-group"><div id="inputArea'+number+'"></div></div>');
+          newCarePlanDiv.appendTo("#questiongroup");
+
+      number++; 
+       alert(number);
+        });
+
+
+        $("#removequestion").click(function () {
+          if(number==1){
+            alert("No more question to remove");
+            return false;
+          }   
+            
+          number--;
+          
+          $('#formquestion'+number).remove();  
+        });
+
+
+
+
+         $('#question'+number).change(function () {
+          //alert("change number value"+number);
+             
+            var Value = document.getElementById('question'+number).value
+            //alert("after increament question"+Value);
+            if(Value=='Boolean')
+            {
+              $("#mul"+number).remove();
+              $("#free"+number).remove();
+            $("#inputArea"+number).append('<div id="bool'+number+'" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
+          }
+          else if(Value=='Multiple')
+            {
+              $("#free"+number).remove();
+              $("#bool"+number).remove();
+            $("#inputArea"+number).append('<div id="mul'+number+'"class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><input type="text" class="form-control"/></div><div class="col-xs-4"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
+          }
+          else
+            {
+              $("#bool"+number).remove();
+              $("#mul"+number).remove();
+            $("#inputArea"+number).append('<div id="free'+number+'" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><input type="text" class="form-control" placeholder="Question"/></div><div class="col-xs-4"><input type="text" class="form-control" placeholder="Answer"/></div></div>');
+          }
+
+          });
+
+});
+*/
+        </script>
+        <div id="dyna">
+
+        </div>
+
+             
             <br>
              <div class="form-group">
             <label class="col-xs-3 control-label"></label>
