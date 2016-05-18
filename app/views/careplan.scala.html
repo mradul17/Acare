@@ -13,8 +13,8 @@
  <link rel="stylesheet" href="css/screen.css">
  <script type="text/javascript" src="@routes.Assets.versioned("jquery/jsDatePick.min.js")"></script>
 
-<link rel="stylesheet" href="@routes.Assets.versioned("css/jsDatePickltr.min.css")">
-  <link rel="stylesheet" href="@routes.Assets.versioned("css/jquery-ui.css")">
+<link rel="stylesheet" href="@routes.Assets.versioned("css/jsDatePickltr.min.css")" >
+  <link rel="stylesheet" href="@routes.Assets.versioned("css/jquery-ui.css")" >
 
 
     <!-- Script import for autocomplete -->
@@ -47,299 +47,171 @@
 
     <script type="text/javascript">
 
-    $(document).ready(function(){
-        var counter = 1;
-         
+      $(document).ready(function(){
+          var counter = 1;
+
+      medication();
+      route(); 
+      datepick(); 
+
+      function medication() {
+  
+          $( ".mname" ).keyup(function() {
+          var dInput = $(this).val();
+          $(function(){
+            var arr = [];
+            $.getJSON("/medication?text="+dInput, function(data) {
+
+              $( ".mname" ).autocomplete({
+                source: data,
+                focus: function( event, ui ) {
+                $(this).val(ui.item.label);
+                  return false;
+                },
+                select: function( event, ui ) {
+
+                  $(this).val(ui.item.label);
+                  var i = $(this).index('input:text');
+                  if(i>17)
+                    var count=(i-4)%13;
+                  else
+                    count="";
+                  $( "#mcode"+count).val( ui.item.value );
+                  $( "#mcodeSystem"+count).val( "2.16.840.1.113883.6.88" );
+                  $( "#mcodeSystemname"+count).val( "RxNorm" );
+                  return false;
+                },
+              });
+            });
+          });
+        });
+/*              $( '.mname').autocomplete({
+                minLength: 0,
+                source: Medicaton,
+
+                focus: function( event, ui ) {
+                  $(this).val(ui.item.label);
+                    return false;
+                },
+
+                select: function( event, ui ) {
+                   $(this).val(ui.item.label);
+                  var i = $(this).index('input:text');
+                  if(i>13)
+                    var count=i%13;
+                  else
+                    count="";
+                  alert(count);
+                    $( '#mcode'+count).val( ui.item.value );
+                    $( '#mcodeSystem'+count).val( ui.item.label1 );
+                    $( '#mcodeSystemname'+count).val( ui.item.label2 );
+                  return false;
+                },
+            })*/
+      }  
+
+      function route() {
+
+        $( ".rname" ).keyup(function() {
+          var dInput = $(this).val();
+          $(function(){
+            var arr = [];
+            $.getJSON("/route?text="+dInput, function(data) {
+
+              $( ".rname" ).autocomplete({
+                source: data,
+                focus: function( event, ui ) {
+                $(this).val(ui.item.label);
+                  return false;
+                },
+                select: function( event, ui ) {
+
+                  $(this).val(ui.item.label);
+                  var i = $(this).index('input:text');
+                  if(i>17)
+                    var count=(i-4)%13;
+                  else
+                    count="";
+                  $( "#rcode"+count).val( ui.item.value );
+                  $( "#rcodeSystem"+count).val( ui.item.label1 );
+                  $( "#rcodeSystemname"+count).val( ui.item.label2 );
+                  return false;
+                },
+              });
+            });
+          });
+        });
+/*              $( ".rname").autocomplete({
+                minLength: 0,
+                source: '/route?text='+$(this).val(),
+                focus: function( event, ui ) {
+                  $(this).val(ui.item.label);
+                      return false;
+                    },
+                select: function( event, ui ) {
+
+                  $(this).val(ui.item.label);
+                  var i = $(this).index('input:text');
+                  if(i>17)
+                    var count=(i-4)%13;
+                  else
+                    count="";
+                  $( "#rcode"+count).val( ui.item.value );
+                  $( "#rcodeSystem"+count).val( ui.item.label1 );
+                  $( "#rcodeSystemname"+count).val( ui.item.label2 );
+                  return false;
+                },
+            })*/
+        }
+
+        function datepick() {
+          $( ".startdate" ).datepicker();
+          $( ".enddate" ).datepicker();
+        }
         
-        $("#addButton").click(function () {  
+          $("#addButton").click(function () {  
         
-          var newCarePlanDiv = $(document.createElement('div'))
-              .attr("id", 'careplan' + counter);
+            var newCarePlanDiv = $(document.createElement('div')).attr("id", 'careplan' + counter);
                    
-newCarePlanDiv.after().html('<div class="form-group" ><div class="col-xs-2"><label>Medicaton</label></div><div class="col-xs-2"><input class=" mname form-control " type="text" placeholder="Name" id="mname'+(counter+1)+'" name="madicationName['+counter+'][product][name]" value="" onkeypress="myFunction()"></div><div class="col-xs-2"><input class="mcode form-control " type="text" placeholder="Code" id="mcode'+(counter+1)+'"name="madicationName['+counter+'][product][code]" readonly></div><div class="col-xs-2"><input class=" mcodeSystem form-control " type="text" placeholder="CodeSystem" id="mcodeSystem'+(counter+1)+'" name="madicationName['+counter+'][product][Systemcode]" readonly></div><div class="col-xs-2"><input class="mcodeSystemname form-control" type="text" placeholder="CodeSystemName" id="mcodeSystemname'+(counter+1)+'" name="madicationName['+counter+'][product][Systemcodename]" readonly></div></div><div class="form-group" ><div class="col-xs-2"><label>Route:</label></div><div class="col-xs-2"><input class="form-control rname" type="text" placeholder="Name" id="rname'+(counter+1)+'" name="madicationName['+counter+'][Route][name]" value "" onkeypress="myFunction1()"></div><div class="col-xs-2"><input class="form-control rcode" type="text" placeholder="Code" id="rcode'+(counter+1)+'" name="madicationName['+counter+'][Route][code]" readonly></div><div class="col-xs-2"><input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem'+(counter+1)+'" name="madicationName['+counter+'][Route][codeSystem]" readonly></div><div class="col-xs-2"><input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname'+(counter+1)+'" name="madicationName['+counter+'][Route][codeSystemname]" readonly></div></div><div class="form-group" ><div class="col-xs-2"><label>Dose:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="madicationName['+counter+'][Dose][quentity]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units" id="dunits" name="madicationName['+counter+'][Dose][units]"></div><div class="col-xs-2"> <label>Start Date:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Start date" id="startdate'+(counter+1)+'" name="madicationName['+counter+'][Startdate]" onclick="Startdate()"></div></div><div class="form-group" ><div class="col-xs-2"><label>Frequency:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Peried" id="fperied" name="madicationName['+counter+'][Frequency][peried]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units"id="funits" name="madicationName['+counter+'][Frequency][units]"></div> <div class="col-xs-2"><label>End Date:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="End date"id="enddate'+(counter+1)+'" name="madicationName['+counter+'][Enddate]" onclick="Enddate()"></div></div>');
-          newCarePlanDiv.appendTo("#CarePlanGroup");
+        newCarePlanDiv.after().html('<div class="form-group" ><div class="col-xs-2"><label>Medicaton</label></div><div class="col-xs-2"><input class="mname form-control" type="text" id="mname'+counter+'" placeholder="Name" name="madicationName['+counter+'][product][name]"></div><div class="col-xs-2"><input class="mcode form-control " type="text" placeholder="Code" id="mcode'+counter+'" name="madicationName['+counter+'][product][code]" readonly></div><div class="col-xs-2"><input class="mcodeSystem form-control" id= "mcodeSystem'+counter+'" type="text" placeholder="CodeSystem" name="madicationName['+counter+'][product][Systemcode]" readonly></div><div class="col-xs-2"><input class="mcodeSystemname form-control" id="mcodeSystemname'+counter+'" type="text" placeholder="CodeSystemName" name="madicationName['+counter+'][product][Systemcodename]" readonly></div></div><div class="form-group" ><div class="col-xs-2"><label>Route:</label></div><div class="col-xs-2"><input class="form-control rname" type="text" placeholder="Name" id="rname'+counter+'" name="madicationName['+counter+'][Route][name]"></div><div class="col-xs-2"><input class="form-control rcode" type="text" placeholder="Code" id="rcode'+counter+'" name="madicationName['+counter+'][Route][code]" readonly></div><div class="col-xs-2"><input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem'+counter+'" name="madicationName['+counter+'][Route][codeSystem]" readonly></div><div class="col-xs-2"><input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname'+counter+'" name="madicationName['+counter+'][Route][codeSystemname]" readonly></div></div><div class="form-group" ><div class="col-xs-2"><label>Dose:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="madicationName['+counter+'][Dose][quentity]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units" id="dunits" name="madicationName['+counter+'][Dose][units]"></div><div class="col-xs-2"> <label>Start Date:</label></div><div class="col-xs-2"><input class="startdate form-control" type="text" placeholder="Start date" id="startdate" name="madicationName['+counter+'][Startdate]"></div></div><div class="form-group" ><div class="col-xs-2"><label>Frequency:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Peried" id="fperied" name="madicationName['+counter+'][Frequency][peried]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units"id="funits" name="madicationName['+counter+'][Frequency][units]"></div> <div class="col-xs-2"><label>End Date:</label></div><div class="col-xs-2"><input class="enddate form-control" type="text" placeholder="End date" id="enddate" name="madicationName['+counter+'][Enddate]"></div></div>');
+              
+              newCarePlanDiv.appendTo("#CarePlanGroup");
 
-      counter++; 
-       //alert(counter);
-        });
+            counter++; 
 
+            $(".mname").each(function() {
+                medication();
+            });
 
-        $("#removeButton").click(function () {
-          if(counter==1){
-            alert("No more textbox to remove");
-            return false;
-          }   
+            $(".rname").each(function() {
+                route();
+            });
+            $(".enddate").each(function() {
+              datepick();
+            });
+            $(".startdate").each(function() {
+                datepick();
+            });
+          });
+
+          $("#removeButton").click(function () {
+              if(counter==1){
+                alert("No more textbox to remove");
+                return false;
+              }   
+              
+              counter--;
             
-          counter--;
-          temp--;
-          temp1--;
-          
           $("#careplan" + counter).remove();  
-        });
+          });
 
-    $('#mname' + counter).keypress( function(){
-      //var counter1=0;
-             var Medicaton = [
-            {
-               value:  "104894",
-               label:"Ondansetron 4 Mg Po Tbdp",
-               label1:"2.16.840.1.113883.6.88",
-               label2:"RxNorm",
-            },
-            {
-               value: "573621",
-               label: "Albuterol 0.09 MG/ACTUAT inhalant solution",
-               label1:"2.16.840.1.113883.6.88",
-                label2:"RxNorm",
-            },
-            {
-               value: "104895",
-               label: "ONDANSETRON 4 mg ORAL TABLET",
-               label1:"2.16.840.1.113883.6.88",
-               label2:"RxNorm",
-            },
-             {
-               value: "105171",
-               label: "CEFADROXIL 500 mg in 5 mL ORAL POWDER",
-               label1:"2.16.840.1.113883.6.88",
-               label2:"RxNorm",
-            },
-         ];
-         
-             $( '#mname'+counter).autocomplete({
-            minLength: 0,
-            source: Medicaton,
-            focus: function( event, ui ) {
-               $( '#mname'+counter ).val( ui.item.label );
-                  return false;
-               },
-            select: function( event, ui ) {
-               $( '#mname'+counter ).val( ui.item.label );
-               $( '#mcode'+counter ).val( ui.item.value );
-               $( '#mcodeSystem'+counter ).val( ui.item.label1 );
-               $( '#mcodeSystemname'+counter ).val( ui.item.label2 );
-               // alert("value of counter"+counter);
-               return false;
-            },
-
-         })
-          });   
-
-     
+    });
+    </script>
+<style type="text/css">
+  .ui-autocomplete { max-height: 200px; overflow-y: auto; overflow-x: hidden;}
+</style>
 
 
- $('#rname' + counter).keypress( function(){
-
-             var Routs = [
-            {
-               value:  "C38633",
-               label:"ELECTRO-OSMOSIS",
-               label1:"2.16.840.1.113883.3.26.1.1",
-               label2:"NCI Thesaurus",
-            },
-            {
-               value: "C38205",
-               label: "ENDOCERVICAL",
-               label1:"2.16.840.1.113883.3.26.1.1",
-                label2:"NCI Thesaurus",
-            },
-            {
-               value: "C38261",
-               label: "INTRAPULMONARY",
-               label1:"2.16.840.1.113883.3.26.1.1",
-               label2:"NCI Thesaurus",
-            },
-             {
-               value: "C38205",
-               label: "ENDOCERVICAL",
-               label1:"2.16.840.1.113883.3.26.1.1",
-                label2:"NCI Thesaurus",
-            },
-             {
-               value: "C38205",
-               label: "ENDOCERVICAL",
-               label1:"2.16.840.1.113883.3.26.1.1",
-                label2:"NCI Thesaurus",
-            },
-         ];
-             $( "#rname"+counter ).autocomplete({
-            minLength: 0,
-            source: Routs,
-            focus: function( event, ui ) {
-               $( "#rname"+counter ).val( ui.item.label );
-                  return false;
-               },
-            select: function( event, ui ) {
-               $( "#rname"+counter ).val( ui.item.label );
-               $( "#rcode"+counter ).val( ui.item.value );
-               $( "#rcodeSystem"+counter ).val( ui.item.label1 );
-               $( "#rcodeSystemname"+counter ).val( ui.item.label2 );
-               return false;
-            },
-         })
-         });
-
-
- $("#startdate"+counter).click(function () {
-          new JsDatePick({
-      useMode:2,
-      target:"startdate"+counter,
-      dateFormat:"%d-%M-%Y"
-     
-    });  
-        });
- $("#enddate"+counter).click(function () {
-          new JsDatePick({
-      useMode:2,
-      target:"enddate"+counter,
-      dateFormat:"%d-%M-%Y"
-     
-    });  
-        });
-
-
- 
-
-
-
-});
-
-  </script>
-
-
-  <script type="text/javascript">
-  var temp1=2;
-    var temp=2;
- function Enddate(){
- 
-       
-new JsDatePick({
-      useMode:2,
-      target:"enddate"+temp,
-      dateFormat:"%d-%M-%Y"
-     
-    });  
-
-temp++;
-
-}
-
-function Startdate(){
-   
-new JsDatePick({
-      useMode:2,
-      target:"startdate"+temp1,
-      dateFormat:"%d-%M-%Y"
-     
-    });  
-
-temp1++;
-
-}
-
-
-
-
-  </script>
-
-
-  <script type="text/javascript">
-  var counter1=2;
-function myFunction() {
-  
-  var Medicaton = [
-            {
-               value:  "104894",
-               label:"Ondansetron 4 Mg Po Tbdp",
-               label1:"2.16.840.1.113883.6.88",
-               label2:"RxNorm",
-            },
-            {
-               value: "573621",
-               label: "Albuterol 0.09 MG/ACTUAT inhalant solution",
-               label1:"2.16.840.1.113883.6.88",
-                label2:"RxNorm",
-            },
-            {
-               value: "104895",
-               label: "ONDANSETRON 4 mg ORAL TABLET",
-               label1:"2.16.840.1.113883.6.88",
-               label2:"RxNorm",
-            },
-             {
-               value: "105171",
-               label: "CEFADROXIL 500 mg in 5 mL ORAL POWDER",
-               label1:"2.16.840.1.113883.6.88",
-               label2:"RxNorm",
-            },
-         ];
-         
-             $( '#mname'+counter1).autocomplete({
-            minLength: 0,
-            source: Medicaton,
-            focus: function( event, ui ) {
-               $( '#mname'+counter1 ).val( ui.item.label );
-                  return false;
-               },
-            select: function( event, ui ) {
-               $( '#mname'+counter1).val( ui.item.label );
-               $( '#mcode'+counter1).val( ui.item.value );
-               $( '#mcodeSystem'+counter1).val( ui.item.label1 );
-               $( '#mcodeSystemname'+counter1).val( ui.item.label2 );
-                //alert("value of counter1"+counter1);
-                counter1++;
-               // alert("value of counter1 after increament"+counter1);
-               return false;
-            },
-
-         })
-    
-}
-  </script>
-
-  <script type="text/javascript">
-  var counter2=2;
-function myFunction1() {
-  
-  var Routs = [
-            {
-               value:  "C38633",
-               label:"ELECTRO-OSMOSIS",
-               label1:"2.16.840.1.113883.3.26.1.1",
-               label2:"NCI Thesaurus",
-            },
-            {
-               value: "C38205",
-               label: "ENDOCERVICAL",
-               label1:"2.16.840.1.113883.3.26.1.1",
-                label2:"NCI Thesaurus",
-            },
-            {
-               value: "C38261",
-               label: "INTRAPULMONARY",
-               label1:"2.16.840.1.113883.3.26.1.1",
-               label2:"NCI Thesaurus",
-            }
-         ];
-             $( "#rname"+counter2 ).autocomplete({
-            minLength: 0,
-            source: Routs,
-            focus: function( event, ui ) {
-               $( "#rname"+counter2 ).val( ui.item.label );
-                  return false;
-               },
-            select: function( event, ui ) {
-               $( "#rname"+counter2 ).val( ui.item.label );
-               $( "#rcode"+counter2 ).val( ui.item.value );
-               $( "#rcodeSystem"+counter2 ).val( ui.item.label1 );
-               $( "#rcodeSystemname"+counter2 ).val( ui.item.label2 );
-               counter2++;
-               return false;
-            },
-         })
-    
-}
-  </script>
 
 
 <script type="text/javascript">
@@ -433,12 +305,6 @@ $(function() {
 });
   </script>
 
-  <script>
-         
-      </script>
-  
-
-
 </head>
 
 <body bgcolor="#90EE90">
@@ -498,16 +364,16 @@ $(function() {
                <label>Medicaton</label>
               </div>
               <div class="col-xs-2">
-                <input class="mname form-control" type="text" placeholder="Name" id="mname1" name="madicationName[0][product][name]" value="" >
+                <input class="mname form-control" type="text" placeholder="Name" id="mname" name="madicationName[0][product][name]" value="" >
               </div>  
               <div class="col-xs-2">
-                <input class="mcode form-control " type="text" placeholder="Code" id="mcode1"name="madicationName[0][product][code]" readonly>
+                <input class="mcode form-control " type="text" placeholder="Code" id="mcode" name="madicationName[0][product][code]" readonly>
               </div>  
               <div class="col-xs-2">
-                <input class="mcodeSystem form-control" type="text" placeholder="CodeSystem" id="mcodeSystem1" name="madicationName[0][product][Systemcode]" readonly>
+                <input class="mcodeSystem form-control" type="text" placeholder="CodeSystem" id="mcodeSystem" name="madicationName[0][product][Systemcode]" readonly>
               </div>  
               <div class="col-xs-2">
-                <input class="mcodeSystemname form-control" type="text" placeholder="CodeSystemName" id="mcodeSystemname1" name="madicationName[0][product][Systemcodename]" readonly>
+                <input class="mcodeSystemname form-control" type="text" id="mcodeSystemname" placeholder="CodeSystemName" name="madicationName[0][product][Systemcodename]" readonly>
               </div>  
        </div>
         <div class="form-group" >
@@ -515,16 +381,16 @@ $(function() {
                <label>Route:</label>
               </div>
               <div class="col-xs-2">
-                <input class="form-control rname" type="text" placeholder="Name" id="rname1" name="madicationName[0][Route][name]">
+                <input class="form-control rname" type="text" placeholder="Name" id="rname" name="madicationName[0][Route][name]">
               </div>
                <div class="col-xs-2">
-                <input class="form-control rcode" type="text" placeholder="Code" id="rcode1" name="madicationName[0][Route][code]" readonly>
+                <input class="form-control rcode" type="text" placeholder="Code" id="rcode" name="madicationName[0][Route][code]" readonly>
               </div>
                <div class="col-xs-2">
-           <input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem1" name="madicationName[0][Route][codeSystem]" readonly>
+           <input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem" name="madicationName[0][Route][codeSystem]" readonly>
               </div>
                <div class="col-xs-2">
-                <input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname1" name="madicationName[0][Route][codeSystemname]" readonly>
+                <input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname" name="madicationName[0][Route][codeSystemname]" readonly>
               </div>
       </div>
       <div class="form-group" >
@@ -541,7 +407,7 @@ $(function() {
                  <label>Start Date:</label>
               </div>
               <div class="col-xs-2">
-               <input class="form-control" type="text" placeholder="Start date" id="startdate1" name="madicationName[0][Startdate]">
+               <input class="startdate form-control" type="text" placeholder="Start date" id="startdate" name="madicationName[0][Startdate]">
 
               </div>
        </div>
@@ -561,8 +427,8 @@ $(function() {
                 <label>End Date:</label>
               </div>
               <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="End date"
-                id="enddate1" name="madicationName[0][Enddate]">
+                <input class=" enddate form-control" type="text" placeholder="End date"
+                id="enddate" name="madicationName[0][Enddate]">
               </div>
        </div>
 

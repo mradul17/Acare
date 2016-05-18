@@ -1,11 +1,561 @@
-@import play.mvc.Http.Context
+@(id:Long)
+
 <!DOCTYPE html>
-<html>
-	<head>
-		<title>iDAvatars</title>
-	</head>
-	<body>
-		<p>@Context.current().session().get("id")</p>
-		<p>@Context.current().session().get("name")</p>
-	</body>
+<html lang="en">
+<head>
+
+ 	<title>Care Plan</title>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+ 	<script src="@routes.Assets.versioned("jquery/jquery.min.js")"></script>
+  	<script src="@routes.Assets.versioned("jquery/jquery.validate.min.js")"></script>
+  	<script src="@routes.Assets.versioned("bootstrap/js/bootstrap.min.js")"></script>
+ 	<link rel="stylesheet" href="css/screen.css">
+ 	<script type="text/javascript" src="@routes.Assets.versioned("jquery/jsDatePick.min.js")"></script>
+
+	<link rel="stylesheet" href="@routes.Assets.versioned("css/jsDatePickltr.min.css")">
+  	<link rel="stylesheet" href="@routes.Assets.versioned("css/jquery-ui.css")">
+
+    <!-- Script import for autocomplete -->
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <style>
+		body { 
+        	background: url("@routes.Assets.versioned("images/bg.jpg")") no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+         	background-size: cover;
+         	opacity: .7;
+        }
+      
+		label {
+            font-size: 16px;
+            color: white;
+      	}
+
+    	h3 {
+        	font-size: 25px;
+      	}
+
+      	input[type=checkbox] {
+    		zoom: 1.5;
+		}
+    </style>
+     
+
+    <script type="text/javascript">
+
+    	$(document).ready(function(){
+        	var counter = 1;
+            var Medicaton = [
+	            {
+	               value:  "104894",
+	               label:"Ondansetron 4 Mg Po Tbdp",
+	               label1:"2.16.840.1.113883.6.88",
+	               label2:"RxNorm",
+	            },
+	            {
+	               value: "573621",
+	               label: "Albuterol 0.09 MG/ACTUAT inhalant solution",
+	               label1:"2.16.840.1.113883.6.88",
+	                label2:"RxNorm",
+	            },
+	            {
+	               value: "104895",
+	               label: "ONDANSETRON 4 mg ORAL TABLET",
+	               label1:"2.16.840.1.113883.6.88",
+	               label2:"RxNorm",
+	            },
+	             {
+	               value: "105171",
+	               label: "CEFADROXIL 500 mg in 5 mL ORAL POWDER",
+	               label1:"2.16.840.1.113883.6.88",
+	               label2:"RxNorm",
+	            },
+         	];
+        	var Routs = [
+	            {
+	               value:  "C38633",
+	               label:"ELECTRO-OSMOSIS",
+	               label1:"2.16.840.1.113883.3.26.1.1",
+	               label2:"NCI Thesaurus",
+	            },
+	            {
+	               value: "C38205",
+	               label: "ENDOCERVICAL",
+	               label1:"2.16.840.1.113883.3.26.1.1",
+	                label2:"NCI Thesaurus",
+	            },
+	            {
+	               value: "C38261",
+	               label: "INTRAPULMONARY",
+	               label1:"2.16.840.1.113883.3.26.1.1",
+	               label2:"NCI Thesaurus",
+	            }
+         	];
+
+			medication();
+			route(); 
+
+			function medication() {
+  
+	            $( '.mname').autocomplete({
+		            minLength: 2,
+		            source: Medicaton,
+		            focus: function( event, ui ) {
+		            	$( '.mname'+counter).val( ui.item.label );
+		                	return false;
+		               	},
+		            select: function( event, ui ) {
+		            	$( '.mname'+counter).val( ui.item.label );
+		               	$( '.mcode'+counter).val( ui.item.value );
+		               	$( '.mcodeSystem'+counter).val( ui.item.label1 );
+		               	$( '.mcodeSystemname'+counter).val( ui.item.label2 );
+		               	return false;
+		            },
+		        })
+			}  
+
+			function route() {
+  
+	            $( ".rname").autocomplete({
+		            minLength: 0,
+		            source: Routs,
+		            focus: function( event, ui ) {
+		            	$( ".rname").val( ui.item.label );
+		                	return false;
+		               	},
+		            select: function( event, ui ) {
+		              	$( ".rname" ).val( ui.item.label );
+		                $( ".rcode" ).val( ui.item.value );
+		                $( ".rcodeSystem" ).val( ui.item.label1 );
+		                $( ".rcodeSystemname").val( ui.item.label2 );
+		                return false;
+		            },
+	        	})
+	    	}
+        
+        	$("#addButton").click(function () {  
+        
+        		var newCarePlanDiv = $(document.createElement('div')).attr("id", 'careplan' + counter);
+                   
+				newCarePlanDiv.after().html('<div class="form-group" ><div class="col-xs-2"><label>Medicaton</label></div><div class="col-xs-2"><input class="mname'+(counter+1)+' form-control" type="text" placeholder="Name" id="mname" name="madicationName['+counter+'][product][name]"></div><div class="col-xs-2"><input class="mcode form-control " type="text" placeholder="Code" id="mcode" name="madicationName['+counter+'][product][code]" readonly></div><div class="col-xs-2"><input class="mcodeSystem form-control" type="text" placeholder="CodeSystem" id="mcodeSystem" name="madicationName['+counter+'][product][Systemcode]" readonly></div><div class="col-xs-2"><input class="mcodeSystemname form-control" type="text" placeholder="CodeSystemName" id="mcodeSystemname" name="madicationName['+counter+'][product][Systemcodename]" readonly></div></div><div class="form-group" ><div class="col-xs-2"><label>Route:</label></div><div class="col-xs-2"><input class="form-control rname" type="text" placeholder="Name" id="rname" name="madicationName['+counter+'][Route][name]"></div><div class="col-xs-2"><input class="form-control rcode" type="text" placeholder="Code" id="rcode" name="madicationName['+counter+'][Route][code]" readonly></div><div class="col-xs-2"><input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem" name="madicationName['+counter+'][Route][codeSystem]" readonly></div><div class="col-xs-2"><input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname" name="madicationName['+counter+'][Route][codeSystemname]" readonly></div></div><div class="form-group" ><div class="col-xs-2"><label>Dose:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="madicationName['+counter+'][Dose][quentity]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units" id="dunits" name="madicationName['+counter+'][Dose][units]"></div><div class="col-xs-2"> <label>Start Date:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Start date" id="startdate" name="madicationName['+counter+'][Startdate]" onclick="Startdate()"></div></div><div class="form-group" ><div class="col-xs-2"><label>Frequency:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Peried" id="fperied" name="madicationName['+counter+'][Frequency][peried]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units"id="funits" name="madicationName['+counter+'][Frequency][units]"></div> <div class="col-xs-2"><label>End Date:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="End date"id="enddate" name="madicationName['+counter+'][Enddate]" onclick="Enddate()"></div></div>');
+          		
+          		newCarePlanDiv.appendTo("#CarePlanGroup");
+
+      			counter++; 
+
+	        	$(".mname").each(function() {
+	             	medication();
+	         	});
+
+	        	$(".rname").each(function() {
+	            	route();
+	         	});
+        	});
+
+	        $("#removeButton").click(function () {
+	          	if(counter==1){
+	            	alert("No more textbox to remove");
+	            	return false;
+	          	}   
+	            
+	          	counter--;
+	          
+	        $("#careplan" + counter).remove();  
+	        });
+		});
+  	</script>
+
+
+	<script type="text/javascript">
+	    $(document).ready(function(){
+	      
+	       $.fn.serializeObject = function(){
+	    		var self = this,
+	          	json = {},
+	            push_counters = {},
+	            patterns = {
+	                "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
+	                "key":      /[a-zA-Z0-9_]+|(?=\[\])/g,
+	                "push":     /^$/,
+	                "fixed":    /^\d+$/,
+	                "named":    /^[a-zA-Z0-9_]+$/
+	            };
+
+
+		        this.build = function(base, key, value){
+		            base[key] = value;
+		            return base;
+		        };
+
+		        this.push_counter = function(key){
+		            if(push_counters[key] === undefined){
+		                push_counters[key] = 0;
+		            }
+		            return push_counters[key]++;
+		        };
+
+		        $.each($(this).serializeArray(), function(){
+
+		            // skip invalid keys
+		            if(!patterns.validate.test(this.name)){
+		                return;
+		            }
+
+		            var k,
+		                keys = this.name.match(patterns.key),
+		                merge = this.value,
+		                reverse_key = this.name;
+
+		            while((k = keys.pop()) !== undefined){
+
+		                // adjust reverse_key
+		                reverse_key = reverse_key.replace(new RegExp("\\[" + k + "\\]$"), '');
+
+		                // push
+		                if(k.match(patterns.push)){
+		                    merge = self.build([], self.push_counter(reverse_key), merge);
+		                }
+
+		                // fixed
+		                else if(k.match(patterns.fixed)){
+		                    merge = self.build([], k, merge);
+		                }
+
+		                // named
+		                else if(k.match(patterns.named)){
+		                    merge = self.build({}, k, merge);
+		                }
+		            }
+
+		            json = $.extend(true, json, merge);
+		        });
+
+	        	return json;
+	    	};
+		});
+
+		$(function() {
+
+	    	$('form').submit(function(e) {
+	      		e.preventDefault();
+	        	var jso = JSON.stringify($('form').serializeObject());
+	        	$.ajax({
+		    		url: '/careplan/@id/save',
+		    		dataType: 'json',
+		    		type: 'post',
+		    		contentType: 'application/json',
+		    		data: jso,
+		    		success: function( data, textStatus, jQxhr ){
+		        		window.location='/dashboard'
+		    		},
+		    		error: function( jqXhr, textStatus, errorThrown ){
+		        		console.log(JSON.stringify(jqXhr) +" " + textStatus +" " + errorThrown );
+		    		}
+				});
+	    	});
+		});
+  	</script>
+
+</head>
+
+<body bgcolor="#90EE90">
+
+   	<nav class="navbar navbar-inverse navbar-fixed-top">
+	  	<div class="container-fluid">
+
+		    <div class="navbar-header">
+		      	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+		        	<span class="icon-bar"></span>
+		        	<span class="icon-bar"></span>
+		        	<span class="icon-bar"></span>                        
+		      	</button>
+		      	<a class="navbar-brand" href="#">iChroniCare</a>
+		    </div>
+
+		    <div class="collapse navbar-collapse" id="myNavbar">
+		        <ul class="nav navbar-nav">
+		        	<li class="active">
+		        		<a href="/dashboard">
+		        			<span class="glyphicon glyphicon-home"></span>&nbsp;Home
+		        		</a>
+		        	</li>
+		            <li>
+		            	<a href="/patient/list">
+		            		<span class="glyphicon glyphicon-user"></span>&nbsp;PatientList
+		            	</a>
+		            </li>
+		            <li>
+		            	<a href="/patient/registration">
+		            		<span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Patient
+		            	</a>
+		            </li>  
+		        </ul>
+
+		      	<ul class="nav navbar-nav navbar-right">
+		            <li class="dropdown">
+		          		<a class="dropdown-toggle" data-toggle="dropdown" href="#">
+		          			<span class="glyphicon glyphicon-user"></span>
+		          		</a>
+		         		<ul class="dropdown-menu">
+		            		<li>
+		            			<a href="/profile">
+		            				<span class="glyphicon glyphicon-user"></span> MyProfile
+		            			</a>
+		            		</li>
+		            		<li>
+		            			<a href="/practice/info">
+		            				<span class="glyphicon glyphicon-info-sign"></span>&nbsp;PracticeInfo
+		            			</a>
+		            		</li>
+		            		<li>
+		            			<a href="/logout">
+		            				<span class="glyphicon glyphicon-log-out"></span> Log out
+		            			</a>
+		            		</li>
+		          		</ul>
+		        	</li>
+		      	</ul>
+		       
+		       	<ul class="nav navbar-nav navbar-right">
+		            <h5 style="color:white">@ctx().session().get("name")</h5>
+		        </ul>
+		    </div>
+	  </div>
+	</nav>
+
+	<div class="container">
+  		<div class="row">
+
+		<form  class="form-horizontal" role="form" id="CreateCareplan">
+      		<div id='CarePlanGroup'>
+        		<div id="careplan">
+         			<div class="form-group">
+              			<div class="col-xs-2"><label>Medicaton</label></div>
+			            <div class="col-xs-2">
+			            	<input class="mname form-control" type="text" placeholder="Name" id="mname" name="madicationName[0][product][name]">
+			            </div> 
+			            <div class="col-xs-2">
+			                <input class="mcode form-control " type="text" placeholder="Code" id="mcode" name="madicationName[0][product][code]" readonly>
+			            </div>  
+			            <div class="col-xs-2">
+			                <input class="mcodeSystem form-control" type="text" placeholder="CodeSystem" id="mcodeSystem" name="madicationName[0][product][Systemcode]" readonly>
+			            </div>  
+			            <div class="col-xs-2">
+			                <input class="mcodeSystemname form-control" type="text" placeholder="CodeSystemName" id="mcodeSystemname" name="madicationName[0][product][Systemcodename]" readonly>
+			            </div>  
+       				</div>
+
+        			<div class="form-group" >
+             			<div class="col-xs-2"><label>Route:</label></div>
+			            <div class="col-xs-2">
+			                <input class="form-control rname" type="text" placeholder="Name" id="rname" name="madicationName[0][Route][name]">
+			            </div>
+			            <div class="col-xs-2">
+			                <input class="form-control rcode" type="text" placeholder="Code" id="rcode" name="madicationName[0][Route][code]" readonly>
+			            </div>  
+			            <div class="col-xs-2">
+			           		<input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem" name="madicationName[0][Route][codeSystem]" readonly>
+			            </div>
+			            <div class="col-xs-2">
+			                <input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname" name="madicationName[0][Route][codeSystemname]" readonly>
+			            </div>
+      				</div>
+
+      				<div class="form-group" >
+			            <div class="col-xs-2"><label>Dose:</label></div>
+			            <div class="col-xs-2">
+			                <input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="madicationName[0][Dose][quentity]">
+			            </div>
+			            <div class="col-xs-2">
+			                <input class="form-control" type="text" placeholder="Units" id="dunits" name="madicationName[0][Dose][units]">
+			            </div>
+			            <div class="col-xs-2">
+			                 <label>Start Date:</label>
+			            </div>
+			            <div class="col-xs-2">
+			               <input class="form-control" type="text" placeholder="Start date" id="startdate" name="madicationName[0][Startdate]">
+			            </div>
+       				</div>
+
+					<div class="form-group" >
+			            <div class="col-xs-2"><label>Frequency:</label></div>
+			            <div class="col-xs-2">
+			                <input class="form-control" type="text" placeholder="Peried" id="fperied" name="madicationName[0][Frequency][peried]">
+			            </div>
+			            <div class="col-xs-2">
+			                <input class="form-control" type="text" placeholder="Units" 
+			                id="funits" name="madicationName[0][Frequency][units]">
+			            </div>
+			            <div class="col-xs-2">
+			                <label>End Date:</label>
+			            </div>
+			            <div class="col-xs-2">
+			                <input class="form-control" type="text" placeholder="End date"
+			                id="enddate1" name="madicationName[0][Enddate]">
+			            </div>
+       				</div>
+        		</div>
+      		</div>
+
+        	<div class="form-group">
+         		<label class="col-lg-1 control-label"></label>
+         		<div class="col-xs-3">
+          		<button type='button' class="btn btn-info btn-sm" value='Add medication' id='addButton'><span class="glyphicon glyphicon-plus"></span>Add</button>&nbsp;&nbsp;&nbsp;&nbsp;
+          		<button type='button' class="btn btn-info btn-sm" value='Remove medication' id='removeButton'><span class="glyphicon glyphicon-minus"></span>Remove</button>
+        	</div>
+
+
+            <br>
+             <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vitals Measurement</h3>
+        <br>
+
+         <div class="form-group">
+            <label class="col-lg-3 control-label">Blood Pressure</label>
+            <div class="col-xs-2">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="blood pressure">
+              </div>
+               <label class="col-lg-3 control-label">Blood glucose</label>
+            <div class="col-xs-2">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="blood pressure">
+              </div>
+            </div>
+          <br>
+        
+         <div class="form-group">
+            <label class="col-lg-3 control-label">Pulse Rate:</label>
+            <div class="col-xs-2">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="blood pressure">
+              </div>
+               <label class="col-lg-3 control-label">Blood Oxygen Level</label>
+            <div class="col-xs-2">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="blood pressure">
+              </div>
+            </div>
+            <br><br>
+            <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Free Form Question</h3>
+        <br>
+        
+             <div class="form-group">
+             <label class="col-lg-3 control-label">Select Question Type:</label>
+              <div class="col-xs-2">
+          <select class="form-control" id="question">
+            <option>Boolean</option>
+            <option >Multiple</option>
+            <option>free</option>
+          </select>
+        </div>
+        </div>
+        <div id="questiongroup">
+        <div id="formquestion0">
+        <div class="form-group">
+  
+            <div id="inputArea">
+            </div>
+        </div>
+        </div>
+        </div>
+        <div class="form-group">
+       <label class="col-lg-1 control-label"></label>
+          <div class="col-xs-3">
+          <button type='button' class="btn btn-info btn-sm" value='Add medication' id='addquestion'><span class="glyphicon glyphicon-plus"></span>Add Question</button>&nbsp;&nbsp;&nbsp;&nbsp;
+          <button type='button' class="btn btn-info btn-sm" value='Remove question' id='removequestion'><span class="glyphicon glyphicon-minus"></span>Remove Question</button>          </div>
+            </div>
+
+        <script type="text/javascript">
+         var number=1;
+         var counter=0;
+          $("#question").change(function () {
+             
+            var jobValue = document.getElementById('question').value
+           //alert("first question"+jobValue);
+            if(jobValue=='Boolean' && counter==0)
+            {
+              $("#mul").remove();
+              $("#free").remove();
+            $("#inputArea").append('<br><br><div id="bool" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-5"><input type="text" class="form-control" placeholder="Question"></div><div class="col-xs-5"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
+            counter++;
+          }
+           if(jobValue=='Multiple' && counter==0)
+            {
+              $("#free").remove();
+              $("#bool").remove();
+            $("#inputArea").append('<br><br><div id="mul"class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-9"><input type="text" class="form-control" placeholder="Question"/></div></div><label class="col-xs-2" control-label"></label><div class="col-xs-10"><label><input type="checkbox" ><input type="text"name="optradio" placeholder="option1"></label><label><input type="checkbox" ><input type="text "name="optradio" placeholder="option2"></label><label><input  type="checkbox" ><input type="text"name="optradio"placeholder="option3"></label><label><input type="checkbox" ><input type="text"name="optradio" placeholder="option4"></label></div>');
+            counter++;
+          }
+          if (jobValue=='free' && counter==0)
+            {
+              $("#bool").remove();
+              $("#mul").remove();
+            $("#inputArea").append('<br><br><div id="free" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><input type="text" class="form-control" placeholder="Question"/></div><div class="col-xs-4"><input type="text" class="form-control" placeholder="Answer"/></div></div>');
+            counter++;
+          }
+
+          });
+
+ $("#addquestion").click(function () {  
+        
+          var newCarePlanDiv = $(document.createElement('div'))
+              .attr("id", 'formquestion' + number);
+              if(document.getElementById('question').value=='Boolean')
+                 {  
+newCarePlanDiv.after().html('<br><br><div id="bool" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-5"><input type="text" class="form-control" placeholder="Question"></div><div class="col-xs-5"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
+          newCarePlanDiv.appendTo("#questiongroup");
+        }
+        else if(document.getElementById('question').value=='Multiple')
+        {
+            newCarePlanDiv.after().html('<br><br><div id="mul"class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-9"><input type="text" class="form-control" placeholder="Question"/></div></div><label class="col-xs-2" control-label"></label><div class="col-xs-10"><label><input type="checkbox" ><input type="text"name="optradio" placeholder="option1"></label><label><input type="checkbox" ><input type="text "name="optradio" placeholder="option2"></label><label><input  type="checkbox" ><input type="text"name="optradio"placeholder="option3"></label><label><input type="checkbox" ><input type="text"name="optradio" placeholder="option4"></label></div>');
+          newCarePlanDiv.appendTo("#questiongroup");
+
+        }
+        else
+        {
+          newCarePlanDiv.after().html('<br><br><div id="free" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><input type="text" class="form-control" placeholder="Question"/></div><div class="col-xs-4"><input type="text" class="form-control" placeholder="Answer"/></div></div>');
+          newCarePlanDiv.appendTo("#questiongroup");
+        }
+        counter++;
+      number++; 
+       //alert(number);
+        });
+
+
+        $("#removequestion").click(function () {
+          if(number==-1){
+            alert("No more question to remove");
+            return false;
+          }   
+            
+          number--;
+          
+          $('#formquestion'+number).remove();  
+        });
+        </script>
+            <br>
+             <div class="form-group">
+            <label class="col-xs-3 control-label"></label>
+            <div class="col-xs-8">
+              <input type="submit" id="jsondata" class="btn btn-info" value="submit"> 
+              
+             &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="reset" class="btn btn-info" value="Reset">
+            </div>
+          </div>
+            </form>
+           
+           </div>
+           </div>
+
+          
+    </div>
+  
+
+  
+  
+    <!-- Page Content -->
+  
+  
+</body>
+
 </html>

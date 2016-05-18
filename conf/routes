@@ -30,6 +30,8 @@ GET   /practice/info			controllers.Practice.info
 
 GET   /patient/:id/careplan		controllers.Careplan.careplan(id : Long)
 POST  /careplan/:id/save		controllers.Careplan.save(id : Long)
+GET   /route					controllers.Careplan.route(text:String)
+GET   /medication				controllers.Careplan.medication(text:String)
 
 GET   /admin							controllers.Admin.admin
 GET   /admin/:token/activate			controllers.Admin.setPassword(token : String) 

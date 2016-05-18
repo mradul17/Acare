@@ -1,0 +1,406 @@
+@(id:Long)
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Care Plan</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+  <link rel="stylesheet" href="css/screen.css">
+  <link rel="stylesheet" type="text/css" media="all" href="jsDatePick_ltr.min.css" />
+ <!--  <script src="@routes.Assets.versioned("javascripts/main.js")"></script>
+  <script src="@routes.Assets.versioned("javascripts/bootstrap-session-timeout.js")"></script> -->
+  <script type="text/javascript" src="jsDatePick.min.1.3.js"></script>
+ <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/redmond/jquery-ui.css">
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.js"></script>
+
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+    <style>
+      body { 
+        background: url("@routes.Assets.versioned("images/bg.jpg")") no-repeat center center fixed; 
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        opacity: .7;
+      }
+      
+      label{
+            font-size: 16px;
+      }
+      h3{
+        font-size: 25px;
+      }
+      input[type=checkbox] {
+      zoom: 1.5;
+    }
+
+    </style>
+      <script type="text/javascript">
+        window.onload = function(){
+          new JsDatePick({
+            useMode:2,
+            target:"startdate",
+            dateFormat:"%d-%M-%Y" 
+          });
+          new JsDatePick({
+            useMode:2,
+            target:"enddate",
+            dateFormat:"%d-%M-%Y" 
+          });
+        };
+      </script>
+
+    <script type="text/javascript">
+
+    $(document).ready(function(){
+
+        var counter = 1;
+        
+        $("#addButton").click(function () {  
+        
+          var newCarePlanDiv = $(document.createElement('div'))
+              .attr("id", 'careplan' + counter);
+                    
+newCarePlanDiv.after().html('<div class="form-group" ><div class="col-xs-2"><label>Medicaton</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Name" id="mname" name="madicationName['+counter+'][product][name]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Code" id="mcode"name="madicationName['+counter+'][product][code]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="CodeSystem" id="mcodeSystem" name="madicationName['+counter+'][product][Systemcode]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="CodeSystemName" id="mcodeSystemname" name="madicationName['+counter+'][product][Systemcodename]"></div></div><div class="form-group" ><div class="col-xs-2"><label>Route:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Name" id="rname" name="madicationName['+counter+'][Route][name]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Code" id="rcode" name="madicationName['+counter+'][Route][code]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="CodeSystem" id="rcodeSystem" name="madicationName['+counter+'][Route][codeSystem]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Codesystemname" id="rcodeSystemname" name="madicationName['+counter+'][Route][codeSystemname]"></div></div><div class="form-group" ><div class="col-xs-2"><label>Dose:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="madicationName['+counter+'][Dose][quentity]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units" id="dunits" name="madicationName['+counter+'][Dose][units]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="RateQuantity" id="rquantity" name="madicationName['+counter+'][Rate][quantity]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="RateUnits" id="runits" name="madicationName['+counter+'][Rate][units]"></div></div><div class="form-group" ><div class="col-xs-2"><label>Frequency:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Peried" id="fperied" name="madicationName['+counter+'][Frequency][peried]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units"id="funits" name="madicationName['+counter+'][Frequency][units]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Start date" id="startdate" name="madicationName['+counter+'][Startdate]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="End date"id="enddate" name="madicationName['+counter+'][Enddate]"></div></div>');
+          newCarePlanDiv.appendTo("#CarePlanGroup");
+
+          counter++;
+        });
+
+        $("#removeButton").click(function () {
+          if(counter==1){
+            alert("No more textbox to remove");
+            return false;
+          }   
+            
+          counter--;
+          
+          $("#careplan" + counter).remove();  
+        });
+      });
+
+  </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+      
+       $.fn.serializeObject = function()
+{
+    var self = this,
+            json = {},
+            push_counters = {},
+            patterns = {
+                "validate": /^[a-zA-Z][a-zA-Z0-9_]*(?:\[(?:\d*|[a-zA-Z0-9_]+)\])*$/,
+                "key":      /[a-zA-Z0-9_]+|(?=\[\])/g,
+                "push":     /^$/,
+                "fixed":    /^\d+$/,
+                "named":    /^[a-zA-Z0-9_]+$/
+            };
+
+
+        this.build = function(base, key, value){
+            base[key] = value;
+            return base;
+        };
+
+        this.push_counter = function(key){
+            if(push_counters[key] === undefined){
+                push_counters[key] = 0;
+            }
+            return push_counters[key]++;
+        };
+
+        $.each($(this).serializeArray(), function(){
+
+            // skip invalid keys
+            if(!patterns.validate.test(this.name)){
+                return;
+            }
+
+            var k,
+                keys = this.name.match(patterns.key),
+                merge = this.value,
+                reverse_key = this.name;
+
+            while((k = keys.pop()) !== undefined){
+
+                // adjust reverse_key
+                reverse_key = reverse_key.replace(new RegExp("\\[" + k + "\\]$"), '');
+
+                // push
+                if(k.match(patterns.push)){
+                    merge = self.build([], self.push_counter(reverse_key), merge);
+                }
+
+                // fixed
+                else if(k.match(patterns.fixed)){
+                    merge = self.build([], k, merge);
+                }
+
+                // named
+                else if(k.match(patterns.named)){
+                    merge = self.build({}, k, merge);
+                }
+            }
+
+            json = $.extend(true, json, merge);
+        });
+
+        return json;
+    };
+});
+$(function() {
+    $('form').submit(function(e) {
+      e.preventDefault();
+        var jso = JSON.stringify($('form').serializeObject());
+        alert (jso);
+        $.ajax({
+    url: '/careplan/@id/save',
+    dataType: 'json',
+    type: 'post',
+    contentType: 'application/json',
+    data: jso,
+    success: function( data, textStatus, jQxhr ){
+        console.log( "success" );
+        window.location='/dashboard'
+    },
+    error: function( jqXhr, textStatus, errorThrown ){
+        console.log(JSON.stringify(jqXhr) +" " + textStatus +" " + errorThrown );
+    }
+});
+    });
+});
+  </script>
+  
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+
+
+    $( "#mname" ).autocomplete({
+      source: function( request, response ) {
+        $.ajax({
+          url: "/medication",
+          dataType: "json",
+          data: {
+            featureClass: "P",
+            style: "full",
+            maxRows: 12,
+            name_startsWith: request.term
+          },
+          success: function( data ) {
+            response( $.map( data.entities, function( item ) {
+              return {
+                label: item.concept_name,
+                value: item.concept_code
+              }
+            }));
+          }
+        });
+      },
+      minLength: 0,
+      select: function( event, ui ) {
+        log( ui.item ?
+          "Selected: " + ui.item.concept_name :
+          "Nothing selected, input was " + this.value);
+      },
+      open: function() {
+        $( this ).removeClass( "ui-corner-all" ).addClass( "ui-corner-top" );
+      },
+      close: function() {
+        $( this ).removeClass( "ui-corner-top" ).addClass( "ui-corner-all" );
+      }
+    });
+  });
+    </script>
+
+
+</head>
+
+<body bgcolor="#90EE90">
+
+   <nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">iChroniCare</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="/dashboard"><span class="glyphicon glyphicon-home"></span>&nbsp;Home</a></li>
+            <li><a href="/patient/list"> <span class="glyphicon glyphicon-user"></span>&nbsp;PatientList</a></li>
+            <li><a href="/patient/registration"><span class="glyphicon glyphicon-plus-sign"></span>&nbsp;Add Patient</a></li>  
+          </ul>
+      <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+          <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <span class="glyphicon glyphicon-user"></span></a>
+          <ul class="dropdown-menu">
+
+            <li><a href="/profile"><span class="glyphicon glyphicon-user"></span> MyProfile</a></li>
+            <li><a href="/practice/info"><span class="glyphicon glyphicon-info-sign"></span>&nbsp;PracticeInfo</a></li>
+            <li><a href="/logout"><span class="glyphicon glyphicon-log-out"></span> Log out</a></li>
+          </ul>
+        </li>
+        
+      </ul>
+       <ul class="nav navbar-nav navbar-right">
+            <h5 style="color:white">@ctx().session().get("name")</h5>
+          </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  
+  <div class="row">
+      <!-- left column -->
+     
+      <!-- edit form column -->
+      <div class="col-xs-20 ">
+        
+        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medication Prescription</h3>
+        <br>
+<form  class="form-horizontal" role="form" id="CreateCareplan" >
+
+      <div id='CarePlanGroup' >
+        <div id="careplan1" >
+         <div class="form-group" >
+              <div class="col-xs-2">
+               <label>Medicaton</label>
+              </div>
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="Name" id="mname" name="madicationName[0][product][name]">
+              </div>  
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="Code" id="mcode"name="madicationName[0][product][code]">
+              </div>  
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="CodeSystem" id="mcodeSystem" name="madicationName[0][product][Systemcode]">
+              </div>  
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="CodeSystemName" id="mcodeSystemname" name="madicationName[0][product][Systemcodename]">
+              </div>  
+       </div>
+        <div class="form-group" >
+             <div class="col-xs-2">
+               <label>Route:</label>
+              </div>
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="Name" id="rname" name="madicationName[0][Route][name]">
+              </div>
+               <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="Code" id="rcode" name="madicationName[0][Route][code]">
+              </div>
+               <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="CodeSystem" id="rcodeSystem" name="madicationName[0][Route][codeSystem]">
+              </div>
+               <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="Codesystemname" id="rcodeSystemname" name="madicationName[0][Route][codeSystemname]">
+              </div>
+      </div>
+      <div class="form-group" >
+              <div class="col-xs-2">
+               <label>Dose:</label>
+              </div>
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="madicationName[0][Dose][quentity]">
+              </div>
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="Units" id="dunits" name="madicationName[0][Dose][units]">
+              </div>
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="RateQuantity" id="rquantity" name="madicationName[0][Rate][quantity]">
+              </div>
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="RateUnits" id="runits" name="madicationName[0][Rate][units]">
+              </div>
+       </div>
+
+<div class="form-group" >
+              <div class="col-xs-2">
+               <label>Frequency:</label>
+              </div>
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="Peried" id="fperied" name="madicationName[0][Frequency][peried]">
+              </div>
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="Units" 
+                id="funits" name="madicationName[0][Frequency][units]">
+              </div>
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="Start date" id="startdate" name="madicationName[0][Startdate]">
+              </div>
+              <div class="col-xs-2">
+                <input class="form-control" type="text" placeholder="End date"
+                id="enddate" name="madicationName[0][Enddate]">
+              </div>
+       </div>
+
+        </div>
+      </div>
+
+        <br>
+        <div class="form-group">
+         <label class="col-lg-1 control-label"></label>
+          <div class="col-xs-3">
+          <button type='button' class="btn btn-info btn-sm" value='Add medication' id='addButton'><span class="glyphicon glyphicon-plus"></span>Add</button>&nbsp;&nbsp;&nbsp;&nbsp;
+          <button type='button' class="btn btn-info btn-sm" value='Remove medication' id='removeButton'><span class="glyphicon glyphicon-minus"></span>Remove</button>
+        </div>
+        </div>
+
+        <div class="form-group col-xs-2">
+          <select class="form-control" id="question">
+            <option selected="selected">Boolean</option>
+            <option >Multiple</option>
+            <option>free</option>
+          </select>
+        </div>
+        <div class="form-group">
+  
+            <div id="inputArea">
+            </div>
+        </div>
+
+        <script type="text/javascript">
+          $("#question").change(function () {
+            $("#inputArea").append('<div class="form-group"><label class="col-xs-2" control-label"></label><div class="col-sm-4"><input type="text" class="form-control"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
+          });
+        </script>
+
+        <div id="dyna">
+
+        </div>
+
+
+             <div class="form-group">
+            <label class="col-xs-3 control-label"></label>
+            <div class="col-xs-8">
+              <input type="submit" id="jsondata" class="btn btn-info" value="submit"> 
+              
+             &nbsp;&nbsp;&nbsp;&nbsp;
+              <input type="reset" class="btn btn-info" value="Reset">
+            </div>
+          </div>
+            </form>
+           
+           </div>
+           </div>
+    </div>
+</body>
+
+</html>
