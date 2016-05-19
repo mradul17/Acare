@@ -58,32 +58,34 @@
   
           $( ".mname" ).keyup(function() {
           var dInput = $(this).val();
-          $(function(){
-            var arr = [];
-            $.getJSON("/medication?text="+dInput, function(data) {
+          if(dInput.length>2){
+            $(function(){
+              var arr = [];
+              $.getJSON("/medication?text="+dInput, function(data) {
 
-              $( ".mname" ).autocomplete({
-                source: data,
-                focus: function( event, ui ) {
-                $(this).val(ui.item.label);
-                  return false;
-                },
-                select: function( event, ui ) {
-
+                $( ".mname" ).autocomplete({
+                  source: data,
+                  focus: function( event, ui ) {
                   $(this).val(ui.item.label);
-                  var i = $(this).index('input:text');
-                  if(i>17)
-                    var count=(i-4)%13;
-                  else
-                    count="";
-                  $( "#mcode"+count).val( ui.item.value );
-                  $( "#mcodeSystem"+count).val( "2.16.840.1.113883.6.88" );
-                  $( "#mcodeSystemname"+count).val( "RxNorm" );
-                  return false;
-                },
+                    return false;
+                  },
+                  select: function( event, ui ) {
+
+                    $(this).val(ui.item.label);
+                    var i = $(this).index('input:text');
+                    if(i>13)
+                      var count=i%13;
+                    else
+                      count="";
+                    $( "#mcode"+count).val( ui.item.value );
+                    $( "#mcodeSystem"+count).val( "2.16.840.1.113883.6.88" );
+                    $( "#mcodeSystemname"+count).val( "RxNorm" );
+                    return false;
+                  },
+                });
               });
             });
-          });
+          }
         });
 /*              $( '.mname').autocomplete({
                 minLength: 0,
@@ -114,32 +116,34 @@
 
         $( ".rname" ).keyup(function() {
           var dInput = $(this).val();
-          $(function(){
-            var arr = [];
-            $.getJSON("/route?text="+dInput, function(data) {
+          if(dInput.length>2){
+            $(function(){
+              var arr = [];
+              $.getJSON("/route?text="+dInput, function(data) {
 
-              $( ".rname" ).autocomplete({
-                source: data,
-                focus: function( event, ui ) {
-                $(this).val(ui.item.label);
-                  return false;
-                },
-                select: function( event, ui ) {
-
+                $( ".rname" ).autocomplete({
+                  source: data,
+                  focus: function( event, ui ) {
                   $(this).val(ui.item.label);
-                  var i = $(this).index('input:text');
-                  if(i>17)
-                    var count=(i-4)%13;
-                  else
-                    count="";
-                  $( "#rcode"+count).val( ui.item.value );
-                  $( "#rcodeSystem"+count).val( ui.item.label1 );
-                  $( "#rcodeSystemname"+count).val( ui.item.label2 );
-                  return false;
-                },
+                    return false;
+                  },
+                  select: function( event, ui ) {
+
+                    $(this).val(ui.item.label);
+                    var i = $(this).index('input:text');
+                    if(i>17)
+                      var count=(i-4)%13;
+                    else
+                      count="";
+                    $( "#rcode"+count).val( ui.item.value );
+                    $( "#rcodeSystem"+count).val( ui.item.label1 );
+                    $( "#rcodeSystemname"+count).val( ui.item.label2 );
+                    return false;
+                  },
+                });
               });
             });
-          });
+          }
         });
 /*              $( ".rname").autocomplete({
                 minLength: 0,
@@ -458,19 +462,19 @@ $(function() {
               </div>
                <label class="col-lg-3 control-label">Blood glucose</label>
             <div class="col-xs-2">
-              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="blood pressure">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="Blood glucose">
               </div>
             </div>
           <br>
         
          <div class="form-group">
-            <label class="col-lg-3 control-label">Pulse Rate:</label>
+            <label class="col-lg-3 control-label">Pulse Rate</label>
             <div class="col-xs-2">
-              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="blood pressure">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="Pulse Rate">
               </div>
                <label class="col-lg-3 control-label">Blood Oxygen Level</label>
             <div class="col-xs-2">
-              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="blood pressure">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="Blood Oxygen Level">
               </div>
             </div>
             <br><br>
@@ -514,7 +518,7 @@ $(function() {
             {
               $("#mul").remove();
               $("#free").remove();
-            $("#inputArea").append('<br><br><div id="bool" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-5"><input type="text" class="form-control" placeholder="Question"></div><div class="col-xs-5"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
+            $("#inputArea").append('<br><br><div id="bool" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-5"><input type="text" class="form-control" name="boolean" placeholder="Question"></div><div class="col-xs-5"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
             counter++;
           }
            if(jobValue=='Multiple' && counter==0)

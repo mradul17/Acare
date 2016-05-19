@@ -37,14 +37,14 @@ public class Careplan extends Controller {
     }
 
     public Result route(String text) {
-		String query = "SELECT Concept_Code as value, Concept_Name as label, Code_System_OID as label1, Code_System_Name as label2 FROM phvs where Concept_Name like '%"+text+"%' ";
+		String query = "SELECT Concept_Code as value, Concept_Name as label, Code_System_OID as label1, Code_System_Name as label2 FROM route where Concept_Name like '%"+text+"%' ";
         SqlQuery sqlQuery = Ebean.createSqlQuery(query);
         List<SqlRow> list = sqlQuery.findList();
         return Results.ok(Json.toJson(list));
     }
 
     public Result medication(String text) {
-		String query = "SELECT STR as label, RXCUI as value  FROM RXNCONSO where STR like '%"+text+"%' ";
+		String query = "SELECT STR as label, CODE as value  FROM medication where STR like '%"+text+"%' ";
         SqlQuery sqlQuery = Ebean.createSqlQuery(query);
         List<SqlRow> list = sqlQuery.findList();
         return Results.ok(Json.toJson(list));
