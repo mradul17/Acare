@@ -458,11 +458,11 @@ $(function() {
          <div class="form-group">
             <label class="col-lg-3 control-label">Blood Pressure</label>
             <div class="col-xs-2">
-              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="blood pressure">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="blood pressure">
               </div>
                <label class="col-lg-3 control-label">Blood glucose</label>
             <div class="col-xs-2">
-              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="Blood glucose">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="Blood glucose">
               </div>
             </div>
           <br>
@@ -470,11 +470,11 @@ $(function() {
          <div class="form-group">
             <label class="col-lg-3 control-label">Pulse Rate</label>
             <div class="col-xs-2">
-              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="Pulse Rate">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="Pulse Rate">
               </div>
                <label class="col-lg-3 control-label">Blood Oxygen Level</label>
             <div class="col-xs-2">
-              <input  type="checkbox" id="check" placeholder="Number" name="reading" value="Blood Oxygen Level">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="Blood Oxygen Level">
               </div>
             </div>
             <br><br>
@@ -518,7 +518,7 @@ $(function() {
             {
               $("#mul").remove();
               $("#free").remove();
-            $("#inputArea").append('<br><br><div id="bool" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-5"><input type="text" class="form-control" name="boolean" placeholder="Question"></div><div class="col-xs-5"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
+            $("#inputArea").append('<br><br><div id="bool" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-5"><input type="text" class="form-control" name="boolean['+counter+'][question]" placeholder="Question"></div><div class="col-xs-5"><label class="radio-inline"><input type="radio" name="boolean['+counter+'][Answer]" value="yes">Yes</label><label class="radio-inline"><input name="boolean['+counter+'][Answer]"" type="radio" value="no">No</label></div></div>');
             counter++;
           }
            if(jobValue=='Multiple' && counter==0)
@@ -544,18 +544,18 @@ $(function() {
               .attr("id", 'formquestion' + number);
               if(document.getElementById('question').value=='Boolean')
                  {  
-newCarePlanDiv.after().html('<br><br><div id="bool" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-5"><input type="text" class="form-control" placeholder="Question"></div><div class="col-xs-5"><label class="radio-inline"><input type="radio" name="optradio">Yes</label><label class="radio-inline"><input type="radio" name="optradio">No</label></div></div>');
+newCarePlanDiv.after().html('<br><br><div id="bool" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-5"><input name="boolean['+counter+'][question]" type="text" class="form-control" placeholder="Question"></div><div class="col-xs-5"><label class="radio-inline"><input type="radio" name="boolean['+counter+'][Answer]" value="yes" >Yes</label><label class="radio-inline"><input name="boolean['+counter+'][Answer]" type="radio" value="no" >No</label></div></div>');
           newCarePlanDiv.appendTo("#questiongroup");
         }
         else if(document.getElementById('question').value=='Multiple')
         {
-            newCarePlanDiv.after().html('<br><br><div id="mul"class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-9"><input type="text" class="form-control" placeholder="Question"/></div></div><label class="col-xs-2" control-label"></label><div class="col-xs-10"><label><input type="checkbox" value=""><input type="text"name="optradio" placeholder="option1"></label><label><input type="checkbox" value=""><input type="text "name="optradio" placeholder="option2"></label><label><input  type="checkbox" value=""><input type="text"name="optradio"placeholder="option3"></label><label><input type="checkbox" value=""><input type="text"name="optradio" placeholder="option4"></label></div>');
+            newCarePlanDiv.after().html('<br><br><div id="mul"class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-9"><input type="text" name="boolean['+counter+'][question]" class="form-control" placeholder="Question"/></div></div><label class="col-xs-2" control-label"></label><div class="col-xs-10"><label><input name="Mcq['+counter+'][Answer]" type="checkbox" value=""></label><input type="text" placeholder="option1"><label><input name="Mcq['+counter+'][Answer]" type="checkbox" value=""></label><input type="text" placeholder="option2"><label><input  type="checkbox" name="Mcq['+counter+'][Answer]" value=""></label><input type="text" placeholder="option3"><label><input name="Mcq['+counter+'][Answer]" type="checkbox" value=""></label><input type="text" placeholder="option4"></div>');
           newCarePlanDiv.appendTo("#questiongroup");
 
         }
         else
         {
-          newCarePlanDiv.after().html('<br><br><div id="free" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><input type="text" class="form-control" placeholder="Question"/></div><div class="col-xs-4"><input type="text" class="form-control" placeholder="Answer"/></div></div>');
+          newCarePlanDiv.after().html('<br><br><div id="free" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><input type="text" name="freetype['+counter+'][question]" class="form-control" placeholder="Question"/></div><div class="col-xs-4"><input type="text" class="form-control" name="freetype['+counter+'][Answer]" placeholder="Answer"/></div></div>');
           newCarePlanDiv.appendTo("#questiongroup");
         }
         counter++;
