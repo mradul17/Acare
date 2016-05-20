@@ -18,8 +18,11 @@ import java.util.List;
 import play.data.Form;
 import play.data.DynamicForm;
 import models.ebeanModel.Careplans;
+import models.ebeanModel.Product;
+import models.ebeanModel.Route;
+import models.ebeanModel.Combine;
 import play.libs.Json;
-
+import java.util.Iterator;
 import com.avaje.ebean.text.json.EJson;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -51,10 +54,29 @@ public class Careplan extends Controller {
     }
 
     public Result save(Long id) throws java.io.IOException{
-		System.out.println("Care save");
 		JsonNode json = request().body().asJson();
-		System.out.println(json);
+
 		String formData = json.toString();
+		System.out.println("----------"+json);
+		//String c = str.toString() + str1.toString();
+		ObjectMapper mapper = new ObjectMapper();
+
+		Combine combine = mapper.readValue(json.get("medicationName").get(0).get("product").toString(), Combine.class);
+		combine = mapper.readValue(json.get("medicationName").get(0).get("route").toString(), Combine.class);
+		/*combine = mapper.readValue(json.get("medicationName").get(0).get("dose").toString(), Combine.class);
+		combine = mapper.readValue(json.get("medicationName").get(0).get("frequency").toString(), Combine.class);
+		combine = mapper.readValue(json.get("medicationName").get(0).get("time").toString(), Combine.class);*/
+		System.out.println("==========="+Json.toJson(combine));
+
+		//combine.save();
+		//Medication medication = mapper.readValue(json.get("medicationName").get(0).toString(), Medication.class);
+		//Medication medication1 = mapper.readValue(str1.toString(), Medication.class);
+/*		Route route = mapper.readValue(str1.toString(), Route.class);
+		Combine obj = new Combine();
+		obj.medication = medication;
+		obj.route = route;*/
+		
+		
 		List<Careplans> list = Ebean.find(Careplans.class)
 		 .select("id")
 		 .where()
@@ -141,9 +163,7 @@ public class Careplan extends Controller {
 	+"},"
 	+"\"Data\": "+json+""
 +"}";
-System.out.println(data);
 		ws.url("https://api.redoxengine.com/endpoint").setHeader("Authorization","Bearer c3773024-b383-4962-ba7c-07a394c5d3ca").setContentType("application/json").post(data);
-		System.out.println("after redox request");
 		return ok(json);
 	}
 }

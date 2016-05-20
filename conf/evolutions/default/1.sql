@@ -10,6 +10,25 @@ create table careplans (
   constraint pk_careplans primary key (id)
 );
 
+create table combine (
+  id                            bigint auto_increment not null,
+  mname                         varchar(255),
+  mcode                         varchar(255),
+  msystemcode                   varchar(255),
+  msystemcodename               varchar(255),
+  rname                         varchar(255),
+  rcode                         varchar(255),
+  rsystemcode                   varchar(255),
+  rsystemcodename               varchar(255),
+  funits                        varchar(255),
+  period                        varchar(255),
+  dunits                        varchar(255),
+  quantity                      varchar(255),
+  startdate                     varchar(255),
+  enddate                       varchar(255),
+  constraint pk_combine primary key (id)
+);
+
 create table doctors (
   id                            bigint auto_increment not null,
   name                          varchar(255),
@@ -91,6 +110,8 @@ alter table practices_doctors drop foreign key fk_practices_doctors_did_id;
 drop index ix_practices_doctors_did_id on practices_doctors;
 
 drop table if exists careplans;
+
+drop table if exists combine;
 
 drop table if exists doctors;
 

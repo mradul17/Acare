@@ -12,5 +12,6 @@ libraryDependencies ++= Seq(
   javaWs,
   "mysql" % "mysql-connector-java" % "5.1.28",
   "org.apache.commons" % "commons-email" % "1.2",
+  "org.json" % "json" % "20160212",
   evolutions
 )
