@@ -19,6 +19,10 @@ public class Combine extends Model {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Long id;
 
+    @ManyToOne
+    @Column(name="did")
+    public Doctors did;
+
     public String mname;
 
     public String mcode;

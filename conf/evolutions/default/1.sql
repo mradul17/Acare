@@ -12,6 +12,7 @@ create table careplans (
 
 create table combine (
   id                            bigint auto_increment not null,
+  did                           bigint,
   mname                         varchar(255),
   mcode                         varchar(255),
   msystemcode                   varchar(255),
