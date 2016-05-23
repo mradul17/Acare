@@ -61,10 +61,13 @@ public class Careplan extends Controller {
 
 		int size = json.get("medicationName").size();
 
+		ObjectNode did = Json.newObject();
+		did.put("id", id);
+
 		for(int i=0;i<size;i++){
 
 			ObjectNode newJson = Json.newObject();
-			newJson.put("did",id);
+			newJson.put("did",did);
 			newJson.putAll((ObjectNode)json.get("medicationName").get(i).get("product"));
 			newJson.putAll((ObjectNode)json.get("medicationName").get(i).get("route"));
 			newJson.putAll((ObjectNode)json.get("medicationName").get(i).get("dose"));
@@ -73,6 +76,7 @@ public class Careplan extends Controller {
 
 			ObjectMapper mapper = new ObjectMapper();
 			Combine combine = mapper.readValue(newJson.toString(), Combine.class);
+			System.out.println("-----------"+Json.toJson(combine));
 			combine.save();
 
 		}

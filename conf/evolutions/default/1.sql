@@ -12,7 +12,7 @@ create table careplans (
 
 create table combine (
   id                            bigint auto_increment not null,
-  did                           bigint,
+  did_id                        bigint,
   mname                         varchar(255),
   mcode                         varchar(255),
   msystemcode                   varchar(255),
@@ -95,6 +95,9 @@ create table practices_doctors (
   constraint pk_practices_doctors primary key (id)
 );
 
+alter table combine add constraint fk_combine_did_id foreign key (did_id) references doctors (id) on delete restrict on update restrict;
+create index ix_combine_did_id on combine (did_id);
+
 alter table practices_doctors add constraint fk_practices_doctors_pid_id foreign key (pid_id) references practices (id) on delete restrict on update restrict;
 create index ix_practices_doctors_pid_id on practices_doctors (pid_id);
 
@@ -103,6 +106,9 @@ create index ix_practices_doctors_did_id on practices_doctors (did_id);
 
 
 # --- !Downs
+
+alter table combine drop foreign key fk_combine_did_id;
+drop index ix_combine_did_id on combine;
 
 alter table practices_doctors drop foreign key fk_practices_doctors_pid_id;
 drop index ix_practices_doctors_pid_id on practices_doctors;
