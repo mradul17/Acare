@@ -20,10 +20,9 @@ public class Careplans extends Model {
     @NotNull
     public String madicationName;
 
-@NotNull
-public Long patientid;
-    
-
+	@NotNull
+	public Long patientid;
+	    
     public static Finder<Long, Careplans> find = new Finder<Long,Careplans>(Careplans.class);
 }
 

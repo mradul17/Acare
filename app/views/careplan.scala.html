@@ -27,7 +27,7 @@
          -moz-background-size: cover;
          -o-background-size: cover;
          background-size: cover;
-         opacity: .7;
+         opacity: .8;
         }
       
       label{
@@ -175,9 +175,9 @@
         
           $("#addButton").click(function () {  
         
-            var newCarePlanDiv = $(document.createElement('div')).attr("id", 'careplan' + counter);
+            var newCarePlanDiv = $(document.createElement('div')).attr("id", 'careplan' + counter).addClass("col-sm-5 col-md-12");
                    
-        newCarePlanDiv.after().html('<div class="form-group" ><div class="col-xs-2"><label>Medicaton</label></div><div class="col-xs-2"><input class="mname form-control" type="text" id="mname'+counter+'" placeholder="Name" name="medicationName['+counter+'][product][mname]"></div><div class="col-xs-2"><input class="mcode form-control " type="text" placeholder="Code" id="mcode'+counter+'" name="medicationName['+counter+'][product][mcode]" readonly></div><div class="col-xs-2"><input class="mcodeSystem form-control" id= "mcodeSystem'+counter+'" type="text" placeholder="CodeSystem" name="medicationName['+counter+'][product][msystemcode]" readonly></div><div class="col-xs-2"><input class="mcodeSystemname form-control" id="mcodeSystemname'+counter+'" type="text" placeholder="CodeSystemName" name="medicationName['+counter+'][product][msystemcodename]" readonly></div></div><div class="form-group" ><div class="col-xs-2"><label>Route:</label></div><div class="col-xs-2"><input class="form-control rname" type="text" placeholder="Name" id="rname'+counter+'" name="medicationName['+counter+'][route][rname]"></div><div class="col-xs-2"><input class="form-control rcode" type="text" placeholder="Code" id="rcode'+counter+'" name="medicationName['+counter+'][route][rcode]" readonly></div><div class="col-xs-2"><input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem'+counter+'" name="medicationName['+counter+'][route][rsystemcode]" readonly></div><div class="col-xs-2"><input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname'+counter+'" name="medicationName['+counter+'][route][rsystemcodename]" readonly></div></div><div class="form-group" ><div class="col-xs-2"><label>Dose:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="medicationName['+counter+'][dose][quantity]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units" id="dunits" name="medicationName['+counter+'][dose][dunits]"></div><div class="col-xs-2"> <label>Start Date:</label></div><div class="col-xs-2"><input class="startdate form-control" type="text" placeholder="Start date" id="startdate" name="medicationName['+counter+'][time][startdate]"></div></div><div class="form-group" ><div class="col-xs-2"><label>Frequency:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Peried" id="fperied" name="medicationName['+counter+'][frequency][period]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units"id="funits" name="medicationName['+counter+'][frequency][funits]"></div> <div class="col-xs-2"><label>End Date:</label></div><div class="col-xs-2"><input class="enddate form-control" type="text" placeholder="End date" id="enddate" name="medicationName['+counter+'][time][enddate]"></div></div>');
+        newCarePlanDiv.after().html('<div class="form-group" ><div class="col-md-1"><label>Medicaton</label></div><div class="col-md-3"><input class="mname form-control" type="text" id="mname'+counter+'" placeholder="Name" name="medicationName['+counter+'][product][mname]"></div><div class="col-md-2"><input class="mcode form-control " type="text" placeholder="Code" id="mcode'+counter+'" name="medicationName['+counter+'][product][mcode]" readonly></div><div class="col-md-2"><input class="mcodeSystem form-control" id= "mcodeSystem'+counter+'" type="text" placeholder="CodeSystem" name="medicationName['+counter+'][product][msystemcode]" readonly></div><div class="col-md-3"><input class="mcodeSystemname form-control" id="mcodeSystemname'+counter+'" type="text" placeholder="CodeSystemName" name="medicationName['+counter+'][product][msystemcodename]" readonly></div></div><div class="form-group" ><div class="col-md-1"><label>Route:</label></div><div class="col-md-3"><input class="form-control rname" type="text" placeholder="Name" id="rname'+counter+'" name="medicationName['+counter+'][route][rname]"></div><div class="col-md-2"><input class="form-control rcode" type="text" placeholder="Code" id="rcode'+counter+'" name="medicationName['+counter+'][route][rcode]" readonly></div><div class="col-md-2"><input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem'+counter+'" name="medicationName['+counter+'][route][rsystemcode]" readonly></div><div class="col-md-3"><input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname'+counter+'" name="medicationName['+counter+'][route][rsystemcodename]" readonly></div></div><div class="form-group" ><div class="col-md-1"><label>Dose:</label></div><div class="col-md-3"><input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="medicationName['+counter+'][dose][quantity]"></div><div class="col-md-2"><input class="form-control" type="text" placeholder="Units" id="dunits" name="medicationName['+counter+'][dose][dunits]"></div><div class="col-md-2"> <label>Start Date:</label></div><div class="col-md-3"><input class="startdate form-control" type="text" placeholder="Start date" id="startdate" name="medicationName['+counter+'][time][startdate]"></div></div><div class="form-group" ><div class="col-md-1"><label>Frequency:</label></div><div class="col-md-3"><input class="form-control" type="text" placeholder="Peried" id="fperied" name="medicationName['+counter+'][frequency][period]"></div><div class="col-md-2"><input class="form-control" type="text" placeholder="Units"id="funits" name="medicationName['+counter+'][frequency][funits]"></div> <div class="col-md-2"><label>End Date:</label></div><div class="col-md-3"><input class="enddate form-control" type="text" placeholder="End date" id="enddate" name="medicationName['+counter+'][time][enddate]"></div></div>');
               
               newCarePlanDiv.appendTo("#CarePlanGroup");
 
@@ -213,6 +213,7 @@
     </script>
 <style type="text/css">
   .ui-autocomplete { max-height: 200px; overflow-y: auto; overflow-x: hidden;}
+
 </style>
 
 
@@ -355,82 +356,86 @@ $(function() {
       <!-- left column -->
      
       <!-- edit form column -->
-      <div class="col-xs-20 ">
+      <div class="col-md-20 ">
         
         <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medication Prescription</h3>
         <br>
 <form  class="form-horizontal" role="form" id="CreateCareplan" >
 
       <div id='CarePlanGroup' >
-        <div id="careplan" >
-         <div class="form-group" >
-              <div class="col-xs-2">
-               <label>Medicaton</label>
-              </div>
-              <div class="col-xs-2">
+        <div id="careplan" class="col-sm-5 col-md-12">
+
+          <div class="form-group" >
+
+            <div class="col-md-1">
+               <label>Medicaton:</label>
+            </div>
+              <div class="col-md-3">
                 <input class="mname form-control" value="sad" type="text" placeholder="Name" id="mname" name="medicationName[0][product][mname]" value="aspirin" >
               </div>  
-              <div class="col-xs-2">
+              <div class="col-md-2 ">
                 <input class="mcode form-control " type="text" value="c123" placeholder="Code" id="mcode" name="medicationName[0][product][mcode]" readonly>
               </div>  
-              <div class="col-xs-2">
-                <input class="mcodeSystem form-control" type="text" value="12.3213.2" placeholder="CodeSystem" id="mcodeSystem" name="medicationName[0][product][msystemcode]" readonly>
-              </div>  
-              <div class="col-xs-2">
+                
+              <div class="col-md-2">
                 <input class="mcodeSystemname form-control" type="text" value="rxnorm" id="mcodeSystemname" placeholder="CodeSystemName" name="medicationName[0][product][msystemcodename]" readonly>
-              </div>  
+              </div> 
+              <div class="col-md-3">
+                <input class="mcodeSystem form-control" type="text" value="2.16.840.1.113883.3.26.1.1" placeholder="CodeSystem" id="mcodeSystem" name="medicationName[0][product][msystemcode]" readonly>
+              </div> 
        </div>
         <div class="form-group" >
-             <div class="col-xs-2">
+             <div class="col-md-1">
                <label>Route:</label>
               </div>
-              <div class="col-xs-2">
+              <div class="col-md-3">
                 <input class="form-control rname" type="text" value="oral" placeholder="Name" id="rname" name="medicationName[0][route][rname]">
               </div>
-               <div class="col-xs-2">
+               <div class="col-md-2">
                 <input class="form-control rcode" type="text" value="12324" placeholder="Code" id="rcode" name="medicationName[0][route][rcode]" readonly>
               </div>
-               <div class="col-xs-2">
-           <input class="form-control rcodeSystem" type="text" value="2323.23.21" placeholder="CodeSystem" id="rcodeSystem" name="medicationName[0][route][rsystemcode]" readonly>
-              </div>
-               <div class="col-xs-2">
+               
+               <div class="col-md-2">
                 <input class="form-control rcodeSystemname" type="text" value="RxNorm" placeholder="Codesystemname" id="rcodeSystemname" name="medicationName[0][route][rsystemcodename]" readonly>
+              </div>
+              <div class="col-md-3">
+           <input class="form-control rcodeSystem" type="text" value="2323.23.21" placeholder="CodeSystem" id="rcodeSystem" name="medicationName[0][route][rsystemcode]" readonly>
               </div>
       </div>
       <div class="form-group" >
-              <div class="col-xs-2">
+              <div class="col-md-1">
                <label>Dose:</label>
               </div>
-              <div class="col-xs-2">
+              <div class="col-md-3">
                 <input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="medicationName[0][dose][quantity]">
               </div>
-              <div class="col-xs-2">
+              <div class="col-md-2">
                 <input class="form-control" type="text" placeholder="Units" id="dunits" name="medicationName[0][dose][dunits]">
               </div>
-              <div class="col-xs-2">
+              <div class="col-md-2">
                  <label>Start Date:</label>
               </div>
-              <div class="col-xs-2">
+              <div class="col-md-3">
                <input class="startdate form-control" type="text" placeholder="Start date" id="startdate" name="medicationName[0][time][startdate]">
 
               </div>
        </div>
 
 <div class="form-group" >
-              <div class="col-xs-2">
+              <div class="col-md-1">
                <label>Frequency:</label>
               </div>
-              <div class="col-xs-2">
+              <div class="col-md-3">
                 <input class="form-control" type="text" placeholder="Peried" id="fperied" name="medicationName[0][frequency][period]">
               </div>
-              <div class="col-xs-2">
+              <div class="col-md-2">
                 <input class="form-control" type="text" placeholder="Units" 
                 id="funits" name="medicationName[0][frequency][funits]">
               </div>
-              <div class="col-xs-2">
+              <div class="col-md-2">
                 <label>End Date:</label>
               </div>
-              <div class="col-xs-2">
+              <div class="col-md-3">
                 <input class=" enddate form-control" type="text" placeholder="End date"
                 id="enddate" name="medicationName[0][time][enddate]">
               </div>
@@ -439,51 +444,46 @@ $(function() {
         </div>
       </div>
 
-        <br>
+        <div class="form-group col-md-12">
+         <div class="col-md-9"></div>
+          <div class="col-md-2"><p class="text-right">
+          <button type='button' class="btn btn-primary btn-md" id='addButton'><span class="glyphicon glyphicon-plus"></span></button>
+          <button type='button' class="btn btn-primary btn-md" id='removeButton'><span class="glyphicon glyphicon-minus"></span></button></p>
+        </div>
+        </div>
+
         <div class="form-group">
-         <label class="col-lg-1 control-label"></label>
-          <div class="col-xs-3">
-          <button type='button' class="btn btn-info btn-sm" value='Add medication' id='addButton'><span class="glyphicon glyphicon-plus"></span>Add</button>&nbsp;&nbsp;&nbsp;&nbsp;
-          <button type='button' class="btn btn-info btn-sm" value='Remove medication' id='removeButton'><span class="glyphicon glyphicon-minus"></span>Remove</button>
-        </div>
+        <div class="col-md-3"><p class="text-left" style="color:black; font-size: 20px ">Vitals Measurement:</p></div>
         </div>
 
-
-
-
-            <br>
-             <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Vitals Measurement</h3>
-        <br>
-
-         <div class="form-group">
-            <label class="col-lg-3 control-label">Blood Pressure</label>
-            <div class="col-xs-2">
+         <div class="form-group col-md-12">
+         
+            <div class="col-md-2">
               <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="blood pressure">
-              </div>
-               <label class="col-lg-3 control-label">Blood glucose</label>
-            <div class="col-xs-2">
+              <label>Blood Pressure</label>
+            </div>
+            <div class="col-md-2">
               <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="Blood glucose">
+              <label>Blood glucose</label>
               </div>
-            </div>
-          <br>
-        
-         <div class="form-group">
-            <label class="col-lg-3 control-label">Pulse Rate</label>
-            <div class="col-xs-2">
+
+            <div class="col-md-2">
               <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="Pulse Rate">
-              </div>
-               <label class="col-lg-3 control-label">Blood Oxygen Level</label>
-            <div class="col-xs-2">
-              <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="Blood Oxygen Level">
-              </div>
+              <label>Pulse Rate</label>
             </div>
-            <br><br>
-            <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Free Form Question</h3>
-        <br>
+            <div class="col-md-3">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="Blood Oxygen Level">
+              <label>Blood Oxygen Level</label>
+              </div>
+          </div>
+
+        <div class="form-group">
+        <div class="col-md-4"><p class="text-left" style="color:black; font-size: 20px ">Free Form Questions:</p></div>
+        </div>
         
              <div class="form-group">
-             <label class="col-lg-3 control-label">Select Question Type:</label>
-              <div class="col-xs-2">
+             <label class="col-lg-2">Select Question Type:</label>
+              <div class="col-md-2">
           <select class="form-control" id="question">
             <option>Choice Type</option>
             <option>Boolean</option>
@@ -503,7 +503,7 @@ $(function() {
         </div>
         <div class="form-group">
        <label class="col-lg-1 control-label"></label>
-          <div class="col-xs-3">
+          <div class="col-md-3">
           <button type='button' class="btn btn-info btn-sm" value='Add medication' id='addquestion'><span class="glyphicon glyphicon-plus"></span>Add Question</button>&nbsp;&nbsp;&nbsp;&nbsp;
           <button type='button' class="btn btn-info btn-sm" value='Remove question' id='removequestion'><span class="glyphicon glyphicon-minus"></span>Remove Question</button>          </div>
             </div>
@@ -521,8 +521,8 @@ $(function() {
               $("#free").remove();
             $("#inputArea").append('<br><br>'+
               '<div id="bool" class="form-group">'+
-                '<label class="col-xs-2" control-label"></label>'+
-                '<div class="col-xs-5">'+
+                '<label class="col-md-2" control-label"></label>'+
+                '<div class="col-md-5">'+
                   '<input type="text" class="form-control" name="boolean['+counter+'][question][]" placeholder="Question">'+
                 '</div>'+
               '</div>');
@@ -534,13 +534,13 @@ $(function() {
               $("#bool").remove();
             $("#inputArea").append('<br><br>'+
 '<div class="form-group">'+
-  '<label class="col-xs-2" control-label"></label>'+
-  '<div class="col-xs-9">'+
+  '<label class="col-md-2" control-label"></label>'+
+  '<div class="col-md-9">'+
     '<input type="text" name="Mcq['+counter+'][question][]" class="form-control" placeholder="Question"/>'+
   '</div>'+
 '</div>'+
-'<label class="col-xs-2" control-label"></label>'+
-'<div class="col-xs-10">'+
+'<label class="col-md-2" control-label"></label>'+
+'<div class="col-md-10">'+
   '<input name="Mcq['+counter+'][choice][0][index]" hidden type="text" value="0">'+
   '<input name="Mcq['+counter+'][choice][0][value]" type="text" placeholder="option1">'+
   '<input name="Mcq['+counter+'][choice][1][index]" hidden type="text" value="1">'+
@@ -556,7 +556,7 @@ $(function() {
             {
               $("#bool").remove();
               $("#mul").remove();
-            $("#inputArea").append('<br><br><div id="free" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><input name="freetype['+counter+'][question][]" type="text" class="form-control" placeholder="Question"/></div></div>');
+            $("#inputArea").append('<br><br><div id="free" class="form-group"><label class="col-md-2" control-label"></label><div class="col-md-4"><input name="freetype['+counter+'][question][]" type="text" class="form-control" placeholder="Question"/></div></div>');
             counter++;
           }
 
@@ -568,20 +568,20 @@ $(function() {
               .attr("id", 'formquestion' + number);
               if(document.getElementById('question').value=='Boolean')
                  {  
-newCarePlanDiv.after().html('<br><br><div id="bool" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-5"><input name="boolean['+counter+'][question][]" type="text" class="form-control" placeholder="Question"></div></div></div>');
+newCarePlanDiv.after().html('<br><br><div id="bool" class="form-group"><label class="col-md-2" control-label"></label><div class="col-md-5"><input name="boolean['+counter+'][question][]" type="text" class="form-control" placeholder="Question"></div></div></div>');
           newCarePlanDiv.appendTo("#questiongroup");
         }
         else if(document.getElementById('question').value=='Multiple')
         {
             newCarePlanDiv.after().html('<br><br>'+
 '<div class="form-group">'+
-  '<label class="col-xs-2" control-label"></label>'+
-  '<div class="col-xs-9">'+
+  '<label class="col-md-2" control-label"></label>'+
+  '<div class="col-md-9">'+
     '<input type="text" name="Mcq['+counter+'][question][]" class="form-control" placeholder="Question"/>'+
   '</div>'+
 '</div>'+
-'<label class="col-xs-2" control-label"></label>'+
-'<div class="col-xs-10">'+
+'<label class="col-md-2" control-label"></label>'+
+'<div class="col-md-10">'+
   '<input name="Mcq['+counter+'][choice][0][index]" hidden type="text" value="0">'+
   '<input name="Mcq['+counter+'][choice][0][value]" type="text" placeholder="option1">'+
   '<input name="Mcq['+counter+'][choice][1][index]" hidden type="text" value="1">'+
@@ -596,11 +596,11 @@ newCarePlanDiv.after().html('<br><br><div id="bool" class="form-group"><label cl
         }
         else
         {
-          newCarePlanDiv.after().html('<br><br><div id="free" class="form-group"><label class="col-xs-2" control-label"></label><div class="col-xs-4"><input type="text" name="freetype['+counter+'][question][]" class="form-control" placeholder="Question"/></div></div>');
+          newCarePlanDiv.after().html('<br><br><div id="free" class="form-group"><label class="col-md-2" control-label"></label><div class="col-md-4"><input type="text" name="freetype['+counter+'][question][]" class="form-control" placeholder="Question"/></div></div>');
           newCarePlanDiv.appendTo("#questiongroup");
         }
         counter++;
-      number++; 
+        number++; 
        //alert(number);
         });
 
@@ -618,8 +618,8 @@ newCarePlanDiv.after().html('<br><br><div id="bool" class="form-group"><label cl
         </script>
             <br>
              <div class="form-group">
-            <label class="col-xs-3 control-label"></label>
-            <div class="col-xs-8">
+            <label class="col-md-3 control-label"></label>
+            <div class="col-md-8">
             
               <input type="submit" id="jsondata" class="btn btn-info" value="submit"> 
               

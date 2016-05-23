@@ -7,8 +7,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.validation.constraints.NotNull;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.avaje.ebean.Model;
+import javax.persistence.FetchType;
 
 import java.util.Date;
 
@@ -20,8 +21,10 @@ public class Combine extends Model {
     public Long id;
 
     @ManyToOne
-    @Column(name="did")
     public Doctors did;
+
+    @ManyToOne
+    public Patients pid;
 
     public String mname;
 
@@ -50,4 +53,7 @@ public class Combine extends Model {
     public String startdate;
 
     public String enddate; 
+
+    @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP")
+    public Date updateAt;
 }

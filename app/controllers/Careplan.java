@@ -12,14 +12,12 @@ import javax.inject.Inject;
 import com.avaje.ebean.SqlQuery;
 import com.avaje.ebean.SqlRow;
 import com.avaje.ebean.Ebean;
-
+import play.mvc.Http.Context;
 import java.util.List;
 
 import play.data.Form;
 import play.data.DynamicForm;
 import models.ebeanModel.Careplans;
-import models.ebeanModel.Product;
-import models.ebeanModel.Route;
 import models.ebeanModel.Combine;
 import play.libs.Json;
 import java.util.Iterator;
@@ -61,13 +59,19 @@ public class Careplan extends Controller {
 
 		int size = json.get("medicationName").size();
 
+		// patient id
+		ObjectNode pid = Json.newObject();
+		pid.put("id", id);
+
+		// doctor id
 		ObjectNode did = Json.newObject();
-		did.put("id", id);
+		did.put("id", ctx().session().get("id"));
 
 		for(int i=0;i<size;i++){
 
 			ObjectNode newJson = Json.newObject();
 			newJson.put("did",did);
+			newJson.put("pid",pid);
 			newJson.putAll((ObjectNode)json.get("medicationName").get(i).get("product"));
 			newJson.putAll((ObjectNode)json.get("medicationName").get(i).get("route"));
 			newJson.putAll((ObjectNode)json.get("medicationName").get(i).get("dose"));
@@ -87,7 +91,6 @@ public class Careplan extends Controller {
 		 .where()
 		 .eq("patientid",id)
           	.findList();
-		//Careplans careplan = new Careplans();
           	if(list.isEmpty())
           	{
           		Careplans careplan = new Careplans();

@@ -13,6 +13,7 @@ create table careplans (
 create table combine (
   id                            bigint auto_increment not null,
   did_id                        bigint,
+  pid_id                        bigint,
   mname                         varchar(255),
   mcode                         varchar(255),
   msystemcode                   varchar(255),
@@ -27,6 +28,7 @@ create table combine (
   quantity                      varchar(255),
   startdate                     varchar(255),
   enddate                       varchar(255),
+  update_at                     TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   constraint pk_combine primary key (id)
 );
 
@@ -95,8 +97,21 @@ create table practices_doctors (
   constraint pk_practices_doctors primary key (id)
 );
 
+create table question (
+  question_number               bigint auto_increment not null,
+  question_type                 varchar(255),
+  question                      varchar(255),
+  depend_on_previous_question_question_number bigint,
+  previous_question_answer_should_be varchar(255),
+  choice                        varchar(255),
+  constraint pk_question primary key (question_number)
+);
+
 alter table combine add constraint fk_combine_did_id foreign key (did_id) references doctors (id) on delete restrict on update restrict;
 create index ix_combine_did_id on combine (did_id);
+
+alter table combine add constraint fk_combine_pid_id foreign key (pid_id) references patients (id) on delete restrict on update restrict;
+create index ix_combine_pid_id on combine (pid_id);
 
 alter table practices_doctors add constraint fk_practices_doctors_pid_id foreign key (pid_id) references practices (id) on delete restrict on update restrict;
 create index ix_practices_doctors_pid_id on practices_doctors (pid_id);
@@ -104,17 +119,26 @@ create index ix_practices_doctors_pid_id on practices_doctors (pid_id);
 alter table practices_doctors add constraint fk_practices_doctors_did_id foreign key (did_id) references doctors (id) on delete restrict on update restrict;
 create index ix_practices_doctors_did_id on practices_doctors (did_id);
 
+alter table question add constraint fk_question_depend_on_previous_question_question_number foreign key (depend_on_previous_question_question_number) references question (question_number) on delete restrict on update restrict;
+create index ix_question_depend_on_previous_question_question_number on question (depend_on_previous_question_question_number);
+
 
 # --- !Downs
 
 alter table combine drop foreign key fk_combine_did_id;
 drop index ix_combine_did_id on combine;
 
+alter table combine drop foreign key fk_combine_pid_id;
+drop index ix_combine_pid_id on combine;
+
 alter table practices_doctors drop foreign key fk_practices_doctors_pid_id;
 drop index ix_practices_doctors_pid_id on practices_doctors;
 
 alter table practices_doctors drop foreign key fk_practices_doctors_did_id;
 drop index ix_practices_doctors_did_id on practices_doctors;
+
+alter table question drop foreign key fk_question_depend_on_previous_question_question_number;
+drop index ix_question_depend_on_previous_question_question_number on question;
 
 drop table if exists careplans;
 
@@ -129,4 +153,6 @@ drop table if exists patients;
 drop table if exists practices;
 
 drop table if exists practices_doctors;
+
+drop table if exists question;
 
