@@ -492,116 +492,149 @@ $(function() {
           </select>
          </div>
          <div class="col-xs-3">
-          <button type='button' class="btn btn-info btn-sm" value='Add medication' id='addquestion'><span class="glyphicon glyphicon-plus"></span>Add Question</button>&nbsp;&nbsp;&nbsp;&nbsp;
-          <button type='button' class="btn btn-info btn-sm" value='Remove question' id='removequestion'><span class="glyphicon glyphicon-minus"></span>Remove Question</button>          </div>
-        </div>
-        <div id="questiongroup">
-        <div id="formquestion0">
-        <div class="form-group">
-  
-            <div id="inputArea">
+          <button type='button' class="btn btn-info btn-sm" value='Add medication' 
+          id="addquestion"><span class="glyphicon glyphicon-plus"></span>Add Question</button>&nbsp;&nbsp;&nbsp;&nbsp;
+          <button type='button' class="btn btn-info btn-sm" value='Remove question' id='removequestion'>
+            <span class="glyphicon glyphicon-minus"></span>Remove Question</button>          
             </div>
         </div>
-        </div>
+        <div id="questiongroup">
+
         </div>
 
         <script type="text/javascript">
-         var number=1;
-         var counter=0;
-         var counter2=1;
-$("#addquestion").click(function () {  
-        
-    var newCarePlanDiv = $(document.createElement('div'))
-      .attr("id", 'formquestion' + number);
-    if(document.getElementById('question').value=='Boolean')
-        {  
 
-          newCarePlanDiv.after().html('<div id="bool" class="form-group"><label class="col-xs-2" control-label" style=text-align:right;>'+(counter+1)+'</label><div class="col-xs-5"><input name="boolean['+counter+'][question][]" type="text" class="form-control" placeholder="Boolean Question"></div></div></div>');
+  var qN = 0;
+  var bQC = 0;
+  var mQC = 0;
+  var fQC = 0;
+  var cN = [];
+  $("#addquestion").click(function () {
+    
+    var newCarePlanDiv = $(document.createElement('div'))
+        .attr("id", 'questionNumber' + qN);
+
+    if(document.getElementById('question').value == 'Boolean'){
+
+      newCarePlanDiv.after().html(
+        '<div id = "bool" class = "form-group col-md-7">'+
+          '<label class = "col-md-2 control-label" style = "text-align:right;">'+(qN+1)+'</label>'+
+          '<div class = "col-md-5">'+
+            '<input id="bQC" name = "booleanQuestion[][question]" type = "text" class = "form-control" placeholder = "Boolean Question">'+
+          '</div>'+
+        '</div>'
+      );
+
+      newCarePlanDiv.appendTo("#questiongroup");
+      $("#removequestion").val("bQC");
+      bQC++;
+    }
+
+    else if(document.getElementById('question').value=='Multiple') {
+
+      newCarePlanDiv.after().html(
+            '<div class = "form-group">'+
+                '<label class = "col-xs-2" control-label" style = "text-align:right;">'+(qN+1)+'</label>'+
+                '<div class = "col-xs-7">'+
+                  '<input id="mQC" type = "text" name = "mcq['+mQC+'][question]" class = "form-control" placeholder = "Multiple choice question"/>'+
+                '</div>'+
+            '</div>'+
+            '<div id = "optiongroup'+mQC+'" >'+
+              '<div class = "form-group">'+
+                '<label class = "col-xs-2" control-label"></label>'+
+                '<div class = "col-xs-2">'+
+                    '<input name = "mcq['+mQC+'][choice][0][index]" type = "text" value = "0" hidden>'+
+                    '<input name = "mcq['+mQC+'][choice][0][value]" type = "text" class = "form-control" placeholder = "Choice-1">'+
+                  '</div>'+
+                  '<button type = "button" class = "btn btn-default addchoice" value = "'+mQC+'" id = "addchoice">'+
+                    '<span class = "glyphicon glyphicon-plus"></span>'+
+                  '</button>'+
+                  '<button type="button" id="removechoice" value= "'+mQC+'" class="btn btn-default removechoice">'+
+                    '<span class="glyphicon glyphicon-minus"></span>'+
+                  '</button>'+
+                '</div>'+
+              '</div>'
+          );
 
           newCarePlanDiv.appendTo("#questiongroup");
-        }
+          $("#removequestion").val("mQC");
+          cN[mQC] = 0;
+          mQC++; 
+    }
 
-      else if(document.getElementById('question').value=='Multiple')
-        {
+    else {
 
-        newCarePlanDiv.after().html(
-          '<div class="form-group">'+
+      newCarePlanDiv.after().html(
+        '<div id = "free" class = "form-group">'+
+                '<label class = "col-xs-2" control-label" style="text-align:right;">'+(qN+1)+'</label>'+
+                '<div class = "col-xs-4">'+
+                  '<input id="fQC" type = "text" name = "freeQuestion[][question]" class = "form-control" placeholder = "Question"/>'+
+                '</div>'+
+              '</div>'
+          );
 
-          '<label class="col-xs-2" control-label" style=text-align:right;>'+(counter+1)+'</label>'+
-          '<div class="col-xs-7">'+
-            '<input type="text" name="Mcq['+counter+'][question][]" class="form-control" placeholder="Multiple choice question"/>'+
-          '</div>'+
-        '</div>'+
-        '<div id="optiongroup'+counter+'" >'+
-        '<div class="form-group">'+
+          newCarePlanDiv.appendTo("#questiongroup");
+          $("#removequestion").val("fQC");
+          fQC++;
+    }
+    qN++;
+  });
+  $("#removequestion").click(function () {
+    
+      if(qN == 0){
+          alert("No more question to remove");
+          return false;
+      }   
+      qN--;
+      var id = $("#questionNumber"+qN).find('input:text').attr("id");
+      if(id=="bQC"){
+        bQC--;
+      }
+      else if(id=="mQC"){
+        mQC--;
+      }
+      else{
+        fQC--;
+      }
+      $("#removequestion").val(id);
+      $('#questionNumber'+qN).remove();
+      
+  });
+
+    $("body").on('click',".addchoice" , function() {
+
+    var gN = $(this).val();
+    cN[gN]++;
+    $('#optiongroup'+ gN).append(
+      '<div class="form-group">'+
         '<label class="col-xs-2" control-label"></label>'+
         '<div class="col-xs-2">'+
-          '<input name="Mcq['+counter+'][choice][0][index]" type="text" value="'+counter2+'" hidden>'+
-          '<input name="Mcq['+counter+'][choice][0][value]" type="text" class="form-control" placeholder="Choice'+counter2+'">'+
+          '<input name="mcq['+gN+'][choice]['+cN[gN]+'][index]" type="text" value="'+cN[gN]+'" hidden>'+
+          '<input name="mcq['+gN+'][choice]['+cN[gN]+'][value]" type="text" class="form-control" placeholder="choice-'+(cN[gN]+1)+'">'+
           '</div>'+
-          '<button type="button" class="btn btn-default addchoice" value="'+counter+'" id="addchoice"><span class="glyphicon glyphicon-plus"></span></button>'+
-          '</div></div>');
+        '</div>'
+      );
+  });
 
-        newCarePlanDiv.appendTo("#questiongroup");
-
-      }
-      else {
-
-          newCarePlanDiv.after().html('<div id="free" class="form-group">'+
-            '<label class="col-xs-2" control-label" style=text-align:right;>'+(counter+1)+'</label><div class="col-xs-4">'+
-            '<input type="text" name="freetype['+counter+'][question][]" class="form-control" placeholder="Question"/></div></div>');
-
-          newCarePlanDiv.appendTo("#questiongroup");
-        }
-
-        counter++;
-        number++; 
-        });
-
-
-        $("#removequestion").click(function () {
-          if(counter==0){
-            alert("No more question to remove");
-            return false;
-          }   
-            
-          number--;
-          counter--;
-          $('#formquestion'+number).remove();  
-        });
-
-
-
-  $("body").on('click',".addchoice" , function() {
-   $('#optiongroup'+$(this).val()).append('<div class="form-group">'+
-'<label class="col-xs-2" control-label"></label>'+
-'<div class="col-xs-2">'+
-'<input name="Mcq['+counter+'][choice][0][index]" type="text" value="'+counter2+'" hidden>'+
-'<input name="Mcq['+counter+'][choice][0][value]" type="text" class="form-control" placeholder="choice'+counter2+'">'+
-  '</div>'+
-  '<button type="button" id="removechoice" class="btn btn-default removechoice"><span class="glyphicon glyphicon-minus"></span></button>'+
-  '</div>');
-               counter2++;
-        });
-
-
-   $("body").on('click',".removechoice", function() { 
-                        $(this).parent('div').remove();
-        });
-
-
-
-
-        </script>
-            
+$("body").on('click',".removechoice", function() { 
+  var gN = $(this).val();
+  if(cN[gN]==0){
+    alert("can't remove");
+    return false;
+  }
+  cN[gN]--;
+  $("#optiongroup"+gN).children("div:last").remove();
+});
+</script>
+ <br>
              <div class="form-group">
-            <label class="col-xs-1 control-label"></label>
-           
+            <label class="col-xs-3 control-label"></label>
+            <div class="col-xs-8">
               <input type="submit" id="jsondata" class="btn btn-info" value="submit"> 
               
-            
+             &nbsp;&nbsp;&nbsp;&nbsp;
               <input type="reset" class="btn btn-info" value="Reset">
-          
+            </div>
           </div>
             </form>
            

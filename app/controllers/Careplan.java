@@ -35,7 +35,6 @@ public class Careplan extends Controller {
     public Result careplan(Long id) {
 		System.out.println("CarePlan");
 		return Results.ok(views.html.careplan.render(id));
-		//return Results.ok(views.html.careplan.render());
     }
 
     public Result route(String text) {
@@ -58,6 +57,9 @@ public class Careplan extends Controller {
 		String formData = json.toString();
 
 		int size = json.get("medicationName").size();
+		int booleanQuestionSize = json.get("booleanQuestion").size();
+		int multipleChoiceQuestionSize = json.get("mcq").size();
+		int freeQuestionsize = json.get("freeQuestion").size();
 
 		// patient id
 		ObjectNode pid = Json.newObject();
@@ -85,6 +87,7 @@ public class Careplan extends Controller {
 
 		}
 
+		int bsize = json.get("booleanQuestion").size();
 		
 		List<Careplans> list = Ebean.find(Careplans.class)
 		 .select("id")
