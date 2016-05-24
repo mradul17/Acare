@@ -19,6 +19,7 @@ import play.data.Form;
 import play.data.DynamicForm;
 import models.ebeanModel.Careplans;
 import models.ebeanModel.Combine;
+import models.ebeanModel.Question;
 import play.libs.Json;
 import java.util.Iterator;
 import com.avaje.ebean.text.json.EJson;
@@ -87,7 +88,44 @@ public class Careplan extends Controller {
 
 		}
 
-		int bsize = json.get("booleanQuestion").size();
+		for(int i = 0; i < booleanQuestionSize; i++) {
+
+			ObjectNode newJson = Json.newObject();
+			newJson.put("did",did);
+			newJson.put("pid",pid);
+			newJson.putAll((ObjectNode)json.get("booleanQuestion").get(i).get("question"));
+
+			ObjectMapper mapper = new ObjectMapper();
+			Question booleanQuestion = mapper.readValue(newJson.toString(), Question.class);
+			System.out.println("-----------"+Json.toJson(booleanQuestion));
+			booleanQuestion.save();
+		}
+
+		for(int i = 0; i < multipleChoiceQuestionSize; i++) {
+
+			ObjectNode newJson = Json.newObject();
+			newJson.put("did",did);
+			newJson.put("pid",pid);
+			newJson.putAll((ObjectNode)json.get("mcq").get(i).get("question"));
+
+			ObjectMapper mapper = new ObjectMapper();
+			Question multipleChoiceQuestion = mapper.readValue(newJson.toString(), Question.class);
+			System.out.println("-----------"+Json.toJson(multipleChoiceQuestion));
+			multipleChoiceQuestion.save();
+		}
+
+		for(int i = 0; i < freeQuestionsize; i++) {
+
+			ObjectNode newJson = Json.newObject();
+			newJson.put("did",did);
+			newJson.put("pid",pid);
+			newJson.putAll((ObjectNode)json.get("freeQuestion").get(i).get("question"));
+			
+			ObjectMapper mapper = new ObjectMapper();
+			Question freeQuestion = mapper.readValue(newJson.toString(), Question.class);
+			System.out.println("-----------"+Json.toJson(freeQuestion));
+			freeQuestion.save();
+		}
 		
 		List<Careplans> list = Ebean.find(Careplans.class)
 		 .select("id")

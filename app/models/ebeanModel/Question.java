@@ -19,6 +19,12 @@ public class Question extends Model {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     public Long questionNumber;
 
+    @ManyToOne
+    public Doctors did;
+
+    @ManyToOne
+    public Patients pid;
+
     public String questionType;
 
     public String question;

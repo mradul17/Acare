@@ -99,6 +99,8 @@ create table practices_doctors (
 
 create table question (
   question_number               bigint auto_increment not null,
+  did_id                        bigint,
+  pid_id                        bigint,
   question_type                 varchar(255),
   question                      varchar(255),
   depend_on_previous_question_question_number bigint,
@@ -119,6 +121,12 @@ create index ix_practices_doctors_pid_id on practices_doctors (pid_id);
 alter table practices_doctors add constraint fk_practices_doctors_did_id foreign key (did_id) references doctors (id) on delete restrict on update restrict;
 create index ix_practices_doctors_did_id on practices_doctors (did_id);
 
+alter table question add constraint fk_question_did_id foreign key (did_id) references doctors (id) on delete restrict on update restrict;
+create index ix_question_did_id on question (did_id);
+
+alter table question add constraint fk_question_pid_id foreign key (pid_id) references patients (id) on delete restrict on update restrict;
+create index ix_question_pid_id on question (pid_id);
+
 alter table question add constraint fk_question_depend_on_previous_question_question_number foreign key (depend_on_previous_question_question_number) references question (question_number) on delete restrict on update restrict;
 create index ix_question_depend_on_previous_question_question_number on question (depend_on_previous_question_question_number);
 
@@ -136,6 +144,12 @@ drop index ix_practices_doctors_pid_id on practices_doctors;
 
 alter table practices_doctors drop foreign key fk_practices_doctors_did_id;
 drop index ix_practices_doctors_did_id on practices_doctors;
+
+alter table question drop foreign key fk_question_did_id;
+drop index ix_question_did_id on question;
+
+alter table question drop foreign key fk_question_pid_id;
+drop index ix_question_pid_id on question;
 
 alter table question drop foreign key fk_question_depend_on_previous_question_question_number;
 drop index ix_question_depend_on_previous_question_question_number on question;
