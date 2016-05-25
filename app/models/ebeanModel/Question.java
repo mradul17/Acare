@@ -17,6 +17,8 @@ public class Question extends Model {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
+    public Long id;
+
     public Long questionNumber;
 
     @ManyToOne
@@ -29,10 +31,9 @@ public class Question extends Model {
 
     public String question;
 
-    @ManyToOne
-    public Question dependOnPreviousQuestion;
+    public String dependOnPreviousQuestion;
 
     public String previousQuestionAnswerShouldBe;
 
-    public String choice;
+    public String choices;
 }

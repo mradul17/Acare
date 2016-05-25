@@ -3,14 +3,14 @@
 
 # --- !Ups
 
-create table careplans (
+create table careplan_in_json (
   id                            bigint auto_increment not null,
   madication_name               varchar(1000) not null,
   patientid                     bigint not null,
-  constraint pk_careplans primary key (id)
+  constraint pk_careplan_in_json primary key (id)
 );
 
-create table combine (
+create table careplans (
   id                            bigint auto_increment not null,
   did_id                        bigint,
   pid_id                        bigint,
@@ -29,7 +29,7 @@ create table combine (
   startdate                     varchar(255),
   enddate                       varchar(255),
   update_at                     TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  constraint pk_combine primary key (id)
+  constraint pk_careplans primary key (id)
 );
 
 create table doctors (
@@ -98,22 +98,23 @@ create table practices_doctors (
 );
 
 create table question (
-  question_number               bigint auto_increment not null,
+  id                            bigint auto_increment not null,
+  question_number               bigint,
   did_id                        bigint,
   pid_id                        bigint,
   question_type                 varchar(255),
   question                      varchar(255),
-  depend_on_previous_question_question_number bigint,
+  depend_on_previous_question   varchar(255),
   previous_question_answer_should_be varchar(255),
-  choice                        varchar(255),
-  constraint pk_question primary key (question_number)
+  choices                       varchar(255),
+  constraint pk_question primary key (id)
 );
 
-alter table combine add constraint fk_combine_did_id foreign key (did_id) references doctors (id) on delete restrict on update restrict;
-create index ix_combine_did_id on combine (did_id);
+alter table careplans add constraint fk_careplans_did_id foreign key (did_id) references doctors (id) on delete restrict on update restrict;
+create index ix_careplans_did_id on careplans (did_id);
 
-alter table combine add constraint fk_combine_pid_id foreign key (pid_id) references patients (id) on delete restrict on update restrict;
-create index ix_combine_pid_id on combine (pid_id);
+alter table careplans add constraint fk_careplans_pid_id foreign key (pid_id) references patients (id) on delete restrict on update restrict;
+create index ix_careplans_pid_id on careplans (pid_id);
 
 alter table practices_doctors add constraint fk_practices_doctors_pid_id foreign key (pid_id) references practices (id) on delete restrict on update restrict;
 create index ix_practices_doctors_pid_id on practices_doctors (pid_id);
@@ -127,17 +128,14 @@ create index ix_question_did_id on question (did_id);
 alter table question add constraint fk_question_pid_id foreign key (pid_id) references patients (id) on delete restrict on update restrict;
 create index ix_question_pid_id on question (pid_id);
 
-alter table question add constraint fk_question_depend_on_previous_question_question_number foreign key (depend_on_previous_question_question_number) references question (question_number) on delete restrict on update restrict;
-create index ix_question_depend_on_previous_question_question_number on question (depend_on_previous_question_question_number);
-
 
 # --- !Downs
 
-alter table combine drop foreign key fk_combine_did_id;
-drop index ix_combine_did_id on combine;
+alter table careplans drop foreign key fk_careplans_did_id;
+drop index ix_careplans_did_id on careplans;
 
-alter table combine drop foreign key fk_combine_pid_id;
-drop index ix_combine_pid_id on combine;
+alter table careplans drop foreign key fk_careplans_pid_id;
+drop index ix_careplans_pid_id on careplans;
 
 alter table practices_doctors drop foreign key fk_practices_doctors_pid_id;
 drop index ix_practices_doctors_pid_id on practices_doctors;
@@ -151,12 +149,9 @@ drop index ix_question_did_id on question;
 alter table question drop foreign key fk_question_pid_id;
 drop index ix_question_pid_id on question;
 
-alter table question drop foreign key fk_question_depend_on_previous_question_question_number;
-drop index ix_question_depend_on_previous_question_question_number on question;
+drop table if exists careplan_in_json;
 
 drop table if exists careplans;
-
-drop table if exists combine;
 
 drop table if exists doctors;
 

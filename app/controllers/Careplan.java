@@ -17,8 +17,8 @@ import java.util.List;
 
 import play.data.Form;
 import play.data.DynamicForm;
+import models.ebeanModel.CareplanInJson;
 import models.ebeanModel.Careplans;
-import models.ebeanModel.Combine;
 import models.ebeanModel.Question;
 import play.libs.Json;
 import java.util.Iterator;
@@ -55,12 +55,20 @@ public class Careplan extends Controller {
     public Result save(Long id) throws java.io.IOException{
 		JsonNode json = request().body().asJson();
 
-		String formData = json.toString();
+		String formData = json.get("medicationName").toString();
+		int medicationNameSize = 0;
+		int booleanQuestionSize = 0;
+		int multipleChoiceQuestionSize = 0;
+		int freeQuestionSize = 0;
 
-		int size = json.get("medicationName").size();
-		int booleanQuestionSize = json.get("booleanQuestion").size();
-		int multipleChoiceQuestionSize = json.get("mcq").size();
-		int freeQuestionsize = json.get("freeQuestion").size();
+		if(json.get("medicationName")!=null)
+			medicationNameSize = json.get("medicationName").size();
+		if(json.get("booleanQuestion")!=null)
+			booleanQuestionSize = json.get("booleanQuestion").size();
+		if(json.get("multipleChoiceQuestion")!=null)
+			multipleChoiceQuestionSize = json.get("multipleChoiceQuestion").size();
+		if(json.get("freeQuestion")!=null)
+			freeQuestionSize = json.get("freeQuestion").size();
 
 		// patient id
 		ObjectNode pid = Json.newObject();
@@ -70,7 +78,7 @@ public class Careplan extends Controller {
 		ObjectNode did = Json.newObject();
 		did.put("id", ctx().session().get("id"));
 
-		for(int i=0;i<size;i++){
+		for(int i = 0; i<medicationNameSize; i++){
 
 			ObjectNode newJson = Json.newObject();
 			newJson.put("did",did);
@@ -82,23 +90,9 @@ public class Careplan extends Controller {
 			newJson.putAll((ObjectNode)json.get("medicationName").get(i).get("time"));
 
 			ObjectMapper mapper = new ObjectMapper();
-			Combine combine = mapper.readValue(newJson.toString(), Combine.class);
-			System.out.println("-----------"+Json.toJson(combine));
-			combine.save();
+			Careplans careplans = mapper.readValue(newJson.toString(), Careplans.class);
+			careplans.save();
 
-		}
-
-		for(int i = 0; i < booleanQuestionSize; i++) {
-
-			ObjectNode newJson = Json.newObject();
-			newJson.put("did",did);
-			newJson.put("pid",pid);
-			newJson.putAll((ObjectNode)json.get("booleanQuestion").get(i).get("question"));
-
-			ObjectMapper mapper = new ObjectMapper();
-			Question booleanQuestion = mapper.readValue(newJson.toString(), Question.class);
-			System.out.println("-----------"+Json.toJson(booleanQuestion));
-			booleanQuestion.save();
 		}
 
 		for(int i = 0; i < multipleChoiceQuestionSize; i++) {
@@ -106,45 +100,69 @@ public class Careplan extends Controller {
 			ObjectNode newJson = Json.newObject();
 			newJson.put("did",did);
 			newJson.put("pid",pid);
-			newJson.putAll((ObjectNode)json.get("mcq").get(i).get("question"));
+			newJson.put("questionNumber",json.get("multipleChoiceQuestion").get(i).get("questionNumber"));
+			newJson.put("questionType","MCQ");
+			newJson.put("question",json.get("multipleChoiceQuestion").get(i).get("question"));
+			newJson.put("dependOnPreviousQuestion",json.get("multipleChoiceQuestion").get(i).get("dependOnPreviousQuestion"));
+			newJson.put("previousQuestionAnswerShouldBe",json.get("multipleChoiceQuestion").get(i).get("previousQuestionAnswerShouldBe"));
+			newJson.put("choices",json.get("multipleChoiceQuestion").get(i).get("choices").toString());
 
 			ObjectMapper mapper = new ObjectMapper();
 			Question multipleChoiceQuestion = mapper.readValue(newJson.toString(), Question.class);
-			System.out.println("-----------"+Json.toJson(multipleChoiceQuestion));
 			multipleChoiceQuestion.save();
 		}
 
-		for(int i = 0; i < freeQuestionsize; i++) {
+		for(int i = 0; i < booleanQuestionSize; i++) {
 
 			ObjectNode newJson = Json.newObject();
 			newJson.put("did",did);
 			newJson.put("pid",pid);
-			newJson.putAll((ObjectNode)json.get("freeQuestion").get(i).get("question"));
+			newJson.put("questionNumber",json.get("booleanQuestion").get(i).get("questionNumber"));
+			newJson.put("questionType","boolean");
+			newJson.put("question",json.get("booleanQuestion").get(i).get("question"));
+			newJson.put("dependOnPreviousQuestion",json.get("booleanQuestion").get(i).get("dependOnPreviousQuestion"));
+			newJson.put("previousQuestionAnswerShouldBe",json.get("booleanQuestion").get(i).get("previousQuestionAnswerShouldBe"));
+			newJson.put("choices",json.get("booleanQuestion").get(i).get("choices").toString());
+
+			ObjectMapper mapper = new ObjectMapper();
+			Question booleanQuestion = mapper.readValue(newJson.toString(), Question.class);
+			booleanQuestion.save();
+		}
+
+		for(int i = 0; i < freeQuestionSize; i++) {
+
+			ObjectNode newJson = Json.newObject();
+			newJson.put("did",did);
+			newJson.put("pid",pid);
+			newJson.put("questionNumber",json.get("freeQuestion").get(i).get("questionNumber"));
+			newJson.put("questionType","free");
+			newJson.put("question",json.get("freeQuestion").get(i).get("question"));
+			newJson.put("dependOnPreviousQuestion",json.get("freeQuestion").get(i).get("dependOnPreviousQuestion"));
+			newJson.put("previousQuestionAnswerShouldBe",json.get("freeQuestion").get(i).get("previousQuestionAnswerShouldBe"));
 			
 			ObjectMapper mapper = new ObjectMapper();
 			Question freeQuestion = mapper.readValue(newJson.toString(), Question.class);
-			System.out.println("-----------"+Json.toJson(freeQuestion));
 			freeQuestion.save();
 		}
 		
-		List<Careplans> list = Ebean.find(Careplans.class)
+		List<CareplanInJson> list = Ebean.find(CareplanInJson.class)
 		 .select("id")
 		 .where()
 		 .eq("patientid",id)
           	.findList();
           	if(list.isEmpty())
           	{
-          		Careplans careplan = new Careplans();
-          		careplan.madicationName=formData;
-				careplan.patientid=id;
-				careplan.save();
+          		CareplanInJson careplaninjson = new CareplanInJson();
+          		careplaninjson.madicationName=formData;
+				careplaninjson.patientid=id;
+				careplaninjson.save();
 			}
 			else
 			{
-		Careplans careplan = Ebean.find(Careplans.class, list.get(0).id);
-			careplan.madicationName=formData;
+		CareplanInJson careplaninjson = Ebean.find(CareplanInJson.class, list.get(0).id);
+			careplaninjson.madicationName=formData;
 				//careplan.patientid=id;
-			Ebean.save(careplan);
+			Ebean.save(careplaninjson);
 			
 			}
 		//careplan.patientid=id;

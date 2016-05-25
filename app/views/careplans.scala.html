@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="@routes.Assets.versioned("css/jsDatePickltr.min.css")" >
   <link rel="stylesheet" href="@routes.Assets.versioned("css/jquery-ui.css")" >
 
-
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Script import for autocomplete -->
       <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
@@ -27,12 +27,11 @@
          -moz-background-size: cover;
          -o-background-size: cover;
          background-size: cover;
-         opacity: .8;
+         opacity: .7;
         }
       
       label{
             font-size: 16px;
-            color: white;
 
       }
       h3{
@@ -87,7 +86,29 @@
             });
           }
         });
+/*              $( '.mname').autocomplete({
+                minLength: 0,
+                source: Medicaton,
 
+                focus: function( event, ui ) {
+                  $(this).val(ui.item.label);
+                    return false;
+                },
+
+                select: function( event, ui ) {
+                   $(this).val(ui.item.label);
+                  var i = $(this).index('input:text');
+                  if(i>13)
+                    var count=i%13;
+                  else
+                    count="";
+                  alert(count);
+                    $( '#mcode'+count).val( ui.item.value );
+                    $( '#mcodeSystem'+count).val( ui.item.label1 );
+                    $( '#mcodeSystemname'+count).val( ui.item.label2 );
+                  return false;
+                },
+            })*/
       }  
 
       function route() {
@@ -123,7 +144,27 @@
             });
           }
         });
+/*              $( ".rname").autocomplete({
+                minLength: 0,
+                source: '/route?text='+$(this).val(),
+                focus: function( event, ui ) {
+                  $(this).val(ui.item.label);
+                      return false;
+                    },
+                select: function( event, ui ) {
 
+                  $(this).val(ui.item.label);
+                  var i = $(this).index('input:text');
+                  if(i>17)
+                    var count=(i-4)%13;
+                  else
+                    count="";
+                  $( "#rcode"+count).val( ui.item.value );
+                  $( "#rcodeSystem"+count).val( ui.item.label1 );
+                  $( "#rcodeSystemname"+count).val( ui.item.label2 );
+                  return false;
+                },
+            })*/
         }
 
         function datepick() {
@@ -133,9 +174,9 @@
         
           $("#addButton").click(function () {  
         
-            var newCarePlanDiv = $(document.createElement('div')).attr("id", 'careplan' + counter).addClass("col-sm-5 col-md-12");
+            var newCarePlanDiv = $(document.createElement('div')).attr("id", 'careplan' + counter);
                    
-        newCarePlanDiv.after().html('<div class="form-group" ><div class="col-md-1"><label>Medicaton</label></div><div class="col-md-3"><input class="mname form-control" type="text" id="mname'+counter+'" placeholder="Name" name="medicationName['+counter+'][product][mname]"></div><div class="col-md-2"><input class="mcode form-control " type="text" placeholder="Code" id="mcode'+counter+'" name="medicationName['+counter+'][product][mcode]" readonly></div><div class="col-md-2"><input class="mcodeSystem form-control" id= "mcodeSystem'+counter+'" type="text" placeholder="CodeSystem" name="medicationName['+counter+'][product][msystemcode]" readonly></div><div class="col-md-3"><input class="mcodeSystemname form-control" id="mcodeSystemname'+counter+'" type="text" placeholder="CodeSystemName" name="medicationName['+counter+'][product][msystemcodename]" readonly></div></div><div class="form-group" ><div class="col-md-1"><label>Route:</label></div><div class="col-md-3"><input class="form-control rname" type="text" placeholder="Name" id="rname'+counter+'" name="medicationName['+counter+'][route][rname]"></div><div class="col-md-2"><input class="form-control rcode" type="text" placeholder="Code" id="rcode'+counter+'" name="medicationName['+counter+'][route][rcode]" readonly></div><div class="col-md-2"><input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem'+counter+'" name="medicationName['+counter+'][route][rsystemcode]" readonly></div><div class="col-md-3"><input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname'+counter+'" name="medicationName['+counter+'][route][rsystemcodename]" readonly></div></div><div class="form-group" ><div class="col-md-1"><label>Dose:</label></div><div class="col-md-3"><input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="medicationName['+counter+'][dose][quantity]"></div><div class="col-md-2"><input class="form-control" type="text" placeholder="Units" id="dunits" name="medicationName['+counter+'][dose][dunits]"></div><div class="col-md-2"> <label>Start Date:</label></div><div class="col-md-3"><input class="startdate form-control" type="text" placeholder="Start date" id="startdate" name="medicationName['+counter+'][time][startdate]"></div></div><div class="form-group" ><div class="col-md-1"><label>Frequency:</label></div><div class="col-md-3"><input class="form-control" type="text" placeholder="Peried" id="fperied" name="medicationName['+counter+'][frequency][period]"></div><div class="col-md-2"><input class="form-control" type="text" placeholder="Units"id="funits" name="medicationName['+counter+'][frequency][funits]"></div> <div class="col-md-2"><label>End Date:</label></div><div class="col-md-3"><input class="enddate form-control" type="text" placeholder="End date" id="enddate" name="medicationName['+counter+'][time][enddate]"></div></div>');
+        newCarePlanDiv.after().html('<div class="form-group" ><div class="col-md-2"><label>Medicaton</label></div><div class="col-md-2"><input class="mname form-control" type="text" id="mname'+counter+'" placeholder="Name" name="madicationName['+counter+'][product][name]"></div><div class="col-md-2"><input class="mcode form-control " type="text" placeholder="Code" id="mcode'+counter+'" name="madicationName['+counter+'][product][code]" readonly></div><div class="col-md-2"><input class="mcodeSystem form-control" id= "mcodeSystem'+counter+'" type="text" placeholder="CodeSystem" name="madicationName['+counter+'][product][Systemcode]" readonly></div><div class="col-md-2"><input class="mcodeSystemname form-control" id="mcodeSystemname'+counter+'" type="text" placeholder="CodeSystemName" name="madicationName['+counter+'][product][Systemcodename]" readonly></div></div><div class="form-group" ><div class="col-md-2"><label>Route:</label></div><div class="col-md-2"><input class="form-control rname" type="text" placeholder="Name" id="rname'+counter+'" name="madicationName['+counter+'][Route][name]"></div><div class="col-md-2"><input class="form-control rcode" type="text" placeholder="Code" id="rcode'+counter+'" name="madicationName['+counter+'][Route][code]" readonly></div><div class="col-md-2"><input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem'+counter+'" name="madicationName['+counter+'][Route][codeSystem]" readonly></div><div class="col-md-2"><input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname'+counter+'" name="madicationName['+counter+'][Route][codeSystemname]" readonly></div></div><div class="form-group" ><div class="col-md-2"><label>Dose:</label></div><div class="col-md-2"><input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="madicationName['+counter+'][Dose][quentity]"></div><div class="col-md-2"><input class="form-control" type="text" placeholder="Units" id="dunits" name="madicationName['+counter+'][Dose][units]"></div><div class="col-md-2"> <label>Start Date:</label></div><div class="col-md-2"><input class="startdate form-control" type="text" placeholder="Start date" id="startdate" name="madicationName['+counter+'][Startdate]"></div></div><div class="form-group" ><div class="col-md-2"><label>Frequency:</label></div><div class="col-md-2"><input class="form-control" type="text" placeholder="Peried" id="fperied" name="madicationName['+counter+'][Frequency][peried]"></div><div class="col-md-2"><input class="form-control" type="text" placeholder="Units"id="funits" name="madicationName['+counter+'][Frequency][units]"></div> <div class="col-md-2"><label>End Date:</label></div><div class="col-md-2"><input class="enddate form-control" type="text" placeholder="End date" id="enddate" name="madicationName['+counter+'][Enddate]"></div></div>');
               
               newCarePlanDiv.appendTo("#CarePlanGroup");
 
@@ -171,7 +212,6 @@
     </script>
 <style type="text/css">
   .ui-autocomplete { max-height: 200px; overflow-y: auto; overflow-x: hidden;}
-
 </style>
 
 
@@ -258,7 +298,7 @@ $(function() {
     data: jso,
     success: function( data, textStatus, jQxhr ){
         console.log( "success" );
-        window.location='/patient/@id/careplan'
+        window.location='/dashboard'
     },
     error: function( jqXhr, textStatus, errorThrown ){
         console.log(JSON.stringify(jqXhr) +" " + textStatus +" " + errorThrown );
@@ -268,11 +308,23 @@ $(function() {
 });
   </script>
 
+
+<script type="text/javascript">
+  
+ window.onload = function() {
+
+ $("#myModal").modal("show").addClass("fade");
+ }
+
+</script>
+
+
+
 </head>
 
 <body bgcolor="#90EE90">
 
-   <nav class="navbar navbar-inverse navbar-fixed-top">
+  <!--  <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -305,7 +357,9 @@ $(function() {
           </ul>
     </div>
   </div>
-</nav>
+</nav> -->
+
+
 
 <div class="container">
 
@@ -316,153 +370,205 @@ $(function() {
       <!-- edit form column -->
       <div class="col-md-20 ">
         
-        <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medication Prescription</h3>
-        <br>
+       <!--  <h3>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Medication Prescription</h3>
+         -->
 <form  class="form-horizontal" role="form" id="CreateCareplan" >
-
+<div class="modal" id="myModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+         <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="exampleModalLabel">Medication Prescription</h4>
+        </div>
+            <div class="modal-body">
       <div id='CarePlanGroup' >
-        <div id="careplan" class="col-sm-5 col-md-12">
-
-          <div class="form-group" >
-
-            <div class="col-md-1">
-               <label>Medicaton:</label>
-            </div>
-              <div class="col-md-3">
-                <input class="mname form-control"  type="text" placeholder="Name" id="mname" name="medicationName[0][product][mname]" >
-              </div>  
-              <div class="col-md-2 ">
-                <input class="mcode form-control " type="text" placeholder="Code" id="mcode" name="medicationName[0][product][mcode]" readonly>
-              </div>  
-                
+        <div id="careplan" class="col-sm-5 col-md-12" >
+         <div class="form-group" >
               <div class="col-md-2">
-                <input class="mcodeSystemname form-control" type="text" id="mcodeSystemname" placeholder="CodeSystemName" name="medicationName[0][product][msystemcodename]" readonly>
-              </div> 
+               <label>Medicaton</label>
+              </div>
               <div class="col-md-3">
-                <input class="mcodeSystem form-control" type="text" placeholder="CodeSystem" id="mcodeSystem" name="medicationName[0][product][msystemcode]" readonly>
-              </div> 
+                <input class="mname form-control" type="text" placeholder="Name" id="mname" name="madicationName[0][product][name]" value="" >
+              </div>  
+              <div class="col-md-2">
+                <input class="mcode form-control " type="text" placeholder="Code" id="mcode" name="madicationName[0][product][code]" readonly>
+              </div>  
+              <div class="col-md-2">
+                <input class="mcodeSystem form-control" type="text" placeholder="CodeSystem" id="mcodeSystem" name="madicationName[0][product][Systemcode]" readonly>
+              </div>  
+              <div class="col-md-3">
+                <input class="mcodeSystemname form-control" type="text" id="mcodeSystemname" placeholder="CodeSystemName" name="madicationName[0][product][Systemcodename]" readonly>
+              </div>  
        </div>
         <div class="form-group" >
-             <div class="col-md-1">
+             <div class="col-md-2">
                <label>Route:</label>
               </div>
               <div class="col-md-3">
-                <input class="form-control rname" type="text" placeholder="Name" id="rname" name="medicationName[0][route][rname]">
+                <input class="form-control rname" type="text" placeholder="Name" id="rname" name="madicationName[0][Route][name]">
               </div>
                <div class="col-md-2">
-                <input class="form-control rcode" type="text" placeholder="Code" id="rcode" name="medicationName[0][route][rcode]" readonly>
+                <input class="form-control rcode" type="text" placeholder="Code" id="rcode" name="madicationName[0][Route][code]" readonly>
               </div>
-               
                <div class="col-md-2">
-                <input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname" name="medicationName[0][route][rsystemcodename]" readonly>
+           <input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem" name="madicationName[0][Route][codeSystem]" readonly>
               </div>
-              <div class="col-md-3">
-           <input class="form-control rcodeSystem" type="text" placeholder="CodeSystem" id="rcodeSystem" name="medicationName[0][route][rsystemcode]" readonly>
+               <div class="col-md-3">
+                <input class="form-control rcodeSystemname" type="text" placeholder="Codesystemname" id="rcodeSystemname" name="madicationName[0][Route][codeSystemname]" readonly>
               </div>
       </div>
       <div class="form-group" >
-              <div class="col-md-1">
+              <div class="col-md-2">
                <label>Dose:</label>
               </div>
               <div class="col-md-3">
-                <input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="medicationName[0][dose][quantity]">
+                <input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="madicationName[0][Dose][quentity]">
               </div>
               <div class="col-md-2">
-                <input class="form-control" type="text" placeholder="Units" id="dunits" name="medicationName[0][dose][dunits]">
+                <input class="form-control" type="text" placeholder="Units" id="dunits" name="madicationName[0][Dose][units]">
               </div>
               <div class="col-md-2">
                  <label>Start Date:</label>
               </div>
               <div class="col-md-3">
-               <input class="startdate form-control" type="text" placeholder="Start date" id="startdate" name="medicationName[0][time][startdate]">
+               <input class="startdate form-control" type="text" placeholder="Start date" id="startdate" name="madicationName[0][Startdate]">
 
               </div>
        </div>
 
 <div class="form-group" >
-              <div class="col-md-1">
+              <div class="col-md-2">
                <label>Frequency:</label>
               </div>
               <div class="col-md-3">
-                <input class="form-control" type="text" placeholder="Peried" id="fperied" name="medicationName[0][frequency][period]">
+                <input class="form-control" type="text" placeholder="Peried" id="fperied" name="madicationName[0][Frequency][peried]">
               </div>
               <div class="col-md-2">
                 <input class="form-control" type="text" placeholder="Units" 
-                id="funits" name="medicationName[0][frequency][funits]">
+                id="funits" name="madicationName[0][Frequency][units]">
               </div>
               <div class="col-md-2">
                 <label>End Date:</label>
               </div>
               <div class="col-md-3">
                 <input class=" enddate form-control" type="text" placeholder="End date"
-                id="enddate" name="medicationName[0][time][enddate]">
+                id="enddate" name="madicationName[0][Enddate]">
               </div>
        </div>
 
         </div>
       </div>
 
+        
         <div class="form-group col-md-12">
-         <div class="col-md-9"></div>
-          <div class="col-md-2"><p class="text-right">
-          <button type='button' class="btn btn-primary btn-md" id='addButton'><span class="glyphicon glyphicon-plus"></span></button>
-          <button type='button' class="btn btn-primary btn-md" id='removeButton'><span class="glyphicon glyphicon-minus"></span></button></p>
+         <label class="col-md-9 control-label"></label>
+          <div class="col-md-3">
+          <button type='button' class="btn btn-info btn-sm" value='Add medication' id='addButton'><span class="glyphicon glyphicon-plus"></span>Add</button>&nbsp;&nbsp;&nbsp;&nbsp;
+          <button type='button' class="btn btn-info btn-sm" value='Remove medication' id='removeButton'><span class="glyphicon glyphicon-minus"></span>Remove</button>
         </div>
         </div>
 
-        <div class="form-group">
-        <div class="col-md-3"><p class="text-left" style="color:black; font-size: 20px ">Vitals Measurement:</p></div>
+       </div>
+       <div class="modal-footer">
+          <button  class="btn btn-secondary" data-dismiss="modal">Close</button>
+           <button type='button' class="btn btn-info med" value='next' onclick="change()">Next</button>
         </div>
+        </div>
+    </div> 
+</div>
+ 
+<div class="modal" id="myModal1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+         <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="exampleModalLabel">Vitals Measurement </h4>
+        </div>
+            <div class="modal-body">
+        
 
-         <div class="form-group col-md-12">
-         
+         <div class="form-group">
+            <label class="col-lg-3 control-label">Blood Pressure</label>
             <div class="col-md-2">
               <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="blood pressure">
-              <label>Blood Pressure</label>
-            </div>
+              </div>
+               <label class="col-lg-3 control-label">Blood glucose</label>
             <div class="col-md-2">
               <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="Blood glucose">
-              <label>Blood glucose</label>
               </div>
-
+            </div>
+          
+        
+         <div class="form-group">
+            <label class="col-lg-3 control-label">Pulse Rate</label>
             <div class="col-md-2">
               <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="Pulse Rate">
-              <label>Pulse Rate</label>
-            </div>
-            <div class="col-md-3">
-              <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="Blood Oxygen Level">
-              <label>Blood Oxygen Level</label>
               </div>
-          </div>
+               <label class="col-lg-3 control-label">Blood Oxygen Level</label>
+            <div class="col-md-2">
+              <input  type="checkbox" id="check" placeholder="Number" name="reading[]" value="Blood Oxygen Level">
+              </div>
+            </div>
+           
 
-        <div class="form-group">
-        <div class="col-md-4"><p class="text-left" style="color:black; font-size: 20px ">Free Form Questions:</p></div>
+           </div>
+            <div class="modal-footer">
+          <button type='button' class="btn btn-info" onclick="back()" >back</button>
+           <button type='button' class="btn btn-info med" value='next' onclick="change1()">Next</button>
         </div>
-        
+        </div>
+    </div> 
+</div> 
+
+
+<div class="modal" id="myModal2">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+         <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+          <h4 class="modal-title" id="exampleModalLabel">Free Form Question</h4>
+        </div>
+            <div class="modal-body">
              <div class="form-group">
-             <label class="col-md-1"></label>
-              <div class="col-md-3">
+             <label class="col-lg-3 control-label">Select Question Type:</label>
+              <div class="col-md-2">
           <select class="form-control" id="question">
-            <option>Choice Type</option>
+            <option disabled selected>Choice Type</option>
             <option>Boolean</option>
             <option >Multiple</option>
             <option>free</option>
           </select>
-         </div>
-         <div class="col-md-4">
-          <button type='button' class="btn btn-info btn-sm" value='Add medication' 
-          id="addquestion"><span class="glyphicon glyphicon-plus"></span>Add Question</button>&nbsp;&nbsp;&nbsp;&nbsp;
-          <button type='button' class="btn btn-info btn-sm" value='Remove question' id='removequestion'>
-            <span class="glyphicon glyphicon-minus"></span>Remove Question</button>          
+        </div>
+         <div class="col-md-3">
+          <button type='button' class="btn btn-info btn-sm" value='Add medication' id='addquestion'><span class="glyphicon glyphicon-plus"></span>Add</button>&nbsp;&nbsp;&nbsp;&nbsp;
+          <button type='button' class="btn btn-info btn-sm" value='Remove question' id='removequestion'><span class="glyphicon glyphicon-minus"></span>Remove</button>          </div>
+          <div>
+         
+             <div class="col-md-1">
+            <label>previous question number.</label>
             </div>
-          <label class="col-md-2 ">Depends On Question</label>
-          <label class="col-md-2 ">Response of Question</label>
+            <div class="col-md-1">
+            <label>previous question response.</label>
+            </div>
+            </div>
         </div>
         <div id="questiongroup">
-
+        <div id="formquestion0">
+        <div class="form-group">
+  
+            <div id="inputArea">
+            </div>
+        </div>
+        </div>
         </div>
 
-        <script type="text/javascript">
+         <script type="text/javascript">
 
   var qN = 0;
   var bQC = 0;
@@ -479,24 +585,10 @@ $(function() {
       newCarePlanDiv.after().html(
         '<div id = "bool" class = "form-group">'+
           '<label class = "col-md-1 control-label" style = "text-align:right;">'+(qN+1)+'</label>'+
-          '<div class = "col-md-5">'+
-            
-            '<input id="bQC" name = "booleanQuestion['+bQC+'][question]" type = "text" class = "form-control" placeholder = "Boolean Question">'+
-            '<input name = "booleanQuestion['+bQC+'][questionNumber]" type = "text" value = "'+(qN+1)+'" hidden>'+
-            '<input name = "booleanQuestion['+bQC+'][choices][0][index]" type = "text" value = "1" hidden>'+
-            '<input name = "booleanQuestion['+bQC+'][choices][0][value]" type = "text" value = "Yes" hidden>'+
-            '<input name = "booleanQuestion['+bQC+'][choices][1][index]" type = "text" value = "2" hidden>'+
-            '<input name = "booleanQuestion['+bQC+'][choices][1][value]" type = "text" value = "No" hidden>'+
+          '<div class = "col-md-7">'+
+            '<input id="bQC" name = "booleanQuestion[][question]" type = "text" class = "form-control" placeholder = "Boolean Question">'+
           '</div>'+
-          '<div class = "col-md-2">'+
-            '<label class = "control-label">1:Yes 2:No</label>'+
-          '</div>'+
-          '<div class = "col-md-2">'+
-            '<input id="bQC" name = "booleanQuestion['+bQC+'][dependOnPreviousQuestion]" type = "text" class = "form-control" placeholder = "Question Number">'+
-          '</div>'+
-          '<div class = "col-md-2">'+
-            '<input id="bQC" name = "booleanQuestion['+bQC+'][previousQuestionAnswerShouldBe]" type = "text" class = "form-control" placeholder = "Response">'+
-          '</div>'+
+          '<div class="col-md-1"><input type="text" class="form-control" name="previous question number" ></div><div class="col-md-1"><input type="text" class="form-control" name="previous question response"></div>'+
         '</div>'
       );
 
@@ -510,24 +602,17 @@ $(function() {
       newCarePlanDiv.after().html(
             '<div class = "form-group">'+
                 '<label class = "col-md-1" control-label" style = "text-align:right;">'+(qN+1)+'</label>'+
-                '<div class = "col-md-6">'+  
-                  '<input id="mQC" type = "text" name = "multipleChoiceQuestion['+mQC+'][question]" class = "form-control" placeholder = "Multiple choice question"/>'+
-                  '<input name = "multipleChoiceQuestion['+mQC+'][questionNumber]" type = "text" value = "'+(qN+1)+'" hidden>'+
+                '<div class = "col-md-7">'+
+                  '<input id="mQC" type = "text" name = "mcqQuestion['+mQC+'][question]" class = "form-control" placeholder = "Multiple choice question"/>'+
                 '</div>'+
-                '<div class = "col-md-1"></div>'+
-                '<div class = "col-md-2">'+
-                  '<input id="mQC" name = "multipleChoiceQuestion['+mQC+'][dependOnPreviousQuestion]" type = "text" class = "form-control" placeholder = "Question Number">'+
-                '</div>'+
-                '<div class = "col-md-2">'+
-                  '<input id="mQC" name = "multipleChoiceQuestion['+mQC+'][previousQuestionAnswerShouldBe]" type = "text" class = "form-control" placeholder = "Response">'+
-                '</div>'+
+                '<div class="col-md-1"><input type="text" class="form-control" name="previous question number" ></div><div class="col-md-1"><input type="text" class="form-control" name="previous question response"></div>'+
             '</div>'+
             '<div id = "optiongroup'+mQC+'" >'+
               '<div class = "form-group">'+
-                '<label class = "col-md-2" control-label" style="text-align:right;">1</label>'+
+                '<label class = "col-md-2" control-label"></label>'+
                 '<div class = "col-md-2">'+
-                    '<input name = "multipleChoiceQuestion['+mQC+'][choices][0][index]" type = "text" value = "0" hidden>'+
-                    '<input name = "multipleChoiceQuestion['+mQC+'][choices][0][value]" type = "text" class = "form-control" placeholder = "Choice-1">'+
+                    '<input name = "mcqQuestion['+mQC+'][choice][0][index]" type = "text" value = "0" hidden>'+
+                    '<input name = "mcqQuestion['+mQC+'][choice][0][value]" type = "text" class = "form-control" placeholder = "Choice-1">'+
                   '</div>'+
                   '<button type = "button" class = "btn btn-default addchoice" value = "'+mQC+'" id = "addchoice">'+
                     '<span class = "glyphicon glyphicon-plus"></span>'+
@@ -545,28 +630,26 @@ $(function() {
           mQC++; 
     }
 
-    else {
+    else if(document.getElementById('question').value=='free'){
 
       newCarePlanDiv.after().html(
         '<div id = "free" class = "form-group">'+
                 '<label class = "col-md-1" control-label" style="text-align:right;">'+(qN+1)+'</label>'+
-                '<div class = "col-md-6">'+
-                  '<input id="fQC" type = "text" name = "freeQuestion['+fQC+'][question]" class = "form-control" placeholder = "Question"/>'+
-                  '<input name = "freeQuestion['+fQC+'][questionNumber]" type = "text" value = "'+(qN+1)+'" hidden>'+
+                '<div class = "col-md-7">'+
+                  '<input id="fQC" type = "text" name = "freeQuestion[][question]" class = "form-control" placeholder = "Question"/>'+
                 '</div>'+
-                '<div class = "col-md-1"></div>'+
-                '<div class = "col-md-2">'+
-                  '<input id="fQC" name = "freeQuestion['+fQC+'][dependOnPreviousQuestion]" type = "text" class = "form-control" placeholder = "Question Number">'+
-                '</div>'+
-                '<div class = "col-md-2">'+
-                  '<input id="fQC" name = "freeQuestion['+fQC+'][previousQuestionAnswerShouldBe]" type = "text" class = "form-control" placeholder = "Response">'+
-                '</div>'+
+                '<div class="col-md-1"><input type="text" class="form-control" name="previous question number" ></div><div class="col-md-1"><input type="text" class="form-control" name="previous question response"></div>'+
               '</div>'
           );
 
           newCarePlanDiv.appendTo("#questiongroup");
           $("#removequestion").val("fQC");
           fQC++;
+    }
+    else{
+
+      alert("Please Choose Any One Option");
+      return false;
     }
     qN++;
   });
@@ -584,11 +667,12 @@ $(function() {
       else if(id=="mQC"){
         mQC--;
       }
-      else if(id=="fQC"){
+      else{
         fQC--;
       }
       $("#removequestion").val(id);
       $('#questionNumber'+qN).remove();
+      
   });
 
     $("body").on('click',".addchoice" , function() {
@@ -597,11 +681,10 @@ $(function() {
     cN[gN]++;
     $('#optiongroup'+ gN).append(
       '<div class="form-group">'+
-        '<label class = "col-md-2" control-label" style="text-align:right;">'+(cN[gN]+1)+'</label>'+
+        '<label class="col-md-2" control-label"></label>'+
         '<div class="col-md-2">'+
-
-          '<input name="multipleChoiceQuestion['+gN+'][choices]['+cN[gN]+'][index]" type="text" value="'+cN[gN]+'" hidden>'+
-          '<input name="multipleChoiceQuestion['+gN+'][choices]['+cN[gN]+'][value]" type="text" class="form-control" placeholder="choice-'+(cN[gN]+1)+'">'+
+          '<input name="mcqQuestion['+gN+'][choice]['+cN[gN]+'][index]" type="text" value="'+cN[gN]+'" hidden>'+
+          '<input name="mcqQuestion['+gN+'][choice]['+cN[gN]+'][value]" type="text" class="form-control" placeholder="choice-'+(cN[gN]+1)+'">'+
           '</div>'+
         '</div>'
       );
@@ -617,7 +700,7 @@ $("body").on('click',".removechoice", function() {
   $("#optiongroup"+gN).children("div:last").remove();
 });
 </script>
- <br>
+            
              <div class="form-group">
             <label class="col-md-3 control-label"></label>
             <div class="col-md-8">
@@ -627,13 +710,43 @@ $("body").on('click',".removechoice", function() {
               <input type="reset" class="btn btn-info" value="Reset">
             </div>
           </div>
+
+  <div class="modal-footer">
+          <button type='button' class="btn btn-info" onclick="back1()">Back</button>
+        </div>
+           </div>
+        </div>
+    </div> 
+
             </form>
            
          
           </div>
          </div> 
     </div>
+  <script type="text/javascript">
   
+
+  function change(){
+ $("#myModal").removeClass("fade").modal("hide");
+    $("#myModal1").modal("show").addClass("fade");
+};
+
+function change1(){
+ $("#myModal1").removeClass("fade").modal("hide");
+    $("#myModal2").modal("show").addClass("fade");
+};
+
+function back(){
+ $("#myModal1").removeClass("fade").modal("hide");
+    $("#myModal").modal("show").addClass("fade");
+};
+
+function back1(){
+ $("#myModal2").removeClass("fade").modal("hide");
+    $("#myModal1").modal("show").addClass("fade");
+};
+</script>
 
   
   

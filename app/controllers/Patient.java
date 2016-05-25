@@ -34,8 +34,8 @@ public class Patient extends Controller {
     public Result list() {
 
     	String query = "SELECT patients.id,patients.name,patients.dob,patients.email,"+
-                "patients.contactnumber1,careplans.id as cid FROM patients left join careplans"+
-                " on patients.id=careplans.patientid";
+                "patients.contactnumber1,careplan_in_json.id as cid FROM patients left join careplan_in_json"+
+                " on patients.id=careplan_in_json.patientid";
         SqlQuery sqlQuery = Ebean.createSqlQuery(query);
         List<SqlRow> list = sqlQuery.findList();
 		return Results.ok(views.html.patientlist.render(list));
