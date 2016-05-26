@@ -18,7 +18,7 @@ public class CareplanInJson extends Model {
 
     @Column(length=1000)
     @NotNull
-    public String madicationName;
+    public String medicationName;
 
 	@NotNull
 	public Long patientid;

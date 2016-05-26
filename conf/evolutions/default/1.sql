@@ -5,7 +5,7 @@
 
 create table careplan_in_json (
   id                            bigint auto_increment not null,
-  madication_name               varchar(1000) not null,
+  medication_name               varchar(1000) not null,
   patientid                     bigint not null,
   constraint pk_careplan_in_json primary key (id)
 );

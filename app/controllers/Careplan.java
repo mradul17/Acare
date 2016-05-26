@@ -11,6 +11,7 @@ import play.mvc.Controller;
 import javax.inject.Inject;
 import com.avaje.ebean.SqlQuery;
 import com.avaje.ebean.SqlRow;
+import com.avaje.ebean.SqlUpdate;
 import com.avaje.ebean.Ebean;
 import play.mvc.Http.Context;
 import java.util.List;
@@ -34,7 +35,6 @@ public class Careplan extends Controller {
 
     @Inject WSClient ws;
     public Result careplan(Long id) {
-		System.out.println("CarePlan");
 		return Results.ok(views.html.careplan.render(id));
     }
 
@@ -153,16 +153,15 @@ public class Careplan extends Controller {
           	if(list.isEmpty())
           	{
           		CareplanInJson careplaninjson = new CareplanInJson();
-          		careplaninjson.madicationName=formData;
+          		careplaninjson.medicationName=formData;
 				careplaninjson.patientid=id;
 				careplaninjson.save();
 			}
 			else
 			{
-		CareplanInJson careplaninjson = Ebean.find(CareplanInJson.class, list.get(0).id);
-			careplaninjson.madicationName=formData;
-				//careplan.patientid=id;
-			Ebean.save(careplaninjson);
+				String s = "UPDATE careplan_in_json SET medication_name = '"+formData+"' where patientid = '"+id+"'";
+				SqlUpdate update = Ebean.createSqlUpdate(s);
+				Ebean.execute(update);
 			
 			}
 		//careplan.patientid=id;

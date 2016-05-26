@@ -69,7 +69,7 @@
           var newCarePlanDiv = $(document.createElement('div'))
               .attr("id", 'careplan' + counter);
                     
-newCarePlanDiv.after().html('<div class="form-group" ><div class="col-xs-2"><label>Medicaton</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Name" id="mname" name="madicationName['+counter+'][product][name]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Code" id="mcode"name="madicationName['+counter+'][product][code]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="CodeSystem" id="mcodeSystem" name="madicationName['+counter+'][product][Systemcode]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="CodeSystemName" id="mcodeSystemname" name="madicationName['+counter+'][product][Systemcodename]"></div></div><div class="form-group" ><div class="col-xs-2"><label>Route:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Name" id="rname" name="madicationName['+counter+'][Route][name]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Code" id="rcode" name="madicationName['+counter+'][Route][code]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="CodeSystem" id="rcodeSystem" name="madicationName['+counter+'][Route][codeSystem]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Codesystemname" id="rcodeSystemname" name="madicationName['+counter+'][Route][codeSystemname]"></div></div><div class="form-group" ><div class="col-xs-2"><label>Dose:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="madicationName['+counter+'][Dose][quentity]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units" id="dunits" name="madicationName['+counter+'][Dose][units]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="RateQuantity" id="rquantity" name="madicationName['+counter+'][Rate][quantity]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="RateUnits" id="runits" name="madicationName['+counter+'][Rate][units]"></div></div><div class="form-group" ><div class="col-xs-2"><label>Frequency:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Peried" id="fperied" name="madicationName['+counter+'][Frequency][peried]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units"id="funits" name="madicationName['+counter+'][Frequency][units]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Start date" id="startdate" name="madicationName['+counter+'][Startdate]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="End date"id="enddate" name="madicationName['+counter+'][Enddate]"></div></div>');
+newCarePlanDiv.after().html('<div class="form-group" ><div class="col-xs-2"><label>Medicaton</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Name" id="mname" name="medicationName['+counter+'][product][name]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Code" id="mcode"name="medicationName['+counter+'][product][code]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="CodeSystem" id="mcodeSystem" name="medicationName['+counter+'][product][Systemcode]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="CodeSystemName" id="mcodeSystemname" name="medicationName['+counter+'][product][Systemcodename]"></div></div><div class="form-group" ><div class="col-xs-2"><label>Route:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Name" id="rname" name="medicationName['+counter+'][Route][name]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Code" id="rcode" name="medicationName['+counter+'][Route][code]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="CodeSystem" id="rcodeSystem" name="medicationName['+counter+'][Route][codeSystem]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Codesystemname" id="rcodeSystemname" name="medicationName['+counter+'][Route][codeSystemname]"></div></div><div class="form-group" ><div class="col-xs-2"><label>Dose:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="medicationName['+counter+'][Dose][quentity]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units" id="dunits" name="medicationName['+counter+'][Dose][units]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="RateQuantity" id="rquantity" name="medicationName['+counter+'][Rate][quantity]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="RateUnits" id="runits" name="medicationName['+counter+'][Rate][units]"></div></div><div class="form-group" ><div class="col-xs-2"><label>Frequency:</label></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Peried" id="fperied" name="medicationName['+counter+'][Frequency][peried]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Units"id="funits" name="medicationName['+counter+'][Frequency][units]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="Start date" id="startdate" name="medicationName['+counter+'][Startdate]"></div><div class="col-xs-2"><input class="form-control" type="text" placeholder="End date"id="enddate" name="medicationName['+counter+'][Enddate]"></div></div>');
           newCarePlanDiv.appendTo("#CarePlanGroup");
 
           counter++;
@@ -284,16 +284,16 @@ $(document).ready(function() {
                <label>Medicaton</label>
               </div>
               <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="Name" id="mname" name="madicationName[0][product][name]">
+                <input class="form-control" type="text" placeholder="Name" id="mname" name="medicationName[0][product][name]">
               </div>  
               <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="Code" id="mcode"name="madicationName[0][product][code]">
+                <input class="form-control" type="text" placeholder="Code" id="mcode"name="medicationName[0][product][code]">
               </div>  
               <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="CodeSystem" id="mcodeSystem" name="madicationName[0][product][Systemcode]">
+                <input class="form-control" type="text" placeholder="CodeSystem" id="mcodeSystem" name="medicationName[0][product][Systemcode]">
               </div>  
               <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="CodeSystemName" id="mcodeSystemname" name="madicationName[0][product][Systemcodename]">
+                <input class="form-control" type="text" placeholder="CodeSystemName" id="mcodeSystemname" name="medicationName[0][product][Systemcodename]">
               </div>  
        </div>
         <div class="form-group" >
@@ -301,16 +301,16 @@ $(document).ready(function() {
                <label>Route:</label>
               </div>
               <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="Name" id="rname" name="madicationName[0][Route][name]">
+                <input class="form-control" type="text" placeholder="Name" id="rname" name="medicationName[0][Route][name]">
               </div>
                <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="Code" id="rcode" name="madicationName[0][Route][code]">
+                <input class="form-control" type="text" placeholder="Code" id="rcode" name="medicationName[0][Route][code]">
               </div>
                <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="CodeSystem" id="rcodeSystem" name="madicationName[0][Route][codeSystem]">
+                <input class="form-control" type="text" placeholder="CodeSystem" id="rcodeSystem" name="medicationName[0][Route][codeSystem]">
               </div>
                <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="Codesystemname" id="rcodeSystemname" name="madicationName[0][Route][codeSystemname]">
+                <input class="form-control" type="text" placeholder="Codesystemname" id="rcodeSystemname" name="medicationName[0][Route][codeSystemname]">
               </div>
       </div>
       <div class="form-group" >
@@ -318,16 +318,16 @@ $(document).ready(function() {
                <label>Dose:</label>
               </div>
               <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="madicationName[0][Dose][quentity]">
+                <input class="form-control" type="text" placeholder="Quantity" id="dquantity" name="medicationName[0][Dose][quentity]">
               </div>
               <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="Units" id="dunits" name="madicationName[0][Dose][units]">
+                <input class="form-control" type="text" placeholder="Units" id="dunits" name="medicationName[0][Dose][units]">
               </div>
               <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="RateQuantity" id="rquantity" name="madicationName[0][Rate][quantity]">
+                <input class="form-control" type="text" placeholder="RateQuantity" id="rquantity" name="medicationName[0][Rate][quantity]">
               </div>
               <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="RateUnits" id="runits" name="madicationName[0][Rate][units]">
+                <input class="form-control" type="text" placeholder="RateUnits" id="runits" name="medicationName[0][Rate][units]">
               </div>
        </div>
 
@@ -336,18 +336,18 @@ $(document).ready(function() {
                <label>Frequency:</label>
               </div>
               <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="Peried" id="fperied" name="madicationName[0][Frequency][peried]">
+                <input class="form-control" type="text" placeholder="Peried" id="fperied" name="medicationName[0][Frequency][peried]">
               </div>
               <div class="col-xs-2">
                 <input class="form-control" type="text" placeholder="Units" 
-                id="funits" name="madicationName[0][Frequency][units]">
+                id="funits" name="medicationName[0][Frequency][units]">
               </div>
               <div class="col-xs-2">
-                <input class="form-control" type="text" placeholder="Start date" id="startdate" name="madicationName[0][Startdate]">
+                <input class="form-control" type="text" placeholder="Start date" id="startdate" name="medicationName[0][Startdate]">
               </div>
               <div class="col-xs-2">
                 <input class="form-control" type="text" placeholder="End date"
-                id="enddate" name="madicationName[0][Enddate]">
+                id="enddate" name="medicationName[0][Enddate]">
               </div>
        </div>
 
