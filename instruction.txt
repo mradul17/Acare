@@ -1,0 +1,54 @@
+
+Key points of Chronic Care
+
+you should know about
+1. Play
+2. Ebean - "This is must".
+3. Jquery
+4. Bootstrap
+5. Ajax
+6. Mysql
+
+1. For Ebean and Mysql
+	
+	1. Carefully look at text given at line Number "293, 301-305, 307, 314-326, 338, 341-355, 355" in "conf/application.conf".
+	2. application.conf has documentation link about there section, read it.
+	3. also look at conf/evolutions/default/1.sql (auto created by play from the java class[extended Ebean model] path="models/ebeanModel/*.java")
+
+2. Important things when You deploy you code :
+
+	1. Deploy cmd for ubuntu user : "sudo ./gep provision -u=mjain -t=coneng2 --push=acare --tags=acare -k=~/.ssh/mjain.pem".
+	2. Ansible Script is on "chronic" branch of umbrella and path for Script is "umbrella/ansible/roles/acare".
+	4. When you deploy you code Database automatically created(if not present) with name "ChroniCare" (default if you do not change).
+	3. Now if you have a different databaseName,mysqlUser and mysqlPassword and want to change, then change the file "umbrella/ansible/roles/acare/vars/main.yml".
+	4. for change For port number change line number 7 in file "umbrella/ansible/roles/acare/templates/acare.sh".
+	5. Also change the conf/application.conf for different databaseName,mysql useName and password accordingly.
+
+
+3. for locally run by ubuntu user. (change application.conf for mysql user and password).
+	
+	cmd:
+	$	        cd Acare (name of project folder)
+	/Acare$		path_of_your_Playactivator run
+
+	For database : Create database maually
+	mysql -u root -p ChroniCare < medication.sql (.sql file in Acare/medication.sql folder).
+	mysql -u root -p ChroniCare < route.sql
+	mysql -u root -p ChroniCare < doctors.sql (same for practices.sql , pd.sql).
+
+
+4. About Careplan
+	
+	0. "careplan.scala.html"
+	1. Acare/public/javascripts/question.js - this is for dynamically add question.
+	2. Acare/public/javascripts/addfield.js - this is for dynamically add medication.
+	3. Acare/public/javascripts/serialize.js - create json on submit.
+	4. app/controllers/Careplan.java - commented code is for send json to redoxEngine.
+	5. you need to learn how to use redox. website has all detail on this bit.
+
+
+5. Need to do.
+	1. add code (in umbrella/ansible/roles/acare/tasks/mail.yml) for auto import medication.sql and route.sql on coneng2.
+
+if this is not sufficient then you can ask any time for more.
+Thanks

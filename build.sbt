@@ -1,4 +1,4 @@
-name := """chronic"""
+name := """acare"""
 
 version := "1.0-SNAPSHOT"
 
