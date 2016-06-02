@@ -11,7 +11,7 @@ you should know about
 
 1. For Ebean and Mysql
 	
-	1. Carefully look at text given at line Number "293, 301-305, 307, 314-326, 338, 341-355, 355" in "conf/application.conf".
+	1. Carefully look at text given at line Number "38-43,293, 301-305, 307, 314-326, 338, 341-355, 355" in "conf/application.conf".
 	2. application.conf has documentation link about there section, read it.
 	3. also look at conf/evolutions/default/1.sql (auto created by play from the java class[extended Ebean model] path="models/ebeanModel/*.java")
 
